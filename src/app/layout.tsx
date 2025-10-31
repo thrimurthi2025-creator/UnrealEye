@@ -19,10 +19,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
-        <script
-          type="module"
-          src="https://gradio.s3-us-west-2.amazonaws.com/5.49.1/gradio.js"
-        ></script>
       </head>
       <body className="font-body antialiased">
         {children}
