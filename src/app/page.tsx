@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { ThemeToggle } from '@/components/theme-toggle';
 
 // @ts-ignore
 const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
@@ -22,10 +21,6 @@ export default function Home() {
       <div className="gradient-orb orb-1"></div>
       <div className="gradient-orb orb-2"></div>
       
-      <div style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 11 }}>
-        <ThemeToggle />
-      </div>
-
       <div className="container">
         <header>
           <div className="logo">
