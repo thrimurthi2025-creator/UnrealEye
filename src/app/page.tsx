@@ -55,7 +55,7 @@ export default function Home() {
               </div>
             )}
             
-            <div style={{ visibility: isLoading ? 'hidden' : 'visible' }}>
+            <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s' }}>
                 <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
             </div>
           </div>
