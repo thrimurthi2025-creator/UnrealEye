@@ -1,19 +1,36 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 // @ts-ignore
 const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isGradioReady, setIsGradioReady] = useState(false);
+  const gradioContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 4000);
+    const observer = new MutationObserver((mutationsList, obs) => {
+      // The gradio-app component has a `div.gradio-container` inside when it is ready
+      // and the inner "loading" status display is gone.
+      if (gradioContainerRef.current) {
+        const gradioContainer = gradioContainerRef.current.querySelector('gradio-app');
+        if (gradioContainer?.shadowRoot?.querySelector('.gradio-container') && !gradioContainer?.shadowRoot?.querySelector('.st-emotion-cache-12fmjuu')) {
+          setIsGradioReady(true);
+          obs.disconnect(); // Stop observing once it's ready
+        }
+      }
+    });
 
-    return () => clearTimeout(timer);
+    if (gradioContainerRef.current) {
+      observer.observe(gradioContainerRef.current, {
+        childList: true,
+        subtree: true,
+      });
+    }
+
+    return () => observer.disconnect();
   }, []);
+
 
   return (
     <>
@@ -43,7 +60,7 @@ export default function Home() {
           <div className="detector-wrapper">
             <div className="scan-lines"></div>
             
-            {isLoading && (
+            {!isGradioReady && (
               <div className="loading-overlay" id="loadingOverlay">
                 <div className="scanner">
                   <div className="scanner-ring"></div>
@@ -54,8 +71,10 @@ export default function Home() {
                 <div className="loading-subtext">Loading detection models...</div>
               </div>
             )}
-
-            {!isLoading && <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>}
+            
+            <div ref={gradioContainerRef} style={{ display: isGradioReady ? 'block' : 'none' }}>
+                <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
+            </div>
           </div>
 
           <div className="features">
