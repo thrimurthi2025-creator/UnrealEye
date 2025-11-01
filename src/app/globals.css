@@ -62,7 +62,7 @@ body {
   filter: blur(100px);
   opacity: 0.2;
   z-index: 1;
-  transition: background 0.3s ease;
+  transition: background 0.5s ease-in-out;
 }
 
 .orb-1 {
@@ -77,6 +77,15 @@ body {
   bottom: -200px;
   left: -200px;
   animation: float-2 25s ease-in-out infinite;
+}
+
+.orb-1.offline {
+    background: var(--accent-red);
+}
+
+.orb-2.offline {
+    background: var(--accent-red);
+    opacity: 0.1;
 }
 
 @keyframes float-1 {
