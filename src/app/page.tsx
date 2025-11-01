@@ -13,8 +13,8 @@ export default function Home() {
       // The gradio-app component has a `div.gradio-container` inside when it is ready
       // and the inner "loading" status display is gone.
       if (gradioContainerRef.current) {
-        const gradioContainer = gradioContainerRef.current.querySelector('gradio-app');
-        if (gradioContainer?.shadowRoot?.querySelector('.gradio-container') && !gradioContainer?.shadowRoot?.querySelector('.st-emotion-cache-12fmjuu')) {
+        const gradioApp = gradioContainerRef.current.querySelector('gradio-app');
+        if (gradioApp?.shadowRoot?.querySelector('.gradio-container') && !gradioApp?.shadowRoot?.querySelector('.st-emotion-cache-12fmjuu')) {
           setIsGradioReady(true);
           obs.disconnect(); // Stop observing once it's ready
         }
@@ -60,8 +60,7 @@ export default function Home() {
           <div className="detector-wrapper">
             <div className="scan-lines"></div>
             
-            {!isGradioReady && (
-              <div className="loading-overlay" id="loadingOverlay">
+            <div id="loadingOverlay" className={`loading-overlay ${isGradioReady ? 'hidden' : ''}`}>
                 <div className="scanner">
                   <div className="scanner-ring"></div>
                   <div className="scanner-ring"></div>
@@ -69,10 +68,9 @@ export default function Home() {
                 </div>
                 <div className="loading-text">Initializing Neural Network</div>
                 <div className="loading-subtext">Loading detection models...</div>
-              </div>
-            )}
+            </div>
             
-            <div ref={gradioContainerRef} style={{ display: isGradioReady ? 'block' : 'none' }}>
+            <div ref={gradioContainerRef} style={{ visibility: isGradioReady ? 'visible' : 'hidden' }}>
                 <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
             </div>
           </div>
