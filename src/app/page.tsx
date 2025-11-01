@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 // @ts-ignore
 const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
@@ -20,6 +21,10 @@ export default function Home() {
       <div className="grid-bg"></div>
       <div className="gradient-orb orb-1"></div>
       <div className="gradient-orb orb-2"></div>
+      
+      <div style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 11 }}>
+        <ThemeToggle />
+      </div>
 
       <div className="container">
         <header>
@@ -55,9 +60,7 @@ export default function Home() {
               </div>
             )}
             
-            <div style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s' }}>
-                <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
-            </div>
+            <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
           </div>
 
           <div className="features">
