@@ -34,7 +34,7 @@ export default function Home() {
 
         <header></header>
 
-        <main className="main-card">
+        <main className={isLoading ? "main-card offline" : "main-card"}>
           <div className="card-header">
             <h2 className="card-title">Detection Interface</h2>
             <div className={isLoading ? "status-badge offline" : "status-badge"}>
