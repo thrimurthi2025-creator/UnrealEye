@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: 'ImageAI Detective',
-  description: 'Instantly analyze images with AI to detect if they are generated.',
+  title: 'AI Detection Lab — Advanced Image Analysis',
+  description: 'Advanced neural network forensics to distinguish AI-generated imagery from authentic photographs with precision and speed.',
 };
 
 export default function RootLayout({
@@ -16,11 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
       </head>
-      <body className="font-body antialiased">
+      <body className="antialiased">
+        <Script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.49.1/gradio.js" strategy="beforeInteractive" />
         {children}
         <Toaster />
       </body>
