@@ -4,20 +4,35 @@ import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
+import { cn } from "@/lib/utils"
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme()
 
+  const isChecked = theme === 'dark'
+  const onCheckedChange = (checked: boolean) => {
+    setTheme(checked ? 'dark' : 'light')
+  }
+
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-    >
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+    <div className={cn("flex items-center space-x-2", className)}>
+      <Sun className="h-5 w-5 text-gray-500" />
+      <Switch
+        id="theme-toggle"
+        checked={isChecked}
+        onCheckedChange={onCheckedChange}
+        className="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        aria-label="Toggle theme"
+      >
+        <span
+          className={cn(
+            "pointer-events-none absolute flex h-5 w-5 transform items-center justify-center rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out",
+            isChecked ? 'translate-x-5' : 'translate-x-0'
+          )}
+        />
+      </Switch>
+      <Moon className="h-5 w-5 text-gray-400" />
+    </div>
   )
 }

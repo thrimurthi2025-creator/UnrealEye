@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 // @ts-ignore
