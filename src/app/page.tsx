@@ -5,32 +5,15 @@ import { useEffect, useState, useRef } from 'react';
 const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
 
 export default function Home() {
-  const [isGradioReady, setIsGradioReady] = useState(false);
-  const gradioContainerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const observer = new MutationObserver((mutationsList, obs) => {
-      // The gradio-app component has a `div.gradio-container` inside when it is ready
-      // and the inner "loading" status display is gone.
-      if (gradioContainerRef.current) {
-        const gradioApp = gradioContainerRef.current.querySelector('gradio-app');
-        if (gradioApp?.shadowRoot?.querySelector('.gradio-container') && !gradioApp?.shadowRoot?.querySelector('.st-emotion-cache-12fmjuu')) {
-          setIsGradioReady(true);
-          obs.disconnect(); // Stop observing once it's ready
-        }
-      }
-    });
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
 
-    if (gradioContainerRef.current) {
-      observer.observe(gradioContainerRef.current, {
-        childList: true,
-        subtree: true,
-      });
-    }
-
-    return () => observer.disconnect();
+    return () => clearTimeout(timer);
   }, []);
-
 
   return (
     <>
@@ -60,17 +43,19 @@ export default function Home() {
           <div className="detector-wrapper">
             <div className="scan-lines"></div>
             
-            <div id="loadingOverlay" className={`loading-overlay ${isGradioReady ? 'hidden' : ''}`}>
-                <div className="scanner">
-                  <div className="scanner-ring"></div>
-                  <div className="scanner-ring"></div>
-                  <div className="scanner-core"></div>
-                </div>
-                <div className="loading-text">Initializing Neural Network</div>
-                <div className="loading-subtext">Loading detection models...</div>
-            </div>
+            {isLoading && (
+              <div id="loadingOverlay" className="loading-overlay">
+                  <div className="scanner">
+                    <div className="scanner-ring"></div>
+                    <div className="scanner-ring"></div>
+                    <div className="scanner-core"></div>
+                  </div>
+                  <div className="loading-text">Initializing Neural Network</div>
+                  <div className="loading-subtext">Loading detection models...</div>
+              </div>
+            )}
             
-            <div ref={gradioContainerRef} style={{ visibility: isGradioReady ? 'visible' : 'hidden' }}>
+            <div style={{ visibility: isLoading ? 'hidden' : 'visible' }}>
                 <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
             </div>
           </div>
