@@ -4,6 +4,7 @@
   --bg-tertiary: #e9ecef;
   --accent-cyan: #007bff;
   --accent-purple: #6f42c1;
+  --accent-red: #dc3545;
   --text-primary: #212529;
   --text-secondary: #6c757d;
   --border: #dee2e6;
@@ -15,6 +16,7 @@
   --bg-tertiary: #21262d;
   --accent-cyan: #00d4ff;
   --accent-purple: #7c3aed;
+  --accent-red: #ff4d4d;
   --text-primary: #e6edf3;
   --text-secondary: #8b949e;
   --border: #30363d;
@@ -217,6 +219,16 @@ h1 {
     background: rgba(0, 123, 255, 0.1);
     border: 1px solid rgba(0, 123, 255, 0.3);
     color: var(--accent-cyan);
+}
+
+.status-badge.offline {
+  background: rgba(255, 77, 77, 0.1);
+  border-color: rgba(255, 77, 77, 0.3);
+  color: var(--accent-red);
+}
+
+.status-badge.offline .status-dot {
+  background: var(--accent-red);
 }
 
 .status-dot {

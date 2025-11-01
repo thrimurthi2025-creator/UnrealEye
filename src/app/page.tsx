@@ -6,8 +6,10 @@ const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
+    setIsClient(true)
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 4000);
@@ -34,9 +36,9 @@ export default function Home() {
         <main className="main-card">
           <div className="card-header">
             <h2 className="card-title">Detection Interface</h2>
-            <div className="status-badge">
+            <div className={isLoading ? "status-badge offline" : "status-badge"}>
               <span className="status-dot"></span>
-              <span>SYSTEM ONLINE</span>
+              <span>{isLoading ? 'SYSTEM OFFLINE' : 'SYSTEM ONLINE'}</span>
             </div>
           </div>
 
@@ -55,7 +57,7 @@ export default function Home() {
               </div>
             )}
             
-            <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
+            {isClient && <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>}
           </div>
 
           <div className="features">
