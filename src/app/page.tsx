@@ -28,7 +28,7 @@ export default function Home() {
         <header>
           <div className="logo">
             <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} />
-            <span className="logo-text">Detection Lab</span>
+            <span className="logo-text">Unreal Eye</span>
           </div>
           <h1>AI Image Analysis</h1>
           <p className="subtitle">Advanced neural network forensics to distinguish AI-generated imagery from authentic photographs with precision and speed.</p>
