@@ -32,7 +32,9 @@ export default function Home() {
           </div>
         </nav>
 
-        <main className="main-card mt-16">
+        <header></header>
+
+        <main className="main-card">
           <div className="card-header">
             <h2 className="card-title">Detection Interface</h2>
             <div className={isLoading ? "status-badge offline" : "status-badge"}>
