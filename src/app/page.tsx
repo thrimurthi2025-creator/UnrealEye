@@ -27,7 +27,7 @@ export default function Home() {
       <div className="container">
         <header>
           <div className="logo">
-            <Image src="https://i.postimg.cc/fy1WdVNK/IMG-20251101-153850.jpg" alt="Logo" width={50} height={50} />
+            <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} />
             <span className="logo-text">Detection Lab</span>
           </div>
           <h1>AI Image Analysis</h1>
