@@ -32,7 +32,7 @@ export default function Home() {
           </div>
         </nav>
         <header>
-          <h1>AI Image Analysis</h1>
+          
           <p className="subtitle">Advanced neural network forensics to distinguish AI-generated imagery from authentic photographs with precision and speed.</p>
         </header>
 

@@ -127,15 +127,6 @@ header {
   color: transparent;
 }
 
-h1 {
-  font-size: 4rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #FFA500;
-  line-height: 1.1;
-  letter-spacing: -2px;
-}
-
 .subtitle {
   font-size: 1.25rem;
   color: var(--text-secondary);
@@ -413,10 +404,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2.5rem;
-  }
-
   .main-card {
     padding: 20px;
   }
