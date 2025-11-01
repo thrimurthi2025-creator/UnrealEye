@@ -6,10 +6,8 @@ const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 4000);
@@ -57,7 +55,7 @@ export default function Home() {
               </div>
             )}
             
-            {isClient && <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>}
+            <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
           </div>
 
           <div className="features">
