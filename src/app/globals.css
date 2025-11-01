@@ -120,6 +120,13 @@ header {
   letter-spacing: -0.5px;
 }
 
+.logo-text-gradient {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 h1 {
   font-size: 4rem;
   font-weight: 700;
