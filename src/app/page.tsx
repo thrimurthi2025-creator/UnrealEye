@@ -33,7 +33,6 @@ export default function Home() {
         </nav>
         <header>
           
-          <p className="subtitle">Advanced neural network forensics to distinguish AI-generated imagery from authentic photographs with precision and speed.</p>
         </header>
 
         <main className="main-card">
