@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 
 // @ts-ignore
 const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
@@ -26,7 +27,7 @@ export default function Home() {
       <div className="container">
         <header>
           <div className="logo">
-            <div className="logo-icon">🔬</div>
+            <Image src="https://i.postimg.cc/mD3pJS5v/1761889825749.jpg" alt="Logo" width={50} height={50} />
             <span className="logo-text">Detection Lab</span>
           </div>
           <h1>AI Image Analysis</h1>
