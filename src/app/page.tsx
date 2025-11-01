@@ -31,9 +31,6 @@ export default function Home() {
             <span className="logo-text logo-text-gradient">Unreal Eye</span>
           </div>
         </nav>
-        <header>
-          
-        </header>
 
         <main className="main-card">
           <div className="card-header">
