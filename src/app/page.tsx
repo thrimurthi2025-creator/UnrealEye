@@ -82,7 +82,7 @@ export default function Home() {
         </main>
 
         <footer>
-          © 2025 AI Detection Lab • Powered by Hugging Face Infrastructure
+          © 2025 Unreal Eye
         </footer>
       </div>
     </>
