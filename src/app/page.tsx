@@ -1,17 +1,18 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // @ts-ignore
 const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) {
-      setTimeout(() => {
-        overlay.classList.add('hidden');
-      }, 4000);
-    }
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -42,17 +43,19 @@ export default function Home() {
           <div className="detector-wrapper">
             <div className="scan-lines"></div>
             
-            <div className="loading-overlay" id="loadingOverlay">
-              <div className="scanner">
-                <div className="scanner-ring"></div>
-                <div className="scanner-ring"></div>
-                <div className="scanner-core"></div>
+            {isLoading && (
+              <div className="loading-overlay" id="loadingOverlay">
+                <div className="scanner">
+                  <div className="scanner-ring"></div>
+                  <div className="scanner-ring"></div>
+                  <div className="scanner-core"></div>
+                </div>
+                <div className="loading-text">Initializing Neural Network</div>
+                <div className="loading-subtext">Loading detection models...</div>
               </div>
-              <div className="loading-text">Initializing Neural Network</div>
-              <div className="loading-subtext">Loading detection models...</div>
-            </div>
+            )}
 
-            <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>
+            {!isLoading && <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>}
           </div>
 
           <div className="features">
