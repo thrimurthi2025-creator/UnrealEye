@@ -372,3 +372,11 @@
  grad-app, grad-app-unthemed {
     background-color: transparent !important;
   }
+
+gradio-app::part(main) {
+    background: transparent !important;
+}
+
+gradio-app::part(statustracker) {
+    display: none !important;
+}
