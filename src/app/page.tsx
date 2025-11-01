@@ -78,6 +78,11 @@ export default function Home() {
               <h3 className="feature-title">Privacy First</h3>
               <p className="feature-desc">Zero data retention. All processing happens in-memory.</p>
             </div>
+            <div className="feature">
+              <span className="feature-icon">⚠️</span>
+              <h3 className="feature-title">Disclaimer</h3>
+              <p className="feature-desc">AI image detection might not be 100% accurate.</p>
+            </div>
           </div>
         </main>
 
