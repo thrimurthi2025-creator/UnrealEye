@@ -2,21 +2,50 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 
-// @ts-ignore
-const GradioApp = (props) => <gradio-app {...props}></gradio-app>;
+const GradioApp = (props: any) => {
+  const ref = useRef<HTMLElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const onLoad = () => setIsLoaded(true);
+    ref.current.addEventListener('load', onLoad);
+    return () => ref.current?.removeEventListener('load', onLoad);
+  }, [ref]);
+
+  return <gradio-app {...props} ref={ref}></gradio-app>;
+};
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isClient, setIsClient] = useState(false)
+  const gradioRef = useRef<any>(null);
+
 
   useEffect(() => {
     setIsClient(true)
+    const handleLoad = () => {
+      setIsLoading(false);
+    };
+
+    const gradioEl = gradioRef.current;
+    if (gradioEl) {
+      gradioEl.addEventListener('load', handleLoad);
+    }
+    
+    // Fallback timer
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 4000);
+    }, 5000);
 
-    return () => clearTimeout(timer);
-  }, []);
+
+    return () => {
+      clearTimeout(timer);
+      if (gradioEl) {
+        gradioEl.removeEventListener('load', handleLoad);
+      }
+    };
+  }, [isClient]);
 
   return (
     <>
@@ -32,7 +61,8 @@ export default function Home() {
           </div>
         </nav>
 
-        <header></header>
+        <header>
+        </header>
 
         <main className={isLoading ? "main-card offline" : "main-card"}>
           <div className="card-header">
@@ -46,19 +76,17 @@ export default function Home() {
           <div className="detector-wrapper">
             <div className="scan-lines"></div>
             
-            {isLoading && (
-              <div id="loadingOverlay" className="loading-overlay">
-                  <div className="scanner">
-                    <div className="scanner-ring"></div>
-                    <div className="scanner-ring"></div>
-                    <div className="scanner-core"></div>
-                  </div>
-                  <div className="loading-text">Initializing Neural Network</div>
-                  <div className="loading-subtext">Loading detection models...</div>
-              </div>
-            )}
+            <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
+                <div className="scanner">
+                  <div className="scanner-ring"></div>
+                  <div className="scanner-ring"></div>
+                  <div className="scanner-core"></div>
+                </div>
+                <div className="loading-text">Initializing Neural Network</div>
+                <div className="loading-subtext">Loading detection models...</div>
+            </div>
             
-            {isClient && <GradioApp src="https://thrimurthi2025-unrealeye.hf.space"></GradioApp>}
+            {isClient && <GradioApp ref={gradioRef} src="https://thrimurthi2025-unrealeye.hf.space"></GradioApp>}
           </div>
 
           <div className="features">
