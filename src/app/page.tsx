@@ -58,7 +58,7 @@ export default function Home() {
               </div>
             )}
             
-            {isClient && <GradioApp src="https://thrimurthi2025-ai-or-not.hf.space"></GradioApp>}
+            {isClient && <GradioApp src="https://thrimurthi2025-unrealeye.hf.space"></GradioApp>}
           </div>
 
           <div className="features">
