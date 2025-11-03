@@ -60,50 +60,6 @@ body {
   50% { opacity: 0.5; }
 }
 
-.gradient-orb {
-  position: fixed;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.2;
-  z-index: 1;
-  transition: background 0.5s ease-in-out;
-}
-
-.orb-1 {
-  background: var(--accent-cyan);
-  top: -200px;
-  right: -200px;
-  animation: float-1 20s ease-in-out infinite;
-}
-
-.orb-2 {
-  background: var(--accent-purple);
-  bottom: -200px;
-  left: -200px;
-  animation: float-2 25s ease-in-out infinite;
-}
-
-.orb-1.offline {
-    background: var(--accent-red);
-}
-
-.orb-2.offline {
-    background: var(--accent-red);
-    opacity: 0.1;
-}
-
-@keyframes float-1 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-100px, 100px); }
-}
-
-@keyframes float-2 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(100px, -100px); }
-}
-
 .container {
   position: relative;
   z-index: 10;

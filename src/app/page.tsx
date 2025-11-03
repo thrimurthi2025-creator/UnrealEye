@@ -50,8 +50,6 @@ export default function Home() {
   return (
     <>
       <div className="grid-bg"></div>
-      <div className={isLoading ? "gradient-orb orb-1 offline" : "gradient-orb orb-1"}></div>
-      <div className={isLoading ? "gradient-orb orb-2 offline" : "gradient-orb orb-2"}></div>
       
       <div className="container">
         <nav className="top-nav">
