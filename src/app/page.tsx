@@ -4,51 +4,52 @@ import Image from 'next/image';
 
 const GradioApp = (props: any) => {
   const ref = useRef<HTMLElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-
+  
   useEffect(() => {
-    if (!ref.current) return;
-    const onLoad = () => setIsLoaded(true);
+    if (!ref.current || !props.onLoad) return;
+    const onLoad = () => props.onLoad();
     ref.current.addEventListener('load', onLoad);
-    return () => ref.current?.removeEventListener('load', onLoad);
-  }, [ref]);
+
+    // Set a fallback timer in case the load event doesn't fire
+    const timer = setTimeout(onLoad, 5000);
+
+    return () => {
+      ref.current?.removeEventListener('load', onLoad);
+      clearTimeout(timer);
+    };
+  }, [ref, props.onLoad]);
 
   return <gradio-app {...props} ref={ref}></gradio-app>;
 };
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isClient, setIsClient] = useState(false)
-  const gradioRef = useRef<any>(null);
-
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true)
-    const handleLoad = () => {
-      setIsLoading(false);
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    const spotlight = document.getElementById('spotlight');
+    if (!spotlight) return;
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const { clientX, clientY } = event;
+      spotlight.style.setProperty('--x', `${clientX}px`);
+      spotlight.style.setProperty('--y', `${clientY}px`);
     };
 
-    const gradioEl = gradioRef.current;
-    if (gradioEl) {
-      gradioEl.addEventListener('load', handleLoad);
-    }
-    
-    // Fallback timer
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      clearTimeout(timer);
-      if (gradioEl) {
-        gradioEl.removeEventListener('load', handleLoad);
-      }
+      window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [isClient]);
+  }, []);
 
   return (
     <>
+      <div id="spotlight" className={isLoading ? 'offline' : ''}></div>
       <div className="grid-bg"></div>
       
       <div className="container">
@@ -84,7 +85,12 @@ export default function Home() {
                 <div className="loading-subtext">Loading detection models...</div>
             </div>
             
-            {isClient && <GradioApp ref={gradioRef} src="https://thrimurthi2025-unrealeye.hf.space"></GradioApp>}
+            {isClient && (
+              <GradioApp 
+                src="https://thrimurthi2025-unrealeye.hf.space"
+                onLoad={() => setIsLoading(false)}
+              />
+            )}
           </div>
 
           <div className="features">
