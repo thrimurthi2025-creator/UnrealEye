@@ -3,21 +3,31 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 
 const GradioApp = (props: any) => {
-  const ref = useRef<HTMLElement>(null);
-  
-  useEffect(() => {
-    if (!ref.current || !props.onLoad) return;
-    const onLoad = () => props.onLoad();
-    ref.current.addEventListener('load', onLoad);
+  const ref = useRef<HTMLElement | null>(null);
+  const [loaded, setLoaded] = useState(false);
 
-    // Set a fallback timer in case the load event doesn't fire
-    const timer = setTimeout(onLoad, 5000);
+  useEffect(() => {
+    const currentRef = ref.current;
+    if (!currentRef) return;
+
+    const handleLoad = () => {
+      if (!loaded) {
+        props.onLoad?.();
+        setLoaded(true);
+      }
+    };
+    
+    // Gradio apps can be slow to load, so we'll check for the event
+    currentRef.addEventListener('load', handleLoad);
+
+    // But also set a fallback timer
+    const timer = setTimeout(handleLoad, 3000);
 
     return () => {
-      ref.current?.removeEventListener('load', onLoad);
+      currentRef?.removeEventListener('load', handleLoad);
       clearTimeout(timer);
     };
-  }, [ref, props.onLoad]);
+  }, [ref, props, loaded]);
 
   return <gradio-app {...props} ref={ref}></gradio-app>;
 };
@@ -53,14 +63,11 @@ export default function Home() {
       <div className="grid-bg"></div>
       
       <div className="container">
-        <nav className="top-nav">
+        <header className="flex justify-between items-center py-4">
           <div className="logo">
-            <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} />
+            <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} className="w-10 h-10 md:w-12 md:h-12" />
             <span className="logo-text logo-text-gradient">Unreal Eye</span>
           </div>
-        </nav>
-
-        <header>
         </header>
 
         <main className={isLoading ? "main-card offline" : "main-card"}>
