@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 export default function EmergencyHelp() {
   
@@ -17,6 +18,12 @@ export default function EmergencyHelp() {
             </Link>
           </div>
         </header>
+
+        <div className="top-nav">
+            <Link href="/" className="flex items-center gap-2 text-sm text-secondary hover:text-primary transition-colors">
+                <ArrowLeft size={20} />
+            </Link>
+        </div>
 
         <main>
           <section className="emergency-section">
