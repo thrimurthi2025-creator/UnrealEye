@@ -30,7 +30,7 @@ export default function EmergencyHelp() {
       <div className="container">
         <header className="flex justify-between items-center py-4">
           <div className="logo">
-            <Link href="/" className='flex items-center gap-3'>
+            <Link href="/">
               <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} className="w-10 h-10 md:w-12 md:h-12" />
               <span className="logo-text logo-text-gradient">Unreal Eye</span>
             </Link>

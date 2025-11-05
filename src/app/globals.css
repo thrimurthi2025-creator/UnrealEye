@@ -126,6 +126,13 @@ header {
   gap: 12px;
 }
 
+.logo a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
 .logo-text {
   font-size: 1.5rem;
   font-weight: 700;
