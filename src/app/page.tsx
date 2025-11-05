@@ -36,16 +36,26 @@ const GradioApp = (props: any) => {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
+  const [isBlinking, setIsBlinking] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  const handleStatusClick = () => {
+    if (!isLoading) {
+      setIsBlinking(true);
+      setTimeout(() => {
+        setIsBlinking(false);
+      }, 500); // Duration of the blink animation
+    }
+  };
+
   return (
     <>
-      <div className="grid-bg"></div>
+      <div className={`grid-bg ${isBlinking ? 'blinking' : ''}`}></div>
       
-      <div className="container">
+      <div className={`container ${isBlinking ? 'blinking' : ''}`}>
         <header className="flex justify-between items-center py-4">
           <div className="logo">
             <Link href="/" className='flex items-center gap-3'>
@@ -59,7 +69,11 @@ export default function Home() {
           <div className={isLoading ? "main-card offline" : "main-card"}>
             <div className="card-header">
               <h2 className="card-title">Detection Interface</h2>
-              <div className={isLoading ? "status-badge offline" : "status-badge"}>
+              <div 
+                className={isLoading ? "status-badge offline" : "status-badge"}
+                onClick={handleStatusClick}
+                style={{ cursor: isLoading ? 'default' : 'pointer' }}
+              >
                 <span className="status-dot"></span>
                 <span>{isLoading ? 'SYSTEM OFFLINE' : 'SYSTEM ONLINE'}</span>
               </div>
