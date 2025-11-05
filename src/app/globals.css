@@ -709,8 +709,11 @@ gradio-app::part(statustracker) {
 /* Power Failure Animation */
 @keyframes power-failure {
   0%, 100% { opacity: 1; }
-  10%, 30%, 50%, 70%, 90% { opacity: 0.4; }
-  20%, 40%, 60%, 80% { opacity: 1; }
+  25% { opacity: 0.3; }
+  30% { opacity: 1; }
+  50% { opacity: 0.2; }
+  55% { opacity: 1; }
+  80% { opacity: 0.4; }
 }
 
 .blinking .main-card,
@@ -718,5 +721,7 @@ gradio-app::part(statustracker) {
 .blinking .logo-text-gradient,
 .blinking .grid-bg,
 .blinking .border-light {
-  animation: power-failure 0.5s linear;
+  animation: power-failure 1s linear;
 }
+
+    

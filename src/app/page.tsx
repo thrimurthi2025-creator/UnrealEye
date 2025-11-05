@@ -47,7 +47,7 @@ export default function Home() {
       setIsBlinking(true);
       setTimeout(() => {
         setIsBlinking(false);
-      }, 500); // Duration of the blink animation
+      }, 1000); // Duration of the blink animation
     }
   };
 
@@ -66,7 +66,7 @@ export default function Home() {
         </header>
 
         <main>
-          <div className={isLoading ? "main-card offline" : "main-card"}>
+          <div className={`main-card ${isLoading ? 'offline' : ''} ${isBlinking ? 'blinking' : ''}`}>
             <div className="card-header">
               <h2 className="card-title">Detection Interface</h2>
               <div 
@@ -145,3 +145,5 @@ export default function Home() {
     </>
   );
 }
+
+    
