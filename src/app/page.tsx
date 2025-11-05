@@ -125,6 +125,10 @@ export default function Home() {
         </main>
 
         <footer>
+          <div className="mb-4">
+            <p className="font-semibold text-accent-red">Are you a victim of image-based abuse?</p>
+            <p>If someone has shared or is threatening to share an intimate image of you, there is help available. <a href="https://stopncii.org/" target="_blank" rel="noopener noreferrer" className="underline text-accent-cyan hover:text-accent-purple">Click here to take control.</a></p>
+          </div>
           © 2025 Unreal Eye
         </footer>
       </div>
