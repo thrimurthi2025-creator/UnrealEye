@@ -86,6 +86,10 @@ export default function Home() {
               )}
             </div>
             <Link href="/emergency-help" className="emergency-card-link">
+              <span className="border-light top"></span>
+              <span className="border-light right"></span>
+              <span className="border-light bottom"></span>
+              <span className="border-light left"></span>
               <div className="emergency-card-content">
                 <span className="emergency-card-icon">🛡️</span>
                 <div className="emergency-card-text">

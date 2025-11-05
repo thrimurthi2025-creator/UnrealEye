@@ -573,18 +573,6 @@ footer {
   margin-top: 40px;
 }
 
-@keyframes pulse-red {
-  0% {
-    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
-  }
-}
-
 .emergency-card-link {
   display: block;
   text-decoration: none;
@@ -595,6 +583,8 @@ footer {
   margin-top: 30px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   border-left: 5px solid var(--accent-red);
+  position: relative;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
@@ -606,7 +596,6 @@ footer {
 .emergency-card-link:hover {
   transform: translateY(-4px);
   border-color: var(--accent-red);
-  box-shadow: 0 4px 20px rgba(220, 53, 69, 0.2);
 }
 
 .dark .emergency-card-link:hover {
@@ -660,4 +649,60 @@ gradio-app::part(main) {
 
 gradio-app::part(statustracker) {
     display: none !important;
+}
+
+.border-light {
+  position: absolute;
+  background: linear-gradient(to right, transparent, var(--accent-red), transparent);
+}
+
+.border-light.top, .border-light.bottom {
+  left: -100%;
+  width: 100%;
+  height: 2px;
+}
+.border-light.top {
+  top: 0;
+  animation: animate-top 4s linear infinite;
+}
+.border-light.bottom {
+  bottom: 0;
+  animation: animate-bottom 4s linear infinite;
+  animation-delay: 2s;
+}
+
+.border-light.left, .border-light.right {
+  top: -100%;
+  width: 2px;
+  height: 100%;
+}
+.border-light.right {
+  right: 0;
+  animation: animate-right 4s linear infinite;
+  animation-delay: 1s;
+}
+.border-light.left {
+  left: 0;
+  animation: animate-left 4s linear infinite;
+  animation-delay: 3s;
+}
+
+@keyframes animate-top {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes animate-bottom {
+  0% { left: 100%; }
+  100% { left: -100%; }
+}
+
+@keyframes animate-right {
+  0% { top: -100%; }
+  100% { top: 100%; }
+}
+
+@keyframes animate-left {
+  0% { top: 100%; }
+  100% { top: -100%; }
 }
