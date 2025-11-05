@@ -654,10 +654,11 @@ gradio-app::part(statustracker) {
 .border-light {
   position: absolute;
   background: linear-gradient(to right, transparent, var(--accent-red), transparent);
+  border-radius: inherit;
 }
 
 .border-light.top, .border-light.bottom {
-  left: -100%;
+  left: 0;
   width: 100%;
   height: 2px;
 }
@@ -668,41 +669,38 @@ gradio-app::part(statustracker) {
 .border-light.bottom {
   bottom: 0;
   animation: animate-bottom 4s linear infinite;
-  animation-delay: 2s;
 }
 
 .border-light.left, .border-light.right {
-  top: -100%;
+  top: 0;
   width: 2px;
   height: 100%;
 }
 .border-light.right {
   right: 0;
   animation: animate-right 4s linear infinite;
-  animation-delay: 1s;
 }
 .border-light.left {
   left: 0;
   animation: animate-left 4s linear infinite;
-  animation-delay: 3s;
 }
 
 @keyframes animate-top {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 @keyframes animate-bottom {
-  0% { left: 100%; }
-  100% { left: -100%; }
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 @keyframes animate-right {
-  0% { top: -100%; }
-  100% { top: 100%; }
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 
 @keyframes animate-left {
-  0% { top: 100%; }
-  100% { top: -100%; }
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
 }
