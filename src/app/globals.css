@@ -65,14 +65,21 @@ body {
   z-index: 10;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 20px;
 }
 
 .top-nav {
   position: absolute;
-  top: 20px;
+  top: 28px;
   left: 20px;
   z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .top-nav {
+    top: 24px;
+    left: 15px;
+  }
 }
 
 header {
@@ -96,6 +103,12 @@ header {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.5px;
+}
+
+@media (max-width: 768px) {
+  .logo-text {
+    font-size: 1.25rem;
+  }
 }
 
 .logo-text-gradient {
@@ -129,16 +142,17 @@ header {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 24px;
-  padding: 20px;
+  padding: 40px;
   box-shadow: 0 0 80px -20px var(--accent-cyan);
   position: relative;
   overflow: hidden;
   transition: background 0.5s ease-in-out, border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .main-card {
-    padding: 40px;
+    padding: 20px;
+    border-radius: 16px;
   }
 }
 
@@ -170,7 +184,7 @@ header {
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--border);
   transition: border-color 0.3s ease;
@@ -181,7 +195,6 @@ header {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30px;
   }
 }
 
@@ -438,12 +451,20 @@ gradio-app {
 }
 
 .emergency-section {
-  margin-top: 60px;
+  margin-top: 40px;
   padding: 30px;
   background: rgba(220, 53, 69, 0.05);
   border: 1px solid rgba(220, 53, 69, 0.2);
   border-radius: 24px;
   color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .emergency-section {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 16px;
+  }
 }
 
 .dark .emergency-section {
@@ -466,6 +487,12 @@ gradio-app {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--accent-red);
+}
+
+@media (max-width: 768px) {
+  .emergency-title {
+    font-size: 1.25rem;
+  }
 }
 
 .emergency-desc {
@@ -504,6 +531,12 @@ gradio-app {
   margin-bottom: 15px;
 }
 
+@media (max-width: 768px) {
+  .steps-title {
+    font-size: 1.1rem;
+  }
+}
+
 .steps-list {
   list-style: decimal;
   margin-left: 20px;
@@ -530,6 +563,7 @@ gradio-app {
   text-decoration: none;
   border-radius: 12px;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
 }
 
 .emergency-button:hover {
@@ -559,25 +593,22 @@ footer {
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 30px;
-  margin-top: 40px;
+  padding: 20px;
+  margin-top: 30px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   border-left: 5px solid var(--accent-red);
-  box-shadow: 0 0 20px -5px var(--accent-red);
-  animation: pulse-red 3s infinite;
 }
 
-@keyframes pulse-red {
-  0%, 100% { box-shadow: 0 0 20px -5px var(--accent-red); }
-  50% { box-shadow: 0 0 30px 0px var(--accent-red); }
+@media (min-width: 768px) {
+  .emergency-card-link {
+    padding: 30px;
+  }
 }
-
 
 .emergency-card-link:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 30px rgba(220, 53, 69, 0.2);
   border-color: var(--accent-red);
-  animation: none;
 }
 
 .dark .emergency-card-link:hover {
@@ -596,16 +627,28 @@ footer {
 }
 
 .emergency-card-title {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 5px;
 }
 
+@media (min-width: 768px) {
+  .emergency-card-title {
+    font-size: 1.25rem;
+  }
+}
+
 .emergency-card-desc {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .emergency-card-desc {
+    font-size: 1rem;
+  }
 }
 
 
