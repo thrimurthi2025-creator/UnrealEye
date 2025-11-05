@@ -1,30 +1,11 @@
 'use client';
-import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function EmergencyHelp() {
   
-  useEffect(() => {
-    const spotlight = document.getElementById('spotlight');
-    if (!spotlight) return;
-
-    const handleMouseMove = (event: MouseEvent) => {
-      const { clientX, clientY } = event;
-      spotlight.style.setProperty('--x', `${clientX}px`);
-      spotlight.style.setProperty('--y', `${clientY}px`);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   return (
     <>
-      <div id="spotlight"></div>
       <div className="grid-bg"></div>
       
       <div className="container">

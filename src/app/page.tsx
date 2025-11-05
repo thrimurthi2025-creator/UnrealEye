@@ -41,26 +41,8 @@ export default function Home() {
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    const spotlight = document.getElementById('spotlight');
-    if (!spotlight) return;
-
-    const handleMouseMove = (event: MouseEvent) => {
-      const { clientX, clientY } = event;
-      spotlight.style.setProperty('--x', `${clientX}px`);
-      spotlight.style.setProperty('--y', `${clientY}px`);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   return (
     <>
-      <div id="spotlight" className={isLoading ? 'offline' : ''}></div>
       <div className="grid-bg"></div>
       
       <div className="container">
