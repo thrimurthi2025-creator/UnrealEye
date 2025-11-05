@@ -451,6 +451,114 @@ gradio-app {
   line-height: 1.6;
 }
 
+.emergency-section {
+  margin-top: 60px;
+  padding: 30px;
+  background: rgba(220, 53, 69, 0.05);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  border-radius: 24px;
+  color: var(--text-primary);
+}
+
+.dark .emergency-section {
+  background: rgba(255, 77, 77, 0.05);
+  border: 1px solid rgba(255, 77, 77, 0.2);
+}
+
+.emergency-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.emergency-icon {
+  font-size: 2rem;
+}
+
+.emergency-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-red);
+}
+
+.emergency-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+}
+
+.emergency-reassurance {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 25px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.emergency-reassurance p {
+  margin-bottom: 10px;
+}
+
+.emergency-reassurance p:last-child {
+  margin-bottom: 0;
+}
+
+.emergency-reassurance strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.steps-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.steps-list {
+  list-style: decimal;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.steps-list strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.emergency-button {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 25px;
+  background-color: var(--accent-red);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.emergency-button:hover {
+  background-color: #a72834;
+  transform: translateY(-2px);
+}
+
+.dark .emergency-button {
+  color: var(--bg-dark);
+}
+
+.dark .emergency-button:hover {
+  background-color: #ff6b6b;
+}
+
 footer {
   text-align: center;
   padding: 40px 20px;

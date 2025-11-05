@@ -124,11 +124,32 @@ export default function Home() {
           </div>
         </main>
 
-        <footer>
-          <div className="mb-4">
-            <p className="font-semibold text-accent-red">Are you a victim of image-based abuse?</p>
-            <p>If someone has shared or is threatening to share an intimate image of you, there is help available. <a href="https://stopncii.org/" target="_blank" rel="noopener noreferrer" className="underline text-accent-cyan hover:text-accent-purple">Click here to take control.</a></p>
+        <section className="emergency-section">
+          <div className="emergency-header">
+            <span className="emergency-icon">🛡️</span>
+            <h2 className="emergency-title">Emergency Help: Image-Based Abuse</h2>
           </div>
+          <p className="emergency-desc">
+            If someone has shared or threatened to share an intimate image of you (real or AI-generated) without your consent, you can take action. This is called Non-Consensual Intimate Imagery (NCII).
+          </p>
+          <div className="emergency-reassurance">
+            <p>🔒 <strong>Your images never leave your device.</strong> The service linked below creates a secure digital fingerprint (a "hash") of the image on your own device to find and remove it, without uploading the image itself.</p>
+            <p>⚖️ <strong>This applies to AI-generated fakes of real people.</strong> The law and takedown policies often protect you even if the image is a "deepfake" or digitally altered.</p>
+          </div>
+          <div className="emergency-steps">
+            <h3 className="steps-title">How to Remove an Image from the Internet</h3>
+            <ol className="steps-list">
+              <li><strong>Preserve Evidence:</strong> Before taking any other action, take a screenshot of where the image is posted. This is for your own records and potential legal action.</li>
+              <li><strong>Generate the Hash:</strong> Use the free tool StopNCII.org. Click the button below to go to their secure website and follow their instructions to create a case.</li>
+              <li><strong>Track Progress:</strong> Once your case is submitted, StopNCII.org works with participating tech companies to find and remove the image across their platforms.</li>
+            </ol>
+          </div>
+          <a href="https://stopncii.org/" target="_blank" rel="noopener noreferrer" className="emergency-button">
+            Remove from Internet (via StopNCII.org)
+          </a>
+        </section>
+
+        <footer>
           © 2025 Unreal Eye
         </footer>
       </div>
