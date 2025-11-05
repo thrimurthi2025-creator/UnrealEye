@@ -716,11 +716,13 @@ gradio-app::part(statustracker) {
   80% { opacity: 0.4; }
 }
 
-.blinking .main-card,
 .blinking .status-dot,
 .blinking .logo-text-gradient,
 .blinking .grid-bg,
-.blinking .border-light {
+.blinking .border-light,
+.blinking .scanner-core,
+.blinking .scanner-ring,
+.blinking .main-card::before {
   animation: power-failure 1s linear;
 }
 
