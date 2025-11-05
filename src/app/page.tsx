@@ -73,34 +73,36 @@ export default function Home() {
           </div>
         </header>
 
-        <main className={isLoading ? "main-card offline" : "main-card"}>
-          <div className="card-header">
-            <h2 className="card-title">Detection Interface</h2>
-            <div className={isLoading ? "status-badge offline" : "status-badge"}>
-              <span className="status-dot"></span>
-              <span>{isLoading ? 'SYSTEM OFFLINE' : 'SYSTEM ONLINE'}</span>
+        <main>
+          <div className={isLoading ? "main-card offline" : "main-card"}>
+            <div className="card-header">
+              <h2 className="card-title">Detection Interface</h2>
+              <div className={isLoading ? "status-badge offline" : "status-badge"}>
+                <span className="status-dot"></span>
+                <span>{isLoading ? 'SYSTEM OFFLINE' : 'SYSTEM ONLINE'}</span>
+              </div>
             </div>
-          </div>
 
-          <div className="detector-wrapper">
-            <div className="scan-lines"></div>
-            
-            <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
-                <div className="scanner">
-                  <div className="scanner-ring"></div>
-                  <div className="scanner-ring"></div>
-                  <div className="scanner-core"></div>
-                </div>
-                <div className="loading-text">Initializing Neural Network</div>
-                <div className="loading-subtext">Loading detection models...</div>
+            <div className="detector-wrapper">
+              <div className="scan-lines"></div>
+              
+              <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
+                  <div className="scanner">
+                    <div className="scanner-ring"></div>
+                    <div className="scanner-ring"></div>
+                    <div className="scanner-core"></div>
+                  </div>
+                  <div className="loading-text">Initializing Neural Network</div>
+                  <div className="loading-subtext">Loading detection models...</div>
+              </div>
+              
+              {isClient && (
+                <GradioApp 
+                  src="https://thrimurthi2025-unrealeye.hf.space"
+                  onLoad={() => setIsLoading(false)}
+                />
+              )}
             </div>
-            
-            {isClient && (
-              <GradioApp 
-                src="https://thrimurthi2025-unrealeye.hf.space"
-                onLoad={() => setIsLoading(false)}
-              />
-            )}
           </div>
 
           <Link href="/emergency-help" className="emergency-card-link">
