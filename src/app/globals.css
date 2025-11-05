@@ -597,16 +597,25 @@ footer {
   margin-top: 40px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   border-left: 5px solid var(--accent-red);
+  box-shadow: 0 0 20px -5px var(--accent-red);
+  animation: pulse-red 3s infinite;
 }
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 20px -5px var(--accent-red); }
+  50% { box-shadow: 0 0 30px 0px var(--accent-red); }
+}
+
 
 .emergency-card-link:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(220, 53, 69, 0.1);
+  box-shadow: 0 10px 30px rgba(220, 53, 69, 0.2);
   border-color: var(--accent-red);
+  animation: none;
 }
 
 .dark .emergency-card-link:hover {
-  box-shadow: 0 10px 30px rgba(255, 77, 77, 0.2);
+  box-shadow: 0 10px 30px rgba(255, 77, 77, 0.3);
 }
 
 .emergency-card-content {
