@@ -716,6 +716,19 @@ gradio-app::part(statustracker) {
   80% { opacity: 0.4; }
 }
 
+@keyframes power-failure-shadow {
+  0%, 100% { box-shadow: 0 0 80px -20px var(--accent-cyan); }
+  25% { box-shadow: 0 0 80px -20px transparent; }
+  30% { box-shadow: 0 0 80px -20px var(--accent-cyan); }
+  50% { box-shadow: 0 0 80px -20px transparent; }
+  55% { box-shadow: 0 0 80px -20px var(--accent-cyan); }
+  80% { box-shadow: 0 0 80px -20px transparent; }
+}
+.dark .blinking .main-card.offline,
+.blinking .main-card.offline {
+  animation: none; /* Turn off default if needed or specify new animation */
+}
+
 .blinking .status-dot,
 .blinking .logo-text-gradient,
 .blinking .grid-bg,
@@ -726,4 +739,21 @@ gradio-app::part(statustracker) {
   animation: power-failure 1s linear;
 }
 
+.blinking .main-card {
+  animation: power-failure-shadow 1s linear;
+}
+
+.blinking .main-card.offline {
+   animation-name: power-failure-shadow-red;
+}
+
+@keyframes power-failure-shadow-red {
+  0%, 100% { box-shadow: 0 0 80px -20px var(--accent-red); }
+  25% { box-shadow: 0 0 80px -20px transparent; }
+  30% { box-shadow: 0 0 80px -20px var(--accent-red); }
+  50% { box-shadow: 0 0 80px -20px transparent; }
+  55% { box-shadow: 0 0 80px -20px var(--accent-red); }
+  80% { box-shadow: 0 0 80px -20px transparent; }
+}
     
+
