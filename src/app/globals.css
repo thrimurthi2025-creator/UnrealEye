@@ -595,8 +595,6 @@ footer {
   margin-top: 30px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   border-left: 5px solid var(--accent-red);
-  animation: pulse-red 2s infinite;
-  box-shadow: 0 0 0 0 rgba(220, 53, 69, 1);
 }
 
 @media (min-width: 768px) {
@@ -607,13 +605,12 @@ footer {
 
 .emergency-card-link:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(220, 53, 69, 0.4);
   border-color: var(--accent-red);
-  animation: none; /* Stop pulsing on hover */
+  box-shadow: 0 4px 20px rgba(220, 53, 69, 0.2);
 }
 
 .dark .emergency-card-link:hover {
-  box-shadow: 0 10px 30px rgba(255, 77, 77, 0.4);
+  box-shadow: 0 4px 25px rgba(255, 77, 77, 0.2);
 }
 
 .emergency-card-content {
