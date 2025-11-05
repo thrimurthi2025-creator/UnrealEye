@@ -68,20 +68,6 @@ body {
   padding: 0 20px;
 }
 
-.top-nav {
-  position: absolute;
-  top: 28px;
-  left: 20px;
-  z-index: 100;
-}
-
-@media (max-width: 768px) {
-  .top-nav {
-    top: 24px;
-    left: 15px;
-  }
-}
-
 header {
   padding: 20px 0;
 }
