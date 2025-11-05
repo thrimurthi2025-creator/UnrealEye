@@ -66,12 +66,11 @@ export default function Home() {
       <div className="container">
         <header className="flex justify-between items-center py-4">
           <div className="logo">
-            <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} className="w-10 h-10 md:w-12 md:h-12" />
-            <span className="logo-text logo-text-gradient">Unreal Eye</span>
+            <Link href="/" className='flex items-center gap-3'>
+              <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} className="w-10 h-10 md:w-12 md:h-12" />
+              <span className="logo-text logo-text-gradient">Unreal Eye</span>
+            </Link>
           </div>
-          <Link href="/emergency-help" className="emergency-link">
-            Emergency Help
-          </Link>
         </header>
 
         <main className={isLoading ? "main-card offline" : "main-card"}>
@@ -126,6 +125,15 @@ export default function Home() {
               <p className="feature-desc">AI image detection might not be 100% accurate.</p>
             </div>
           </div>
+          <Link href="/emergency-help" className="emergency-card-link">
+            <div className="emergency-card-content">
+              <span className="emergency-card-icon">🛡️</span>
+              <div className="emergency-card-text">
+                <h3 className="emergency-card-title">Emergency Help Center</h3>
+                <p className="emergency-card-desc">If you are a victim of image-based abuse, get help here.</p>
+              </div>
+            </div>
+          </Link>
         </main>
 
         <footer>
