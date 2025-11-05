@@ -103,17 +103,16 @@ export default function Home() {
                 />
               )}
             </div>
-          </div>
-
-          <Link href="/emergency-help" className="emergency-card-link">
-            <div className="emergency-card-content">
-              <span className="emergency-card-icon">🛡️</span>
-              <div className="emergency-card-text">
-                <h3 className="emergency-card-title">Emergency Help Center</h3>
-                <p className="emergency-card-desc">If you are a victim of image-based abuse, get help here.</p>
+            <Link href="/emergency-help" className="emergency-card-link">
+              <div className="emergency-card-content">
+                <span className="emergency-card-icon">🛡️</span>
+                <div className="emergency-card-text">
+                  <h3 className="emergency-card-title">Emergency Help Center</h3>
+                  <p className="emergency-card-desc">If you are a victim of image-based abuse, get help here.</p>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
 
           <div className="features">
             <div className="feature">
