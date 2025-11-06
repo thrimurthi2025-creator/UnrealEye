@@ -819,24 +819,39 @@ gradio-app::part(statustracker) {
   margin-top: 0.25rem;
 }
 
-p[data-rating="true"], p[data-rating="mostly-true"] {
+.fact-check-rating[data-rating="true"] .rating-text,
+.fact-check-rating[data-rating="mostly-true"] .rating-text,
+.fact-check-rating[data-rating="accurate"] .rating-text {
   color: var(--accent-green);
 }
-.fact-check-rating[data-rating="true"], .fact-check-rating[data-rating="mostly-true"] {
+.fact-check-rating[data-rating="true"],
+.fact-check-rating[data-rating="mostly-true"],
+.fact-check-rating[data-rating="accurate"] {
   border-color: var(--accent-green);
 }
 
-
-p[data-rating="false"], p[data-rating="mostly-false"] {
+.fact-check-rating[data-rating="false"] .rating-text,
+.fact-check-rating[data-rating="mostly-false"] .rating-text,
+.fact-check-rating[data-rating="inaccurate"] .rating-text,
+.fact-check-rating[data-rating="misleading"] .rating-text {
   color: var(--accent-red);
 }
-.fact-check-rating[data-rating="false"], .fact-check-rating[data-rating="mostly-false"] {
+.fact-check-rating[data-rating="false"],
+.fact-check-rating[data-rating="mostly-false"],
+.fact-check-rating[data-rating="inaccurate"],
+.fact-check-rating[data-rating="misleading"] {
   border-color: var(--accent-red);
 }
 
-p[data-rating="mixture"], p[data-rating="unproven"] {
+.fact-check-rating[data-rating="mixture"] .rating-text,
+.fact-check-rating[data-rating="unproven"] .rating-text,
+.fact-check-rating[data-rating="unsupported"] .rating-text,
+.fact-check-rating[data-rating="no-consensus"] .rating-text {
   color: var(--accent-purple);
 }
-.fact-check-rating[data-rating="mixture"], .fact-check-rating[data-rating="unproven"] {
+.fact-check-rating[data-rating="mixture"],
+.fact-check-rating[data-rating="unproven"],
+.fact-check-rating[data-rating="unsupported"],
+.fact-check-rating[data-rating="no-consensus"] {
   border-color: var(--accent-purple);
 }

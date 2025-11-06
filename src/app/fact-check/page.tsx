@@ -6,29 +6,30 @@ import { Newspaper, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { factCheck, type FactCheckResponse, type Claim } from '@/ai/flows/fact-check-flow';
+import { factCheck, type FactCheckResponse } from '@/ai/flows/fact-check-flow';
 
-function ClaimReviewCard({ claim }: { claim: Claim }) {
-  const claimReview = claim.claimReview[0];
-  const publisher = claimReview.publisher;
-  const rating = claimReview.textualRating;
+function ClaimReviewCard({ result }: { result: FactCheckResponse['results'][0] }) {
+  const { title, claim, verdict, publisher, published_date, claim_review_url } = result;
 
   return (
     <Card className="fact-check-card">
       <CardHeader>
-        <CardTitle className="text-lg">{claim.text}</CardTitle>
+        <CardTitle className="text-lg">{title}</CardTitle>
         <CardDescription>
-          Claim by: {claim.claimant || 'Unknown'} | Reviewed on: {new Date(claimReview.reviewDate).toLocaleDateString()}
+          "{claim}"
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="fact-check-rating">
-          <p>Rating from <a href={publisher.site} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publisher.name}</a>:</p>
-          <p className="rating-text" data-rating={rating.toLowerCase().replace(/ /g, '-')}>{rating}</p>
+        <div className="fact-check-rating" data-rating={verdict.toLowerCase().replace(/ /g, '-')}>
+          <p>Rating from <a href={publisher.site_url} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publisher.name}</a>:</p>
+          <p className="rating-text">{verdict}</p>
         </div>
-        <a href={claimReview.url} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-400 hover:underline">
-          Read the full fact-check
-        </a>
+         <div className="flex justify-between items-center">
+          <a href={claim_review_url} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-400 hover:underline">
+            Read the full fact-check
+          </a>
+          <span className="text-xs text-text-secondary">{new Date(published_date).toLocaleDateString()}</span>
+        </div>
       </CardContent>
     </Card>
   );
@@ -52,13 +53,21 @@ export default function FactCheckPage() {
     try {
       const response = await factCheck({ query });
       setResults(response);
+       if (response.status === 'error') {
+        setError(response.notes || 'An unexpected error occurred.');
+      }
     } catch (err) {
       console.error(err);
-      setError('An error occurred while fetching fact-checks. Please ensure your API key is configured correctly.');
+      setError('An error occurred while fetching fact-checks. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
+  
+  const handleSuggestionClick = (suggestion: string) => {
+    setQuery(suggestion);
+    handleSearch(new MouseEvent('click') as unknown as React.FormEvent);
+  }
 
   return (
     <>
@@ -110,16 +119,35 @@ export default function FactCheckPage() {
 
             {error && <p className="text-center text-red-500 mt-8">{error}</p>}
             
-            {results && (
+            {results && results.status === 'ok' && (
               <div className="fact-check-results mt-8">
-                {results.claims && results.claims.length > 0 ? (
-                  <div className="grid gap-4">
-                    {results.claims.map((claim, index) => (
-                      <ClaimReviewCard key={index} claim={claim} />
-                    ))}
+                <div className="grid gap-4">
+                  {results.results.map((result) => (
+                    <ClaimReviewCard key={result.id} result={result} />
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {results && results.status === 'no_results' && (
+              <div className="text-center mt-8 p-6 bg-bg-secondary border border-border rounded-lg">
+                <p className="text-text-secondary">No fact-checks found for your query.</p>
+                {results.suggestions && results.suggestions.length > 0 && (
+                  <div className="mt-4">
+                    <p className="font-semibold text-text-primary">Did you mean:</p>
+                    <div className="flex flex-wrap justify-center gap-2 mt-2">
+                      {results.suggestions.map((suggestion, index) => (
+                        <Button 
+                          key={index}
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleSuggestionClick(suggestion)}
+                        >
+                          {suggestion}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
-                ) : (
-                  <p className="text-center text-text-secondary mt-8">No fact-checks found for your query.</p>
                 )}
               </div>
             )}
