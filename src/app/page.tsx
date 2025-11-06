@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Newspaper, Search, ArrowRight } from 'lucide-react';
+import { Newspaper, Search, ArrowRight, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -151,6 +151,13 @@ export default function Home() {
     }
   };
 
+  const handleClearSearch = () => {
+    setQuery('');
+    setClaims([]);
+    setHasSearched(false);
+    setFactCheckError(null);
+  };
+
   return (
     <>
       <div className={`grid-bg ${isBlinking ? 'blinking' : ''}`}></div>
@@ -217,13 +224,15 @@ export default function Home() {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search for articles, topics, or keywords..."
                     className="fact-check-input"
+                    disabled={hasSearched}
                   />
                   <Button
-                    type="submit"
+                    type={hasSearched ? "button" : "submit"}
+                    onClick={hasSearched ? handleClearSearch : undefined}
                     className="fact-check-button"
                     disabled={isFactCheckLoading}
                   >
-                    <ArrowRight className="w-5 h-5" />
+                    {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
                   </Button>
                 </form>
               </div>
