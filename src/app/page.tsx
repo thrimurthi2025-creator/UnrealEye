@@ -40,14 +40,14 @@ function ClaimReviewCard({ claim }: { claim: Claim }) {
   return (
     <Card className="fact-check-card">
       <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardTitle className="text-lg">{title || 'Claim'}</CardTitle>
         <CardDescription>
           "{claim.text}"
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="fact-check-rating" data-rating={getRatingClass(textualRating)}>
-          <p>Rating from <a href={publisher.site} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publisher.name}</a>:</p>
+          <p>Rating from <a href={publisher?.site} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publisher?.name || 'Unknown Publisher'}</a>:</p>
           <p className="rating-text">{textualRating}</p>
         </div>
          <div className="flex justify-between items-center">
@@ -200,7 +200,7 @@ export default function Home() {
               )}
             </div>
 
-            <div className="fact-check-section mt-8">
+            <div className="fact-check-section">
               <div className="fact-check-search-card">
                 <div className="flex items-center gap-4 mb-2">
                   <Newspaper className="w-8 h-8 text-cyan-400" />
