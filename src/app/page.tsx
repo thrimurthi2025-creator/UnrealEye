@@ -63,6 +63,11 @@ export default function Home() {
               <span className="logo-text logo-text-gradient">Unreal Eye</span>
             </Link>
           </div>
+          <nav>
+            <Link href="/fact-check" className="emergency-link">
+              Fact Check
+            </Link>
+          </nav>
         </header>
 
         <main>
@@ -145,5 +150,3 @@ export default function Home() {
     </>
   );
 }
-
-    

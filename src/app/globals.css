@@ -108,23 +108,18 @@ header {
 
 .emergency-link {
   font-weight: 600;
-  color: var(--accent-red);
+  color: var(--accent-cyan);
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 12px;
-  border: 1px solid var(--accent-red);
+  border: 1px solid var(--accent-cyan);
   transition: all 0.3s ease;
 }
 
 .emergency-link:hover {
-  background-color: var(--accent-red);
-  color: #fff;
-}
-
-.dark .emergency-link:hover {
+  background-color: var(--accent-cyan);
   color: var(--bg-dark);
 }
-
 
 .main-card {
   background: var(--bg-secondary);
@@ -585,7 +580,6 @@ footer {
   margin-top: 30px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   border-left: 5px solid var(--accent-red);
-  border-right: 5px solid var(--accent-red);
   position: relative;
   overflow: hidden;
 }
@@ -731,9 +725,9 @@ gradio-app::part(statustracker) {
   55% { box-shadow: 0 0 80px -20px var(--accent-cyan); }
   80% { box-shadow: 0 0 80px -20px transparent; }
 }
-.dark .blinking .main-card.offline,
-.blinking .main-card.offline {
-  animation: none; /* Turn off default if needed or specify new animation */
+
+.blinking .main-card {
+  animation: power-failure-shadow 1s linear;
 }
 
 .blinking .status-dot,
@@ -744,10 +738,6 @@ gradio-app::part(statustracker) {
 .blinking .scanner-ring,
 .blinking .main-card::before {
   animation: power-failure 1s linear;
-}
-
-.blinking .main-card {
-  animation: power-failure-shadow 1s linear;
 }
 
 .blinking .main-card.offline {
@@ -762,8 +752,91 @@ gradio-app::part(statustracker) {
   55% { box-shadow: 0 0 80px -20px var(--accent-red); }
   80% { box-shadow: 0 0 80px -20px transparent; }
 }
-    
+
+/* Fact Check Page */
+.fact-check-section {
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+.fact-check-search-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 0 60px -20px var(--accent-purple);
+}
+
+.fact-check-input {
+  background: var(--bg-tertiary);
+  border-color: var(--border);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  height: 50px;
+}
+
+.fact-check-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  color: var(--bg-dark);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fact-check-button:hover {
+  background-color: #20c997; /* a lighter green */
+}
+
+.fact-check-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.fact-check-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.1);
+  border-color: var(--accent-cyan);
+}
+
+.fact-check-rating {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-left: 4px solid;
+  background-color: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+.rating-text {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 0.25rem;
+}
+
+p[data-rating="true"], p[data-rating="mostly-true"] {
+  color: var(--accent-green);
+}
+.fact-check-rating[data-rating="true"], .fact-check-rating[data-rating="mostly-true"] {
+  border-color: var(--accent-green);
+}
 
 
+p[data-rating="false"], p[data-rating="mostly-false"] {
+  color: var(--accent-red);
+}
+.fact-check-rating[data-rating="false"], .fact-check-rating[data-rating="mostly-false"] {
+  border-color: var(--accent-red);
+}
 
-    
+p[data-rating="mixture"], p[data-rating="unproven"] {
+  color: var(--accent-purple);
+}
+.fact-check-rating[data-rating="mixture"], .fact-check-rating[data-rating="unproven"] {
+  border-color: var(--accent-purple);
+}
