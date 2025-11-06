@@ -215,11 +215,11 @@ export default function Home() {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search keywords..."
-                    className="h-12 flex-1 bg-background/50 border-border font-headline text-base"
+                    className="h-14 flex-1 rounded-full bg-background/50 border-border font-headline text-base pl-6"
                   />
                   <Button
                     type="submit"
-                    className="h-12 w-12 rounded-full bg-accent-green p-0 text-white hover:bg-accent-green/90"
+                    className="h-14 w-14 rounded-full bg-accent-green p-0 text-white hover:bg-accent-green/90"
                     disabled={isFactCheckLoading}
                   >
                     <Search />
