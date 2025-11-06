@@ -827,6 +827,14 @@ gradio-app::part(statustracker) {
   background-color: var(--accent-purple);
 }
 
+.fact-check-button.fact-check-button-clear {
+  background-color: var(--accent-red);
+}
+
+.fact-check-button.fact-check-button-clear:hover {
+  background-color: #a72834;
+}
+
 .fact-check-button:disabled {
   background-color: var(--text-secondary);
   cursor: not-allowed;

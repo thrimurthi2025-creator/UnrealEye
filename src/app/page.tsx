@@ -6,6 +6,7 @@ import { Newspaper, Search, ArrowRight, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 // Simplified types based on the direct API response
 type ClaimReview = {
@@ -224,12 +225,12 @@ export default function Home() {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search for articles, topics, or keywords..."
                     className="fact-check-input"
-                    disabled={hasSearched}
+                    disabled={isFactCheckLoading || hasSearched}
                   />
                   <Button
                     type={hasSearched ? "button" : "submit"}
                     onClick={hasSearched ? handleClearSearch : undefined}
-                    className="fact-check-button"
+                    className={cn("fact-check-button", { "fact-check-button-clear": hasSearched })}
                     disabled={isFactCheckLoading}
                   >
                     {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
