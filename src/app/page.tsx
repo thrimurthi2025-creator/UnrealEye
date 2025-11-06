@@ -202,24 +202,24 @@ export default function Home() {
 
             <div className="fact-check-section">
               <div className="fact-check-search-card">
-                <div className="flex items-center gap-4 mb-2">
-                  <Newspaper className="w-8 h-8 text-cyan-400" />
-                  <div>
-                    <h2 className="text-2xl font-bold">Fact Check Search</h2>
-                    <p className="text-text-secondary">Search for fact-checks on news and claims</p>
+                <div className="flex items-start gap-4 mb-4">
+                  <Newspaper className="w-8 h-8 text-accent-purple flex-shrink-0" />
+                  <div className='w-full'>
+                    <h2 className="text-2xl font-bold font-headline">Fact Check Search</h2>
+                    <p className="text-text-secondary font-headline">Search for fact-checks on news and claims</p>
                   </div>
                 </div>
-                <form onSubmit={handleSearch} className="flex gap-2 mt-4">
+                <form onSubmit={handleSearch} className="flex items-center gap-2 mt-4">
                   <Input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search keywords..."
-                    className="h-12 flex-1 bg-background/50 border-border font-code text-base"
+                    className="h-12 flex-1 bg-background/50 border-border font-headline text-base"
                   />
                   <Button
                     type="submit"
-                    className="h-12 w-12 rounded-full bg-accent-green p-0 text-background hover:bg-accent-green/90"
+                    className="h-12 w-12 rounded-full bg-accent-green p-0 text-white hover:bg-accent-green/90"
                     disabled={isFactCheckLoading}
                   >
                     <Search />
