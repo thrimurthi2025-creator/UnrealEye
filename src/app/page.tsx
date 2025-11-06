@@ -202,27 +202,27 @@ export default function Home() {
 
             <div className="fact-check-section">
               <div className="fact-check-search-card">
-                <div className="flex items-start gap-4 mb-4">
-                  <Newspaper className="w-8 h-8 text-accent-purple flex-shrink-0" />
-                  <div className='w-full'>
-                    <h2 className="text-2xl font-bold font-headline">Fact Check Search</h2>
-                    <p className="text-text-secondary font-headline">Search for fact-checks on news and claims</p>
+                 <div className="flex items-start gap-4 mb-4">
+                  <Newspaper className="w-8 h-8 text-accent-cyan flex-shrink-0 mt-1" />
+                  <div>
+                    <h2 className="text-xl font-bold">Fact Check Search</h2>
+                    <p className="text-text-secondary">Search for fact-checks on news and claims.</p>
                   </div>
                 </div>
-                <form onSubmit={handleSearch} className="flex items-center gap-2 mt-4">
+                <form onSubmit={handleSearch} className="flex items-center gap-2 mt-4 relative">
                   <Input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search keywords..."
-                    className="h-16 flex-1 rounded-full bg-background/50 border-border font-headline text-base pl-6"
+                    placeholder="Search for articles, topics, or keywords..."
+                    className="fact-check-input"
                   />
                   <Button
                     type="submit"
-                    className="h-16 w-16 rounded-full bg-accent-green p-0 text-white hover:bg-accent-green/90"
+                    className="fact-check-button"
                     disabled={isFactCheckLoading}
                   >
-                    <Search />
+                    <Search className="w-5 h-5" />
                   </Button>
                 </form>
               </div>

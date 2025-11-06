@@ -755,17 +755,67 @@ gradio-app::part(statustracker) {
 
 /* Fact Check Page */
 .fact-check-section {
-  max-width: 800px;
-  margin: 40px auto 0 auto;
+  margin-top: 30px;
 }
 
 .fact-check-search-card {
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 30px;
-  box-shadow: 0 0 60px -20px var(--accent-purple);
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s ease;
 }
+
+@media (min-width: 768px) {
+  .fact-check-search-card {
+    padding: 30px;
+  }
+}
+
+.fact-check-input {
+  height: 56px;
+  padding-left: 20px;
+  border-radius: 12px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  width: 100%;
+  font-size: 1rem;
+}
+
+.fact-check-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px var(--ring);
+  outline: none;
+}
+
+.fact-check-button {
+  height: 48px;
+  width: 48px;
+  border-radius: 10px;
+  background-color: var(--accent-cyan);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.fact-check-button:hover {
+  background-color: var(--accent-purple);
+}
+
+.fact-check-button:disabled {
+  background-color: var(--text-secondary);
+  cursor: not-allowed;
+}
+
 
 .fact-check-card {
   background-color: var(--bg-tertiary);
