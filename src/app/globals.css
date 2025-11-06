@@ -767,32 +767,6 @@ gradio-app::part(statustracker) {
   box-shadow: 0 0 60px -20px var(--accent-purple);
 }
 
-.fact-check-input {
-  background: var(--bg-dark);
-  border-color: var(--border);
-  color: var(--text-primary);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1rem;
-  height: 50px;
-}
-
-.fact-check-button {
-  width: 50px;
-  height: 50px;
-  border-radius: 50% !important;
-  background-color: var(--accent-green) !important;
-  color: var(--bg-dark) !important;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.fact-check-button:hover {
-  background-color: var(--accent-green) !important;
-  opacity: 0.9;
-}
-
 .fact-check-card {
   background-color: var(--bg-tertiary);
   border: 1px solid var(--border);

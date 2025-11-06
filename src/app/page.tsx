@@ -210,14 +210,18 @@ export default function Home() {
                   </div>
                 </div>
                 <form onSubmit={handleSearch} className="flex gap-2 mt-4">
-                  <Input 
+                  <Input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search keywords..."
-                    className="fact-check-input"
+                    className="h-12 flex-1 bg-background/50 border-border font-code text-base"
                   />
-                  <Button type="submit" className="fact-check-button" disabled={isFactCheckLoading}>
+                  <Button
+                    type="submit"
+                    className="h-12 w-12 rounded-full bg-accent-green p-0 text-background hover:bg-accent-green/90"
+                    disabled={isFactCheckLoading}
+                  >
                     <Search />
                   </Button>
                 </form>
