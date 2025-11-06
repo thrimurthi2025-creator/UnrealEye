@@ -756,7 +756,7 @@ gradio-app::part(statustracker) {
 /* Fact Check Page */
 .fact-check-section {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 0 auto;
 }
 
 .fact-check-search-card {
