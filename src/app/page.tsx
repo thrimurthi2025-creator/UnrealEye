@@ -54,7 +54,7 @@ function ClaimReviewCard({ claim }: { claim: Claim }) {
           <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-400 hover:underline">
             Read the full fact-check
           </a>
-          <span className="text-xs text-text-secondary">{new Date(reviewDate).toLocaleDateString()}</span>
+          <span className="text-xs text-text-secondary">{new Date(reviewDate).toLocaleDateDateString()}</span>
         </div>
       </CardContent>
     </Card>
@@ -215,11 +215,11 @@ export default function Home() {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search keywords..."
-                    className="h-14 flex-1 rounded-full bg-background/50 border-border font-headline text-base pl-6"
+                    className="h-16 flex-1 rounded-full bg-background/50 border-border font-headline text-base pl-6"
                   />
                   <Button
                     type="submit"
-                    className="h-14 w-14 rounded-full bg-accent-green p-0 text-white hover:bg-accent-green/90"
+                    className="h-16 w-16 rounded-full bg-accent-green p-0 text-white hover:bg-accent-green/90"
                     disabled={isFactCheckLoading}
                   >
                     <Search />
@@ -302,3 +302,5 @@ export default function Home() {
     </>
   );
 }
+
+    
