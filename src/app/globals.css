@@ -9,6 +9,7 @@
   --text-primary: #212529;
   --text-secondary: #6c757d;
   --border: #dee2e6;
+  --ring: #007bff;
 }
 
 .dark {
@@ -22,6 +23,7 @@
   --text-primary: #e6edf3;
   --text-secondary: #8b949e;
   --border: #30363d;
+  --ring: #00d4ff;
 }
 
 * {
@@ -576,7 +578,7 @@ footer {
 .emergency-card-link {
   display: block;
   text-decoration: none;
-  background: var(--bg-tertiary);
+  background: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.05) 0%, transparent 70%);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 20px;
@@ -587,6 +589,11 @@ footer {
   position: relative;
   overflow: hidden;
 }
+
+.dark .emergency-card-link {
+    background: radial-gradient(ellipse at center, rgba(255, 77, 77, 0.05) 0%, transparent 70%);
+}
+
 
 @media (min-width: 768px) {
   .emergency-card-link {
