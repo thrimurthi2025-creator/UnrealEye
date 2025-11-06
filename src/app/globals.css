@@ -772,9 +772,25 @@ gradio-app::part(statustracker) {
   }
 }
 
+.fact-check-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fact-check-input-icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
 .fact-check-input {
   height: 56px;
-  padding-left: 20px;
+  padding-left: 3.5rem; /* space for icon */
+  padding-right: 4rem; /* space for button */
   border-radius: 12px;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border);

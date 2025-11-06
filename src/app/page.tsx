@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Newspaper, Search } from 'lucide-react';
+import { Newspaper, Search, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -202,14 +202,15 @@ export default function Home() {
             
             <div className="fact-check-section">
                <div className="fact-check-search-card">
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4 mb-4">
                   <Newspaper className="w-8 h-8 text-accent-cyan flex-shrink-0 mt-1" />
                   <div>
                     <h2 className="text-xl font-bold">Fact Check Search</h2>
                     <p className="text-text-secondary">Search for fact-checks on news and claims.</p>
                   </div>
                 </div>
-                <form onSubmit={handleSearch} className="relative mt-4">
+                <form onSubmit={handleSearch} className="fact-check-form">
+                  <Search className="w-5 h-5 fact-check-input-icon" />
                   <Input
                     type="text"
                     value={query}
@@ -222,7 +223,7 @@ export default function Home() {
                     className="fact-check-button"
                     disabled={isFactCheckLoading}
                   >
-                    <Search className="w-5 h-5" />
+                    <ArrowRight className="w-5 h-5" />
                   </Button>
                 </form>
               </div>
