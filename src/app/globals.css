@@ -783,7 +783,7 @@ gradio-app::part(statustracker) {
   left: 1.25rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   pointer-events: none;
 }
 
@@ -810,7 +810,7 @@ gradio-app::part(statustracker) {
   width: 48px;
   border-radius: 10px;
   background-color: var(--accent-cyan);
-  color: white;
+  color: var(--bg-dark);
   display: flex;
   align-items: center;
   justify-content: center;
