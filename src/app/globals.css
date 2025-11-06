@@ -439,7 +439,7 @@ gradio-app {
 .emergency-section {
   margin-top: 40px;
   padding: 30px;
-  background: rgba(220, 53, 69, 0.05);
+  background: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.02) 70%);
   border: 1px solid rgba(220, 53, 69, 0.2);
   border-radius: 24px;
   color: var(--text-primary);
@@ -454,7 +454,7 @@ gradio-app {
 }
 
 .dark .emergency-section {
-  background: rgba(255, 77, 77, 0.05);
+  background: radial-gradient(ellipse at center, rgba(255, 77, 77, 0.1) 0%, rgba(255, 77, 77, 0.02) 70%);
   border: 1px solid rgba(255, 77, 77, 0.2);
 }
 
@@ -757,3 +757,6 @@ gradio-app::part(statustracker) {
 }
     
 
+
+
+    
