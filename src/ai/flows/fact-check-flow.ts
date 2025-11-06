@@ -82,7 +82,12 @@ const factCheckFlow = ai.defineFlow(
   async ({ query }) => {
     const apiKey = process.env.GOOGLE_API_KEY;
     if (!apiKey) {
-      throw new Error("Google API key not found. Please set GOOGLE_API_KEY in your .env file.");
+      return {
+          query_used: query,
+          status: "error",
+          results: [],
+          notes: "Google API key not found. The site administrator needs to configure this feature.",
+        };
     }
     
     // Pre-process query
@@ -96,36 +101,47 @@ const factCheckFlow = ai.defineFlow(
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = await response.json().catch(() => ({ error: { message: 'Failed to parse API error response.' } }));
+        const errorMessage = errorData?.error?.message || `API request failed with status ${response.status}.`;
         return {
           query_used: processedQuery,
           status: "error",
           results: [],
-          notes: `API request failed with status ${response.status}: ${errorData.error.message}`,
+          notes: errorMessage,
         };
       }
       
       const data = await response.json();
-      const validatedData = GoogleFactCheckResponseSchema.parse(data);
+      const validatedData = GoogleFactCheckResponseSchema.safeParse(data);
 
-      if (!validatedData.claims || validatedData.claims.length === 0) {
+      if (!validatedData.success || !validatedData.data.claims || validatedData.data.claims.length === 0) {
         
         const suggestionPrompt = await ai.generate({
             prompt: `A user searched for a fact check with the query "${query}" and got no results. Provide 3 diverse and helpful alternative search queries they could try. The suggestions should be short and to the point. Return them as a JSON array of strings. Example: ["alternate query 1", "alternate query 2", "alternate query 3"]`,
             format: 'json'
         });
-        const suggestions = suggestionPrompt.json() || [];
+
+        let suggestions: string[] = [];
+        try {
+            const parsedSuggestions = suggestionPrompt.json();
+            if (Array.isArray(parsedSuggestions) && parsedSuggestions.every(s => typeof s === 'string')) {
+                suggestions = parsedSuggestions;
+            }
+        } catch (e) {
+            // Ignore parsing errors, just return no suggestions.
+        }
+
 
         return {
           query_used: processedQuery,
           status: "no_results",
           results: [],
-          suggestions: suggestions as string[],
+          suggestions: suggestions,
           notes: "No claims found for the given query.",
         };
       }
       
-      const results = validatedData.claims
+      const results = validatedData.data.claims
         .flatMap(claim => 
           claim.claimReview.map(review => ({
             id: review.url,
@@ -151,7 +167,7 @@ const factCheckFlow = ai.defineFlow(
         query_used: processedQuery,
         status: "ok",
         results: results,
-        notes: `Found ${validatedData.claims.length} claims. Displaying ${results.length} unique reviews.`,
+        notes: `Found ${validatedData.data.claims.length} claims. Displaying ${results.length} unique reviews.`,
       };
 
     } catch (error) {
@@ -160,7 +176,7 @@ const factCheckFlow = ai.defineFlow(
         query_used: processedQuery,
         status: "error",
         results: [],
-        notes: error instanceof Error ? error.message : "An unknown error occurred.",
+        notes: error instanceof Error ? error.message : "An unknown server error occurred.",
       };
     }
   }
