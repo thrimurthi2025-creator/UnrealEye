@@ -225,7 +225,7 @@ export default function Home() {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search for articles, topics, or keywords..."
                     className="fact-check-input"
-                    disabled={isFactCheckLoading || hasSearched}
+                    disabled={isFactCheckLoading}
                   />
                   <Button
                     type={hasSearched ? "button" : "submit"}
