@@ -6,7 +6,60 @@ import { Newspaper, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { factCheck, type FactCheckResponse } from '@/ai/flows/fact-check-flow';
+
+// Simplified types based on the direct API response
+type ClaimReview = {
+  publisher: { name: string; site: string; };
+  url: string;
+  title: string;
+  reviewDate: string;
+  textualRating: string;
+};
+
+type Claim = {
+  text: string;
+  claimant: string;
+  claimDate: string;
+  claimReview: ClaimReview[];
+};
+
+function ClaimReviewCard({ claim }: { claim: Claim }) {
+  const review = claim.claimReview?.[0];
+  if (!review) return null;
+
+  const { title, textualRating, publisher, url, reviewDate } = review;
+
+  const getRatingClass = (rating: string) => {
+    const lowerRating = rating.toLowerCase();
+    if (['true', 'accurate', 'mostly true'].some(r => lowerRating.includes(r))) return 'true';
+    if (['false', 'inaccurate', 'mostly false', 'misleading'].some(r => lowerRating.includes(r))) return 'false';
+    if (['mixture', 'unproven', 'unsupported', 'no consensus'].some(r => lowerRating.includes(r))) return 'mixture';
+    return '';
+  }
+
+  return (
+    <Card className="fact-check-card">
+      <CardHeader>
+        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardDescription>
+          "{claim.text}"
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="fact-check-rating" data-rating={getRatingClass(textualRating)}>
+          <p>Rating from <a href={publisher.site} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publisher.name}</a>:</p>
+          <p className="rating-text">{textualRating}</p>
+        </div>
+         <div className="flex justify-between items-center">
+          <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-400 hover:underline">
+            Read the full fact-check
+          </a>
+          <span className="text-xs text-text-secondary">{new Date(reviewDate).toLocaleDateString()}</span>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 const GradioApp = (props: any) => {
   const ref = useRef<HTMLElement | null>(null);
@@ -23,10 +76,7 @@ const GradioApp = (props: any) => {
       }
     };
     
-    // Gradio apps can be slow to load, so we'll check for the event
     currentRef.addEventListener('load', handleLoad);
-
-    // But also set a fallback timer
     const timer = setTimeout(handleLoad, 3000);
 
     return () => {
@@ -38,33 +88,6 @@ const GradioApp = (props: any) => {
   return <gradio-app {...props} ref={ref}></gradio-app>;
 };
 
-function ClaimReviewCard({ result }: { result: FactCheckResponse['results'][0] }) {
-  const { title, claim, verdict, publisher, published_date, claim_review_url } = result;
-
-  return (
-    <Card className="fact-check-card">
-      <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
-        <CardDescription>
-          "{claim}"
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="fact-check-rating" data-rating={verdict.toLowerCase().replace(/ /g, '-')}>
-          <p>Rating from <a href={publisher.site_url} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publisher.name}</a>:</p>
-          <p className="rating-text">{verdict}</p>
-        </div>
-         <div className="flex justify-between items-center">
-          <a href={claim_review_url} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-400 hover:underline">
-            Read the full fact-check
-          </a>
-          <span className="text-xs text-text-secondary">{new Date(published_date).toLocaleDateString()}</span>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -72,9 +95,11 @@ export default function Home() {
   const [isBlinking, setIsBlinking] = useState(false);
   
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<FactCheckResponse | null>(null);
+  const [claims, setClaims] = useState<Claim[]>([]);
   const [isFactCheckLoading, setIsFactCheckLoading] = useState(false);
   const [factCheckError, setFactCheckError] = useState<string | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
+
 
   useEffect(() => {
     setIsClient(true);
@@ -85,7 +110,7 @@ export default function Home() {
       setIsBlinking(true);
       setTimeout(() => {
         setIsBlinking(false);
-      }, 1000); // Duration of the blink animation
+      }, 1000); 
     }
   };
 
@@ -94,27 +119,37 @@ export default function Home() {
     if (!query.trim()) return;
     
     setIsFactCheckLoading(true);
-    setResults(null);
     setFactCheckError(null);
+    setClaims([]);
+    setHasSearched(true);
+
+    const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+    if (!API_KEY) {
+        setFactCheckError("API key not configured. The site administrator needs to configure this feature.");
+        setIsFactCheckLoading(false);
+        return;
+    }
 
     try {
-      const response = await factCheck({ query });
-      setResults(response);
-       if (response.status === 'error') {
-        setFactCheckError(response.notes || 'An unexpected error occurred.');
+      const response = await fetch(
+        `https://factchecktools.googleapis.com/v1alpha1/claims:search?key=${API_KEY}&query=${encodeURIComponent(query)}`
+      );
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        const errorMessage = errorData?.error?.message || `HTTP error! Status: ${response.status}`;
+        throw new Error(errorMessage);
       }
-    } catch (err) {
+      
+      const data = await response.json();
+      setClaims(data.claims || []);
+    } catch (err: any) {
       console.error(err);
-      setFactCheckError('An error occurred while fetching fact-checks. Please try again.');
+      setFactCheckError(err.message || 'An error occurred while fetching fact-checks.');
     } finally {
       setIsFactCheckLoading(false);
     }
   };
-
-  const handleSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion);
-    handleSearch(new MouseEvent('click') as unknown as React.FormEvent);
-  }
 
   return (
     <>
@@ -200,40 +235,21 @@ export default function Home() {
 
               {factCheckError && <p className="text-center text-red-500 mt-8">{factCheckError}</p>}
               
-              {results && (
-                <div className="fact-check-results mt-8">
-                  {results.status === 'ok' && (
+              <div className="fact-check-results mt-8">
+                  {claims.length > 0 && (
                     <div className="grid gap-4">
-                      {results.results.map((result) => (
-                        <ClaimReviewCard key={result.id} result={result} />
+                      {claims.map((claim, index) => (
+                        <ClaimReviewCard key={`${claim.claimReview[0]?.url || index}`} claim={claim} />
                       ))}
                     </div>
                   )}
                   
-                  {results.status === 'no_results' && (
+                  {hasSearched && !isFactCheckLoading && claims.length === 0 && !factCheckError && (
                     <div className="text-center mt-8 p-6 bg-bg-secondary border border-border rounded-lg">
                       <p className="text-text-secondary">No fact-checks found for your query.</p>
-                      {results.suggestions && results.suggestions.length > 0 && (
-                        <div className="mt-4">
-                          <p className="font-semibold text-text-primary">Did you mean:</p>
-                          <div className="flex flex-wrap justify-center gap-2 mt-2">
-                            {results.suggestions.map((suggestion, index) => (
-                              <Button 
-                                key={index}
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleSuggestionClick(suggestion)}
-                              >
-                                {suggestion}
-                              </Button>
-                            ))}
-                          </div>
-                        </div>
-                      )}
                     </div>
                   )}
-                </div>
-              )}
+              </div>
             </div>
 
             <Link href="/emergency-help" className="emergency-card-link">
