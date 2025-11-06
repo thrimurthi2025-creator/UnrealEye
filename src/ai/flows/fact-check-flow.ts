@@ -34,12 +34,12 @@ const ClaimSchema = z.object({
 export type Claim = z.infer<typeof ClaimSchema>;
 
 
-export const FactCheckInputSchema = z.object({
+const FactCheckInputSchema = z.object({
   query: z.string().describe('The query to search for fact checks.'),
 });
 export type FactCheckInput = z.infer<typeof FactCheckInputSchema>;
 
-export const FactCheckResponseSchema = z.object({
+const FactCheckResponseSchema = z.object({
   claims: z.array(ClaimSchema).optional(),
   nextPageToken: z.string().optional(),
 });
