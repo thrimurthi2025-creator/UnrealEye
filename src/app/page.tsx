@@ -54,7 +54,7 @@ function ClaimReviewCard({ claim }: { claim: Claim }) {
           <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-400 hover:underline">
             Read the full fact-check
           </a>
-          <span className="text-xs text-text-secondary">{new Date(reviewDate).toLocaleDateDateString()}</span>
+          <span className="text-xs text-text-secondary">{new Date(reviewDate).toLocaleDateString()}</span>
         </div>
       </CardContent>
     </Card>
@@ -302,5 +302,3 @@ export default function Home() {
     </>
   );
 }
-
-    
