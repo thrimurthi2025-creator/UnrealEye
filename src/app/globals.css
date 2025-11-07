@@ -863,7 +863,7 @@ gradio-app::part(statustracker) {
 }
 
 
-.fact-check-input:focus {
+.fact-check-input:focus-visible {
   border-color: var(--accent-cyan);
   box-shadow: 0 0 0 2px var(--ring);
   outline: none;
