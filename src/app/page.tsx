@@ -228,64 +228,65 @@ export default function Home() {
                 />
               )}
             </div>
-          </div>
 
-          <EmergencyCardLink />
+            <EmergencyCardLink />
 
-          <div className="fact-check-section">
-             <div className="fact-check-search-card">
-              <div className="flex items-start gap-4 mb-4">
-                <Newspaper className="w-8 h-8 text-accent-cyan flex-shrink-0 mt-1" />
-                <div>
-                  <h2 className="text-xl font-bold">Fact Check Search</h2>
-                  <p className="text-text-secondary">Search for fact-checks on news and claims.</p>
+            <div className="fact-check-section">
+               <div className="fact-check-search-card">
+                <div className="flex items-start gap-4 mb-4">
+                  <Newspaper className="w-8 h-8 text-accent-cyan flex-shrink-0 mt-1" />
+                  <div>
+                    <h2 className="text-xl font-bold">Fact Check Search</h2>
+                    <p className="text-text-secondary">Search for fact-checks on news and claims.</p>
+                  </div>
                 </div>
+                <form onSubmit={handleSearch} className="fact-check-form">
+                  <Search className="w-5 h-5 fact-check-input-icon" />
+                  <Input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search for articles, topics, or keywords..."
+                    className="fact-check-input"
+                    disabled={isFactCheckLoading}
+                  />
+                  <button
+                    type={hasSearched ? "button" : "submit"}
+                    onClick={hasSearched ? handleClearSearch : undefined}
+                    className={cn("fact-check-button", { "fact-check-button-clear": hasSearched })}
+                    disabled={isFactCheckLoading}
+                  >
+                    {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+                  </button>
+                </form>
               </div>
-              <form onSubmit={handleSearch} className="fact-check-form">
-                <Search className="w-5 h-5 fact-check-input-icon" />
-                <Input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search for articles, topics, or keywords..."
-                  className="fact-check-input"
-                  disabled={isFactCheckLoading}
-                />
-                <button
-                  type={hasSearched ? "button" : "submit"}
-                  onClick={hasSearched ? handleClearSearch : undefined}
-                  className={cn("fact-check-button", { "fact-check-button-clear": hasSearched })}
-                  disabled={isFactCheckLoading}
-                >
-                  {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
-                </button>
-              </form>
-            </div>
 
-            {isFactCheckLoading && (
-               <div className="flex justify-center items-center mt-8">
-                 <Loader />
-               </div>
-            )}
+              {isFactCheckLoading && (
+                 <div className="flex justify-center items-center mt-8">
+                   <Loader />
+                 </div>
+              )}
 
-            {factCheckError && <p className="text-center text-red-500 mt-8">{factCheckError}</p>}
-            
-            <div className="fact-check-results mt-8">
-                {claims.length > 0 && (
-                  <div className="grid gap-4 md:grid-cols-2">
-                    {claims.map((claim, index) => (
-                      <ClaimReviewCard key={`${claim.claimReview[0]?.url || index}`} claim={claim} />
-                    ))}
-                  </div>
-                )}
-                
-                {hasSearched && !isFactCheckLoading && claims.length === 0 && !factCheckError && (
-                  <div className="text-center mt-8 p-6 bg-bg-secondary border border-border rounded-lg">
-                    <p className="text-text-secondary">No fact-checks found for your query.</p>
-                  </div>
-                )}
+              {factCheckError && <p className="text-center text-red-500 mt-8">{factCheckError}</p>}
+              
+              <div className="fact-check-results mt-8">
+                  {claims.length > 0 && (
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {claims.map((claim, index) => (
+                        <ClaimReviewCard key={`${claim.claimReview[0]?.url || index}`} claim={claim} />
+                      ))}
+                    </div>
+                  )}
+                  
+                  {hasSearched && !isFactCheckLoading && claims.length === 0 && !factCheckError && (
+                    <div className="text-center mt-8 p-6 bg-bg-secondary border border-border rounded-lg">
+                      <p className="text-text-secondary">No fact-checks found for your query.</p>
+                    </div>
+                  )}
+              </div>
             </div>
           </div>
+
 
           <div className="features">
             <div className="feature">
