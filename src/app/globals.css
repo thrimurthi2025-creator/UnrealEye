@@ -279,7 +279,6 @@ header {
   z-index: 20;
   opacity: 1;
   transition: opacity 0.6s ease, visibility 0.6s ease, background 0.3s ease;
-  padding: 0;
 }
 
 .loading-overlay.hidden {
@@ -343,7 +342,6 @@ header {
 .dark .skeleton {
   filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.02));
 }
-
 
 @keyframes pulse-skeleton {
   0% {
