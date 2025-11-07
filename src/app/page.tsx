@@ -182,10 +182,6 @@ export default function Home() {
 
         <main className="space-y-8">
            <div className={`main-card ${isDetectorLoading ? 'offline' : ''} ${isBlinking ? 'blinking' : ''}`}>
-             <span className="border-light top"></span>
-             <span className="border-light right"></span>
-             <span className="border-light bottom"></span>
-             <span className="border-light left"></span>
             <div className="card-header">
               <div className="flex items-center gap-2">
                  <button 

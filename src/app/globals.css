@@ -739,77 +739,6 @@ gradio-app::part(statustracker) {
     display: none !important;
 }
 
-.border-light {
-  position: absolute;
-  border-radius: inherit;
-}
-
-.main-card .border-light {
-    background: linear-gradient(to right, transparent, var(--accent-cyan), transparent);
-}
-
-.main-card.offline .border-light {
-    background: linear-gradient(to right, transparent, var(--accent-red), transparent);
-}
-
-.emergency-card-link .border-light {
-  background: linear-gradient(to right, transparent, var(--accent-red), transparent);
-}
-
-.text-detector-card-link .border-light,
-.image-detector-card-link .border-light {
-  background: linear-gradient(to right, transparent, var(--accent-purple), transparent);
-}
-
-
-.border-light.top, .border-light.bottom {
-  left: 0;
-  width: 100%;
-  height: 2px;
-}
-.border-light.top {
-  top: 0;
-  animation: animate-top 4s linear infinite;
-}
-.border-light.bottom {
-  bottom: 0;
-  animation: animate-bottom 4s linear infinite;
-}
-
-.border-light.left, .border-light.right {
-  top: 0;
-  width: 2px;
-  height: 100%;
-}
-.border-light.right {
-  right: 0;
-  animation: animate-right 4s linear infinite;
-}
-.border-light.left {
-  left: 0;
-  animation: animate-left 4s linear infinite;
-}
-
-@keyframes animate-top {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes animate-bottom {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-
-@keyframes animate-right {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-@keyframes animate-left {
-  0% { transform: translateY(100%); }
-  100% { transform: translateY(-100%); }
-}
-
 /* Power Failure Animation */
 @keyframes power-failure {
   0%, 100% { opacity: 1; }
@@ -1065,4 +994,3 @@ gradio-app::part(statustracker) {
 .dark .detector-tab-button.active {
   color: var(--bg-dark);
 }
-
