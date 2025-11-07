@@ -313,7 +313,6 @@ header {
   width: 100%;
   height: 100%;
   border: 3px solid transparent;
-  border-radius: 50%;
   border-top-color: var(--accent-cyan);
   border-right-color: var(--accent-purple);
   animation: spin 2s linear infinite;
@@ -989,4 +988,15 @@ gradio-app::part(statustracker) {
 .fact-check-rating[data-rating="unsupported"],
 .fact-check-rating[data-rating="no-consensus"] {
   border-color: var(--accent-purple);
+}
+
+/* Remove focus outline and highlight globally */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
 }
