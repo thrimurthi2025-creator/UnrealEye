@@ -202,10 +202,16 @@ export default function Home() {
               </div>
               
               {isClient && (
-                <GradioApp 
-                  src="https://thrimurthi2025-unrealeye.hf.space"
-                  onLoad={() => setIsLoading(false)}
-                />
+                <>
+                  <GradioApp 
+                    src="https://thrimurthi2025-unrealeye.hf.space"
+                    onLoad={() => setIsLoading(false)}
+                  />
+                  {/* Preload the text detector app in the background */}
+                  <div style={{ display: 'none' }}>
+                    <GradioApp src="https://thrimurthi2025-unrealeye-text.hf.space" />
+                  </div>
+                </>
               )}
             </div>
             
