@@ -1016,11 +1016,39 @@ gradio-app::part(statustracker) {
     transform: translateX(100%);
 }
 
+.border-light.left {
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    animation: move-vertical 4s linear infinite;
+    transform: translateY(-100%);
+}
+
+.border-light.right {
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    animation: move-vertical 4s linear infinite reverse;
+    transform: translateY(100%);
+}
+
+
 @keyframes move-horizontal {
     0% {
         transform: translateX(-100%);
     }
     100% {
         transform: translateX(100%);
+    }
+}
+
+@keyframes move-vertical {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100%);
     }
 }
