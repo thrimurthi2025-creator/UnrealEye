@@ -744,6 +744,14 @@ gradio-app::part(statustracker) {
   border-radius: inherit;
 }
 
+.main-card .border-light {
+    background: linear-gradient(to right, transparent, var(--accent-cyan), transparent);
+}
+
+.main-card.offline .border-light {
+    background: linear-gradient(to right, transparent, var(--accent-red), transparent);
+}
+
 .emergency-card-link .border-light {
   background: linear-gradient(to right, transparent, var(--accent-red), transparent);
 }
@@ -1029,3 +1037,32 @@ gradio-app::part(statustracker) {
 * {
   -webkit-tap-highlight-color: transparent;
 }
+
+.detector-tab-button {
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.detector-tab-button:hover {
+  background-color: var(--bg-tertiary);
+  border-color: var(--accent-cyan);
+  color: var(--text-primary);
+}
+
+.detector-tab-button.active {
+  background-color: var(--accent-cyan);
+  color: var(--bg-dark);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 15px -5px var(--accent-cyan);
+}
+
+.dark .detector-tab-button.active {
+  color: var(--bg-dark);
+}
+

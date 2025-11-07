@@ -1,15 +1,13 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Newspaper, Search, ArrowRight, X, Bot, ScanSearch } from 'lucide-react';
+import { Newspaper, Search, ArrowRight, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { EmergencyCardLink } from '@/app/emergency-card-link';
 import { Loader } from '@/components/ui/loader';
-import { TextDetectorCardLink } from '@/app/text-detector-card-link';
-import { ImageDetectorCardLink } from '@/app/image-detector-card-link';
 
 type ClaimReview = {
   publisher: { name: string; site: string; };
@@ -26,6 +24,36 @@ type Claim = {
   claimDate: string;
   claimReview: ClaimReview[];
 };
+
+const GradioApp = (props: any) => {
+  const ref = useRef<HTMLElement | null>(null);
+  const loaded = useRef(false);
+
+  useEffect(() => {
+    const currentRef = ref.current;
+    if (!currentRef) return;
+
+    const handleLoad = () => {
+      if (!loaded.current) {
+        props.onLoad?.();
+        loaded.current = true;
+      }
+    };
+    
+    currentRef.addEventListener('load', handleLoad);
+    // Fallback timer in case the 'load' event doesn't fire
+    const timer = setTimeout(handleLoad, 5000); 
+
+    return () => {
+      currentRef?.removeEventListener('load', handleLoad);
+      clearTimeout(timer);
+    };
+  }, [ref, props]);
+
+  // The `key` prop is crucial here to force re-mounting when the src changes
+  return <gradio-app {...props} ref={ref}></gradio-app>;
+};
+
 
 function ClaimReviewCard({ claim }: { claim: Claim }) {
   const review = claim.claimReview?.[0];
@@ -71,6 +99,24 @@ export default function Home() {
   const [isFactCheckLoading, setIsFactCheckLoading] = useState(false);
   const [factCheckError, setFactCheckError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
+  
+  const [isClient, setIsClient] = useState(false);
+  const [isDetectorLoading, setIsDetectorLoading] = useState(true);
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [activeDetector, setActiveDetector] = useState('image');
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const handleStatusClick = () => {
+    if (!isDetectorLoading) {
+      setIsBlinking(true);
+      setTimeout(() => {
+        setIsBlinking(false);
+      }, 1000); 
+    }
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,12 +161,16 @@ export default function Home() {
     setHasSearched(false);
     setFactCheckError(null);
   };
+  
+  const detectorSrc = activeDetector === 'image'
+    ? "https://thrimurthi2025-unrealeye.hf.space"
+    : "https://thrimurthi2025-unrealeye-text.hf.space";
 
   return (
     <>
-      <div className="grid-bg"></div>
+      <div className={`grid-bg ${isBlinking ? 'blinking' : ''}`}></div>
       
-      <div className="container">
+      <div className={`container ${isBlinking ? 'blinking' : ''}`}>
         <header className="flex justify-between items-center py-4">
           <div className="logo">
             <Link href="/" className='flex items-center gap-3'>
@@ -131,8 +181,59 @@ export default function Home() {
         </header>
 
         <main className="space-y-8">
-          <ImageDetectorCardLink />
-          <TextDetectorCardLink />
+           <div className={`main-card ${isDetectorLoading ? 'offline' : ''} ${isBlinking ? 'blinking' : ''}`}>
+             <span className="border-light top"></span>
+             <span className="border-light right"></span>
+             <span className="border-light bottom"></span>
+             <span className="border-light left"></span>
+            <div className="card-header">
+              <div className="flex items-center gap-2">
+                 <button 
+                   className={`detector-tab-button ${activeDetector === 'image' ? 'active' : ''}`}
+                   onClick={() => {
+                     setActiveDetector('image');
+                     setIsDetectorLoading(true);
+                   }}
+                 >
+                   Image Detector
+                 </button>
+                 <button 
+                   className={`detector-tab-button ${activeDetector === 'text' ? 'active' : ''}`}
+                   onClick={() => {
+                     setActiveDetector('text');
+                     setIsDetectorLoading(true);
+                   }}
+                 >
+                   Text Detector
+                 </button>
+              </div>
+              <div 
+                className={isDetectorLoading ? "status-badge offline" : "status-badge"}
+                onClick={handleStatusClick}
+                style={{ cursor: isDetectorLoading ? 'default' : 'pointer' }}
+              >
+                <span className="status-dot"></span>
+                <span>{isDetectorLoading ? 'SYSTEM OFFLINE' : 'SYSTEM ONLINE'}</span>
+              </div>
+            </div>
+
+            <div className="detector-wrapper">
+              <div className="scan-lines"></div>
+              
+              <div id="loadingOverlay" className={`loading-overlay ${!isDetectorLoading ? 'hidden' : ''}`}>
+                  <Loader />
+              </div>
+              
+              {isClient && (
+                <GradioApp 
+                  key={activeDetector}
+                  src={detectorSrc}
+                  onLoad={() => setIsDetectorLoading(false)}
+                />
+              )}
+            </div>
+          </div>
+
           <EmergencyCardLink />
 
           <div className="fact-check-section">
