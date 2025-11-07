@@ -21,7 +21,7 @@ type ClaimReview = {
 type Claim = {
   text: string;
   claimant: string;
-  claimDate: string;
+rqclaimDate: string;
   claimReview: ClaimReview[];
 };
 
@@ -65,16 +65,16 @@ function ClaimReviewCard({ claim }: { claim: Claim }) {
 
 const GradioApp = (props: any) => {
   const ref = useRef<HTMLElement | null>(null);
-  const [loaded, setLoaded] = useState(false);
+  const loaded = useRef(false);
 
   useEffect(() => {
     const currentRef = ref.current;
     if (!currentRef) return;
 
     const handleLoad = () => {
-      if (!loaded) {
+      if (!loaded.current) {
         props.onLoad?.();
-        setLoaded(true);
+        loaded.current = true;
       }
     };
     
@@ -85,7 +85,7 @@ const GradioApp = (props: any) => {
       currentRef?.removeEventListener('load', handleLoad);
       clearTimeout(timer);
     };
-  }, [ref, props, loaded]);
+  }, [ref, props]);
 
   return <gradio-app {...props} ref={ref}></gradio-app>;
 };

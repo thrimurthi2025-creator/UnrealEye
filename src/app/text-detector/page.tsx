@@ -5,12 +5,34 @@ import Link from 'next/link';
 
 const GradioApp = (props: any) => {
   const ref = useRef<HTMLElement | null>(null);
+  const loaded = useRef(false);
+
+  useEffect(() => {
+    const currentRef = ref.current;
+    if (!currentRef) return;
+
+    const handleLoad = () => {
+      if (!loaded.current) {
+        props.onLoad?.();
+        loaded.current = true;
+      }
+    };
+    
+    currentRef.addEventListener('load', handleLoad);
+    const timer = setTimeout(handleLoad, 3000);
+
+    return () => {
+      currentRef?.removeEventListener('load', handleLoad);
+      clearTimeout(timer);
+    };
+  }, [ref, props]);
 
   return <gradio-app {...props} ref={ref}></gradio-app>;
 };
 
 export default function TextDetectorPage() {
   const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
@@ -36,8 +58,21 @@ export default function TextDetectorPage() {
                 <h2 className="card-title">AI-Generated Content Detector</h2>
             </div>
             <div className="detector-wrapper">
+                <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
+                  <div className="scanner">
+                    <div className="scanner-ring"></div>
+                    <div className="scanner-ring"></div>
+                    <div className="scanner-core"></div>
+                  </div>
+                  <div className="loading-text">Initializing Text Analysis Model</div>
+                  <div className="loading-subtext">This may take a moment...</div>
+                </div>
+
                 {isClient && (
-                    <GradioApp src="https://thrimurthi2025-unrealeye-text.hf.space" />
+                    <GradioApp 
+                      src="https://thrimurthi2025-unrealeye-text.hf.space" 
+                      onLoad={() => setIsLoading(false)}
+                    />
                 )}
             </div>
           </section>
