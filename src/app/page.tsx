@@ -52,11 +52,11 @@ function ClaimReviewCard({ claim }: { claim: Claim }) {
           <p>Rating from <a href={publisher?.site} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publisher?.name || 'Unknown Publisher'}</a>:</p>
           <p className="rating-text">{textualRating}</p>
         </div>
-         <div className="flex justify-between items-center">
-          <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-400 hover:underline">
+         <div className="flex justify-between items-center text-sm">
+          <a href={url} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">
             Read the full fact-check
           </a>
-          <span className="text-xs text-text-secondary">{new Date(reviewDate).toLocaleDateString()}</span>
+          <span className="text-text-secondary">{new Date(reviewDate).toLocaleDateString()}</span>
         </div>
       </CardContent>
     </Card>
@@ -228,14 +228,14 @@ export default function Home() {
                     className="fact-check-input"
                     disabled={isFactCheckLoading}
                   />
-                  <Button
+                  <button
                     type={hasSearched ? "button" : "submit"}
                     onClick={hasSearched ? handleClearSearch : undefined}
                     className={cn("fact-check-button", { "fact-check-button-clear": hasSearched })}
                     disabled={isFactCheckLoading}
                   >
                     {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
-                  </Button>
+                  </button>
                 </form>
               </div>
 
@@ -253,7 +253,7 @@ export default function Home() {
               
               <div className="fact-check-results mt-8">
                   {claims.length > 0 && (
-                    <div className="grid gap-4">
+                    <div className="grid gap-4 md:grid-cols-2">
                       {claims.map((claim, index) => (
                         <ClaimReviewCard key={`${claim.claimReview[0]?.url || index}`} claim={claim} />
                       ))}

@@ -406,6 +406,12 @@ gradio-app {
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
 }
 
+@media (max-width: 768px) {
+  .feature {
+    padding: 20px;
+  }
+}
+
 .feature:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
@@ -419,6 +425,13 @@ gradio-app {
   margin-bottom: 15px;
   display: block;
 }
+
+@media (max-width: 768px) {
+  .feature-icon {
+    font-size: 2rem;
+  }
+}
+
 
 .feature-title {
   font-size: 1.125rem;
@@ -575,11 +588,17 @@ footer {
   text-decoration: none;
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 20px;
+  padding: 30px;
   margin-top: 30px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .emergency-card-link, .text-detector-card-link {
+    padding: 20px;
+  }
 }
 
 .emergency-card-link {
@@ -602,11 +621,6 @@ footer {
     background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
 }
 
-@media (min-width: 768px) {
-  .emergency-card-link, .text-detector-card-link {
-    padding: 30px;
-  }
-}
 
 .emergency-card-link:hover, .text-detector-card-link:hover {
   transform: translateY(-4px);
@@ -796,13 +810,13 @@ gradio-app::part(statustracker) {
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 20px;
+  padding: 30px;
   transition: all 0.3s ease;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .fact-check-search-card {
-    padding: 30px;
+    padding: 20px;
   }
 }
 
@@ -821,6 +835,12 @@ gradio-app::part(statustracker) {
   pointer-events: none;
 }
 
+@media (max-width: 768px) {
+  .fact-check-input-icon {
+    left: 1rem;
+  }
+}
+
 .fact-check-input {
   height: 56px;
   padding-left: 3.5rem; /* space for icon */
@@ -832,6 +852,16 @@ gradio-app::part(statustracker) {
   width: 100%;
   font-size: 1rem;
 }
+
+@media (max-width: 768px) {
+  .fact-check-input {
+    height: 48px;
+    padding-left: 3rem;
+    padding-right: 3.5rem;
+    font-size: 0.95rem;
+  }
+}
+
 
 .fact-check-input:focus {
   border-color: var(--accent-cyan);
@@ -855,6 +885,13 @@ gradio-app::part(statustracker) {
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
+}
+
+@media (max-width: 768px) {
+  .fact-check-button {
+    height: 40px;
+    width: 40px;
+  }
 }
 
 .fact-check-button:hover {
