@@ -570,39 +570,63 @@ footer {
   margin-top: 40px;
 }
 
-.emergency-card-link {
+.emergency-card-link, .text-detector-card-link {
   display: block;
   text-decoration: none;
-  background: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.05) 0%, transparent 70%);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 20px;
   margin-top: 30px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-  border-left: 5px solid var(--accent-red);
-  border-right: 5px solid var(--accent-red);
   position: relative;
   overflow: hidden;
+}
+
+.emergency-card-link {
+  background: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.05) 0%, transparent 70%);
+  border-left: 5px solid var(--accent-red);
+  border-right: 5px solid var(--accent-red);
+}
+
+.text-detector-card-link {
+  background: radial-gradient(ellipse at center, rgba(111, 66, 193, 0.05) 0%, transparent 70%);
+  border-left: 5px solid var(--accent-purple);
+  border-right: 5px solid var(--accent-purple);
 }
 
 .dark .emergency-card-link {
     background: radial-gradient(ellipse at center, rgba(255, 77, 77, 0.05) 0%, transparent 70%);
 }
 
+.dark .text-detector-card-link {
+    background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+}
 
 @media (min-width: 768px) {
-  .emergency-card-link {
+  .emergency-card-link, .text-detector-card-link {
     padding: 30px;
   }
 }
 
-.emergency-card-link:hover {
+.emergency-card-link:hover, .text-detector-card-link:hover {
   transform: translateY(-4px);
+}
+
+.emergency-card-link:hover {
   border-color: var(--accent-red);
 }
 
+.text-detector-card-link:hover {
+  border-color: var(--accent-purple);
+}
+
+
 .dark .emergency-card-link:hover {
   box-shadow: 0 4px 25px rgba(255, 77, 77, 0.2);
+}
+
+.dark .text-detector-card-link:hover {
+  box-shadow: 0 4px 25px rgba(124, 58, 237, 0.2);
 }
 
 .emergency-card-content {
@@ -614,6 +638,10 @@ footer {
 .emergency-card-icon {
   font-size: 2.5rem;
   color: var(--accent-red);
+}
+
+.text-detector-card-link .emergency-card-icon {
+  color: var(--accent-purple);
 }
 
 .emergency-card-title {
@@ -659,6 +687,11 @@ gradio-app::part(statustracker) {
   background: linear-gradient(to right, transparent, var(--accent-red), transparent);
   border-radius: inherit;
 }
+
+.text-detector-card-link .border-light {
+  background: linear-gradient(to right, transparent, var(--accent-purple), transparent);
+}
+
 
 .border-light.top, .border-light.bottom {
   left: 0;
