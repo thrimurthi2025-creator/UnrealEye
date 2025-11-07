@@ -9,7 +9,7 @@
   --text-primary: #212529;
   --text-secondary: #6c757d;
   --border: #dee2e6;
-  --ring: #007bff;
+  --ring: transparent;
 }
 
 .dark {
@@ -23,7 +23,7 @@
   --text-primary: #e6edf3;
   --text-secondary: #8b949e;
   --border: #30363d;
-  --ring: #00d4ff;
+  --ring: transparent;
 }
 
 * {
