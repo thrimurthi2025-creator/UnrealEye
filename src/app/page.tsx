@@ -192,11 +192,7 @@ export default function Home() {
               <div className="scan-lines"></div>
               
               <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
-                  <div className="scanner">
-                    <div className="scanner-ring"></div>
-                    <div className="scanner-ring"></div>
-                    <div className="scanner-core"></div>
-                  </div>
+                  <div className="spinner"></div>
                   <div className="loading-text">Initializing Neural Network</div>
                   <div className="loading-subtext">Loading detection models...</div>
               </div>
@@ -247,11 +243,7 @@ export default function Home() {
 
               {isFactCheckLoading && (
                 <div className="flex justify-center items-center mt-8">
-                  <div className="scanner">
-                    <div className="scanner-ring"></div>
-                    <div className="scanner-ring"></div>
-                    <div className="scanner-core"></div>
-                  </div>
+                  <div className="spinner"></div>
                 </div>
               )}
 

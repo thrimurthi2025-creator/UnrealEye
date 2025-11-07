@@ -59,11 +59,7 @@ export default function TextDetectorPage() {
             </div>
             <div className="detector-wrapper">
                 <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
-                  <div className="scanner">
-                    <div className="scanner-ring"></div>
-                    <div className="scanner-ring"></div>
-                    <div className="scanner-core"></div>
-                  </div>
+                  <div className="spinner"></div>
                   <div className="loading-text">Initializing Text Analysis Model</div>
                   <div className="loading-subtext">This may take a moment...</div>
                 </div>
