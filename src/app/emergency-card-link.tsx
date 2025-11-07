@@ -4,6 +4,8 @@ import { cn } from '@/lib/utils';
 export function EmergencyCardLink() {
   return (
     <Link href="/emergency-help" className={cn("emergency-card-link")}>
+      <span className="border-light top"></span>
+      <span className="border-light bottom"></span>
       <div className="card-content">
         <span className="card-icon">🛡️</span>
         <div className="card-text">
