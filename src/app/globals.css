@@ -1014,7 +1014,7 @@ gradio-app::part(statustracker) {
 .border-light {
   position: absolute;
   width: 100%;
-  height: 3px;
+  height: 1px;
   background: var(--accent-red);
   box-shadow: 0 0 10px 0 var(--accent-red);
 }
@@ -1022,13 +1022,13 @@ gradio-app::part(statustracker) {
 .border-light.top {
   top: 0;
   left: 0;
-  animation: move-horizontal 4s linear infinite;
+  animation: move-horizontal 8s linear infinite;
 }
 
 .border-light.bottom {
   bottom: 0;
   right: 0;
-  animation: move-horizontal 4s linear infinite reverse;
+  animation: move-horizontal 8s linear infinite reverse;
 }
 
 @keyframes move-horizontal {
