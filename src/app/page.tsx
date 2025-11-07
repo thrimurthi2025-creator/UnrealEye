@@ -1,16 +1,16 @@
 'use client';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Newspaper, Search, ArrowRight, X, Bot } from 'lucide-react';
+import { Newspaper, Search, ArrowRight, X, Bot, ScanSearch } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { EmergencyCardLink } from '@/app/emergency-card-link';
 import { Loader } from '@/components/ui/loader';
+import { TextDetectorCardLink } from '@/app/text-detector-card-link';
+import { ImageDetectorCardLink } from '@/app/image-detector-card-link';
 
-// Simplified types based on the direct API response
 type ClaimReview = {
   publisher: { name: string; site: string; };
   url: string;
@@ -22,6 +22,7 @@ type ClaimReview = {
 type Claim = {
   text: string;
   claimant: string;
+
   claimDate: string;
   claimReview: ClaimReview[];
 };
@@ -64,59 +65,12 @@ function ClaimReviewCard({ claim }: { claim: Claim }) {
   );
 }
 
-const GradioApp = (props: any) => {
-  const ref = useRef<HTMLElement | null>(null);
-  const loaded = useRef(false);
-
-  useEffect(() => {
-    const currentRef = ref.current;
-    if (!currentRef) return;
-
-    const handleLoad = () => {
-      if (!loaded.current) {
-        props.onLoad?.();
-        loaded.current = true;
-      }
-    };
-    
-    currentRef.addEventListener('load', handleLoad);
-    // Add a timeout as a fallback for the load event
-    const timer = setTimeout(handleLoad, 5000); 
-
-    return () => {
-      currentRef?.removeEventListener('load', handleLoad);
-      clearTimeout(timer);
-    };
-  }, [ref, props]);
-
-  return <gradio-app {...props} ref={ref}></gradio-app>;
-};
-
-
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isClient, setIsClient] = useState(false);
-  const [isBlinking, setIsBlinking] = useState(false);
-  
   const [query, setQuery] = useState('');
   const [claims, setClaims] = useState<Claim[]>([]);
   const [isFactCheckLoading, setIsFactCheckLoading] = useState(false);
   const [factCheckError, setFactCheckError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
-
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const handleStatusClick = () => {
-    if (!isLoading) {
-      setIsBlinking(true);
-      setTimeout(() => {
-        setIsBlinking(false);
-      }, 1000); 
-    }
-  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -164,9 +118,9 @@ export default function Home() {
 
   return (
     <>
-      <div className={`grid-bg ${isBlinking ? 'blinking' : ''}`}></div>
+      <div className="grid-bg"></div>
       
-      <div className={`container ${isBlinking ? 'blinking' : ''}`}>
+      <div className="container">
         <header className="flex justify-between items-center py-4">
           <div className="logo">
             <Link href="/" className='flex items-center gap-3'>
@@ -176,111 +130,64 @@ export default function Home() {
           </div>
         </header>
 
-        <main>
-          <div className={`main-card ${isLoading ? 'offline' : ''} ${isBlinking ? 'blinking' : ''}`}>
-            <div className="card-header">
-              <h2 className="card-title">Detection Interface</h2>
-              <div 
-                className={isLoading ? "status-badge offline" : "status-badge"}
-                onClick={handleStatusClick}
-                style={{ cursor: isLoading ? 'default' : 'pointer' }}
-              >
-                <span className="status-dot"></span>
-                <span>{isLoading ? 'SYSTEM OFFLINE' : 'SYSTEM ONLINE'}</span>
+        <main className="space-y-8">
+          <ImageDetectorCardLink />
+          <TextDetectorCardLink />
+          <EmergencyCardLink />
+
+          <div className="fact-check-section">
+             <div className="fact-check-search-card">
+              <div className="flex items-start gap-4 mb-4">
+                <Newspaper className="w-8 h-8 text-accent-cyan flex-shrink-0 mt-1" />
+                <div>
+                  <h2 className="text-xl font-bold">Fact Check Search</h2>
+                  <p className="text-text-secondary">Search for fact-checks on news and claims.</p>
+                </div>
               </div>
+              <form onSubmit={handleSearch} className="fact-check-form">
+                <Search className="w-5 h-5 fact-check-input-icon" />
+                <Input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search for articles, topics, or keywords..."
+                  className="fact-check-input"
+                  disabled={isFactCheckLoading}
+                />
+                <button
+                  type={hasSearched ? "button" : "submit"}
+                  onClick={hasSearched ? handleClearSearch : undefined}
+                  className={cn("fact-check-button", { "fact-check-button-clear": hasSearched })}
+                  disabled={isFactCheckLoading}
+                >
+                  {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+                </button>
+              </form>
             </div>
 
-            <div className="detector-wrapper">
-              <div className="scan-lines"></div>
-              
-              <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
-                  <Loader />
-              </div>
-              
-              {isClient && (
-                <>
-                  <GradioApp 
-                    src="https://thrimurthi2025-unrealeye.hf.space"
-                    onLoad={() => setIsLoading(false)}
-                  />
-                  {/* Preload the text detector app in the background */}
-                  <div style={{ display: 'none' }}>
-                    <GradioApp src="https://thrimurthi2025-unrealeye-text.hf.space" />
-                  </div>
-                </>
-              )}
-            </div>
+            {isFactCheckLoading && (
+               <div className="flex justify-center items-center mt-8">
+                 <Loader />
+               </div>
+            )}
+
+            {factCheckError && <p className="text-center text-red-500 mt-8">{factCheckError}</p>}
             
-            <div className="fact-check-section">
-               <div className="fact-check-search-card">
-                <div className="flex items-start gap-4 mb-4">
-                  <Newspaper className="w-8 h-8 text-accent-cyan flex-shrink-0 mt-1" />
-                  <div>
-                    <h2 className="text-xl font-bold">Fact Check Search</h2>
-                    <p className="text-text-secondary">Search for fact-checks on news and claims.</p>
+            <div className="fact-check-results mt-8">
+                {claims.length > 0 && (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {claims.map((claim, index) => (
+                      <ClaimReviewCard key={`${claim.claimReview[0]?.url || index}`} claim={claim} />
+                    ))}
                   </div>
-                </div>
-                <form onSubmit={handleSearch} className="fact-check-form">
-                  <Search className="w-5 h-5 fact-check-input-icon" />
-                  <Input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search for articles, topics, or keywords..."
-                    className="fact-check-input"
-                    disabled={isFactCheckLoading}
-                  />
-                  <button
-                    type={hasSearched ? "button" : "submit"}
-                    onClick={hasSearched ? handleClearSearch : undefined}
-                    className={cn("fact-check-button", { "fact-check-button-clear": hasSearched })}
-                    disabled={isFactCheckLoading}
-                  >
-                    {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
-                  </button>
-                </form>
-              </div>
-
-              {isFactCheckLoading && (
-                 <div className="flex justify-center items-center mt-8">
-                   <Loader />
-                 </div>
-              )}
-
-              {factCheckError && <p className="text-center text-red-500 mt-8">{factCheckError}</p>}
-              
-              <div className="fact-check-results mt-8">
-                  {claims.length > 0 && (
-                    <div className="grid gap-4 md:grid-cols-2">
-                      {claims.map((claim, index) => (
-                        <ClaimReviewCard key={`${claim.claimReview[0]?.url || index}`} claim={claim} />
-                      ))}
-                    </div>
-                  )}
-                  
-                  {hasSearched && !isFactCheckLoading && claims.length === 0 && !factCheckError && (
-                    <div className="text-center mt-8 p-6 bg-bg-secondary border border-border rounded-lg">
-                      <p className="text-text-secondary">No fact-checks found for your query.</p>
-                    </div>
-                  )}
-              </div>
+                )}
+                
+                {hasSearched && !isFactCheckLoading && claims.length === 0 && !factCheckError && (
+                  <div className="text-center mt-8 p-6 bg-bg-secondary border border-border rounded-lg">
+                    <p className="text-text-secondary">No fact-checks found for your query.</p>
+                  </div>
+                )}
             </div>
-
-            <Link href="/text-detector" className="text-detector-card-link">
-              <span className="border-light top"></span>
-              <span className="border-light right"></span>
-              <span className="border-light bottom"></span>
-              <span className="border-light left"></span>
-              <div className="emergency-card-content">
-                <span className="emergency-card-icon"><Bot /></span>
-                <div className="emergency-card-text">
-                  <h3 className="emergency-card-title">AI Content Detector</h3>
-                  <p className="emergency-card-desc">Analyze text to detect if it was generated by an AI.</p>
-                </div>
-              </div>
-            </Link>
-
-            <EmergencyCardLink />
           </div>
 
           <div className="features">

@@ -621,9 +621,10 @@ footer {
   margin-top: 40px;
 }
 
-.emergency-card-link, .text-detector-card-link {
+.emergency-card-link, .text-detector-card-link, .image-detector-card-link {
   display: block;
   text-decoration: none;
+  background-color: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 30px;
@@ -634,33 +635,33 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .emergency-card-link, .text-detector-card-link {
+  .emergency-card-link, .text-detector-card-link, .image-detector-card-link {
     padding: 20px;
   }
 }
 
 .emergency-card-link {
-  background: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.05) 0%, transparent 70%);
+  background-image: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.05) 0%, transparent 70%);
   border-left: 5px solid var(--accent-red);
   border-right: 5px solid var(--accent-red);
 }
 
-.text-detector-card-link {
-  background: radial-gradient(ellipse at center, rgba(111, 66, 193, 0.05) 0%, transparent 70%);
+.text-detector-card-link, .image-detector-card-link {
+  background-image: radial-gradient(ellipse at center, rgba(111, 66, 193, 0.05) 0%, transparent 70%);
   border-left: 5px solid var(--accent-purple);
   border-right: 5px solid var(--accent-purple);
 }
 
 .dark .emergency-card-link {
-    background: radial-gradient(ellipse at center, rgba(255, 77, 77, 0.05) 0%, transparent 70%);
+    background-image: radial-gradient(ellipse at center, rgba(255, 77, 77, 0.05) 0%, transparent 70%);
 }
 
-.dark .text-detector-card-link {
-    background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+.dark .text-detector-card-link, .dark .image-detector-card-link {
+    background-image: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
 }
 
 
-.emergency-card-link:hover, .text-detector-card-link:hover {
+.emergency-card-link:hover, .text-detector-card-link:hover, .image-detector-card-link:hover {
   transform: translateY(-4px);
 }
 
@@ -668,7 +669,7 @@ footer {
   border-color: var(--accent-red);
 }
 
-.text-detector-card-link:hover {
+.text-detector-card-link:hover, .image-detector-card-link:hover {
   border-color: var(--accent-purple);
 }
 
@@ -677,26 +678,30 @@ footer {
   box-shadow: 0 4px 25px rgba(255, 77, 77, 0.2);
 }
 
-.dark .text-detector-card-link:hover {
+.dark .text-detector-card-link:hover, .dark .image-detector-card-link:hover {
   box-shadow: 0 4px 25px rgba(124, 58, 237, 0.2);
 }
 
-.emergency-card-content {
+.card-content {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.emergency-card-icon {
+.card-icon {
   font-size: 2.5rem;
+}
+
+.emergency-card-link .card-icon {
   color: var(--accent-red);
 }
 
-.text-detector-card-link .emergency-card-icon {
+.text-detector-card-link .card-icon,
+.image-detector-card-link .card-icon {
   color: var(--accent-purple);
 }
 
-.emergency-card-title {
+.card-title {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -704,19 +709,19 @@ footer {
 }
 
 @media (min-width: 768px) {
-  .emergency-card-title {
+  .card-title {
     font-size: 1.25rem;
   }
 }
 
-.emergency-card-desc {
+.card-desc {
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.6;
 }
 
 @media (min-width: 768px) {
-  .emergency-card-desc {
+  .card-desc {
     font-size: 1rem;
   }
 }
@@ -736,11 +741,15 @@ gradio-app::part(statustracker) {
 
 .border-light {
   position: absolute;
-  background: linear-gradient(to right, transparent, var(--accent-red), transparent);
   border-radius: inherit;
 }
 
-.text-detector-card-link .border-light {
+.emergency-card-link .border-light {
+  background: linear-gradient(to right, transparent, var(--accent-red), transparent);
+}
+
+.text-detector-card-link .border-light,
+.image-detector-card-link .border-light {
   background: linear-gradient(to right, transparent, var(--accent-purple), transparent);
 }
 

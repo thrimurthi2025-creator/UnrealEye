@@ -1,0 +1,109 @@
+'use client';
+import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Loader } from '@/components/ui/loader';
+
+const GradioApp = (props: any) => {
+  const ref = useRef<HTMLElement | null>(null);
+  const loaded = useRef(false);
+
+  useEffect(() => {
+    const currentRef = ref.current;
+    if (!currentRef) return;
+
+    const handleLoad = () => {
+      if (!loaded.current) {
+        props.onLoad?.();
+        loaded.current = true;
+      }
+    };
+    
+    currentRef.addEventListener('load', handleLoad);
+    const timer = setTimeout(handleLoad, 5000); 
+
+    return () => {
+      currentRef?.removeEventListener('load', handleLoad);
+      clearTimeout(timer);
+    };
+  }, [ref, props]);
+
+  return <gradio-app {...props} ref={ref}></gradio-app>;
+};
+
+export default function ImageDetectorPage() {
+  const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isBlinking, setIsBlinking] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const handleStatusClick = () => {
+    if (!isLoading) {
+      setIsBlinking(true);
+      setTimeout(() => {
+        setIsBlinking(false);
+      }, 1000); 
+    }
+  };
+
+  return (
+    <>
+      <div className={`grid-bg ${isBlinking ? 'blinking' : ''}`}></div>
+      
+      <div className={`container ${isBlinking ? 'blinking' : ''}`}>
+        <header className="flex justify-between items-center py-4">
+          <div className="logo">
+            <Link href="/" className='flex items-center gap-3'>
+              <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} className="w-10 h-10 md:w-12 md:h-12" />
+              <span className="logo-text logo-text-gradient">Unreal Eye</span>
+            </Link>
+          </div>
+        </header>
+
+        <main>
+          <div className={`main-card ${isLoading ? 'offline' : ''} ${isBlinking ? 'blinking' : ''}`}>
+            <div className="card-header">
+              <h2 className="card-title">Detection Interface</h2>
+              <div 
+                className={isLoading ? "status-badge offline" : "status-badge"}
+                onClick={handleStatusClick}
+                style={{ cursor: isLoading ? 'default' : 'pointer' }}
+              >
+                <span className="status-dot"></span>
+                <span>{isLoading ? 'SYSTEM OFFLINE' : 'SYSTEM ONLINE'}</span>
+              </div>
+            </div>
+
+            <div className="detector-wrapper">
+              <div className="scan-lines"></div>
+              
+              <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
+                  <Loader />
+              </div>
+              
+              {isClient && (
+                <>
+                  <GradioApp 
+                    src="https://thrimurthi2025-unrealeye.hf.space"
+                    onLoad={() => setIsLoading(false)}
+                  />
+                  {/* Preload the text detector app in the background */}
+                  <div style={{ display: 'none' }}>
+                    <GradioApp src="https://thrimurthi2025-unrealeye-text.hf.space" />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </main>
+
+        <footer>
+          © 2025 Unreal Eye
+        </footer>
+      </div>
+    </>
+  );
+}
