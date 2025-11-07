@@ -209,6 +209,10 @@ header {
   width: 170px;
 }
 
+.status-badge:focus {
+  outline: none;
+}
+
 .status-badge.offline {
   background: rgba(255, 77, 77, 0.1);
   border-color: rgba(255, 77, 77, 0.3);
