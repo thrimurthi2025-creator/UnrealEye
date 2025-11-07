@@ -21,7 +21,7 @@ type ClaimReview = {
 type Claim = {
   text: string;
   claimant: string;
-rqclaimDate: string;
+  claimDate: string;
   claimReview: ClaimReview[];
 };
 
