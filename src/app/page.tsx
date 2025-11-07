@@ -229,8 +229,6 @@ export default function Home() {
               )}
             </div>
 
-            <EmergencyCardLink />
-
             <div className="fact-check-section">
                <div className="fact-check-search-card">
                 <div className="flex items-start gap-4 mb-4">
@@ -285,6 +283,8 @@ export default function Home() {
                   )}
               </div>
             </div>
+
+            <EmergencyCardLink />
           </div>
 
 
