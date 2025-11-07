@@ -952,9 +952,9 @@ gradio-app::part(statustracker) {
   border-color: var(--accent-purple);
 }
 
-/* Remove focus outline and highlight globally */
-*:focus {
-  outline: none !important;
+*:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
 }
 
 /* Remove tap highlight on mobile */
