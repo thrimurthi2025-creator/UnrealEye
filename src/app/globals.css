@@ -642,14 +642,10 @@ footer {
 
 .emergency-card-link {
   background-image: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.05) 0%, transparent 70%);
-  border-left: 5px solid var(--accent-red);
-  border-right: 5px solid var(--accent-red);
 }
 
 .text-detector-card-link, .image-detector-card-link {
   background-image: radial-gradient(ellipse at center, rgba(111, 66, 193, 0.05) 0%, transparent 70%);
-  border-left: 5px solid var(--accent-purple);
-  border-right: 5px solid var(--accent-purple);
 }
 
 .dark .emergency-card-link {
@@ -794,6 +790,7 @@ gradio-app::part(statustracker) {
   border-radius: 16px;
   padding: 30px;
   transition: all 0.3s ease;
+  margin-top: 30px;
 }
 
 @media (max-width: 768px) {
@@ -993,4 +990,52 @@ gradio-app::part(statustracker) {
 
 .dark .detector-tab-button.active {
   color: var(--bg-dark);
+}
+
+.border-light {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+    animation: move 4s linear infinite;
+    box-shadow: 0 0 10px 0 var(--accent-red);
+}
+
+.border-light.top,
+.border-light.bottom {
+    width: 100%;
+    height: 2px;
+}
+
+.border-light.left,
+.border-light.right {
+    width: 2px;
+    height: 100%;
+}
+
+.border-light.top {
+    top: 0;
+    left: -100%;
+}
+
+.border-light.right {
+    top: -100%;
+    right: 0;
+    animation-delay: 1s;
+}
+
+.border-light.bottom {
+    bottom: 0;
+    right: -100%;
+    animation-delay: 2s;
+}
+
+.border-light.left {
+    bottom: -100%;
+    left: 0;
+    animation-delay: 3s;
+}
+
+@keyframes move {
+    100% {
+        transform: translate(100%, 100%);
+    }
 }
