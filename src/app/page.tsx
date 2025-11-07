@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { EmergencyCardLink } from '@/app/emergency-card-link';
+import { Loader } from '@/components/ui/loader';
 
 // Simplified types based on the direct API response
 type ClaimReview = {
@@ -79,7 +80,8 @@ const GradioApp = (props: any) => {
     };
     
     currentRef.addEventListener('load', handleLoad);
-    const timer = setTimeout(handleLoad, 3000);
+    // Add a timeout as a fallback for the load event
+    const timer = setTimeout(handleLoad, 5000); 
 
     return () => {
       currentRef?.removeEventListener('load', handleLoad);
@@ -192,9 +194,7 @@ export default function Home() {
               <div className="scan-lines"></div>
               
               <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
-                  <div className="spinner"></div>
-                  <div className="loading-text">Initializing Neural Network</div>
-                  <div className="loading-subtext">Loading detection models...</div>
+                  <Loader />
               </div>
               
               {isClient && (
@@ -242,9 +242,9 @@ export default function Home() {
               </div>
 
               {isFactCheckLoading && (
-                <div className="flex justify-center items-center mt-8">
-                  <div className="spinner"></div>
-                </div>
+                 <div className="flex justify-center items-center mt-8">
+                   <Loader />
+                 </div>
               )}
 
               {factCheckError && <p className="text-center text-red-500 mt-8">{factCheckError}</p>}

@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Loader } from '@/components/ui/loader';
 
 const GradioApp = (props: any) => {
   const ref = useRef<HTMLElement | null>(null);
@@ -19,7 +20,7 @@ const GradioApp = (props: any) => {
     };
     
     currentRef.addEventListener('load', handleLoad);
-    const timer = setTimeout(handleLoad, 3000);
+    const timer = setTimeout(handleLoad, 5000);
 
     return () => {
       currentRef?.removeEventListener('load', handleLoad);
@@ -59,9 +60,7 @@ export default function TextDetectorPage() {
             </div>
             <div className="detector-wrapper">
                 <div id="loadingOverlay" className={`loading-overlay ${!isLoading ? 'hidden' : ''}`}>
-                  <div className="spinner"></div>
-                  <div className="loading-text">Initializing Text Analysis Model</div>
-                  <div className="loading-subtext">This may take a moment...</div>
+                  <Loader />
                 </div>
 
                 {isClient && (
