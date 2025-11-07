@@ -213,6 +213,12 @@ header {
   outline: none;
 }
 
+.status-badge:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+
 .status-badge.offline {
   background: rgba(255, 77, 77, 0.1);
   border-color: rgba(255, 77, 77, 0.3);
