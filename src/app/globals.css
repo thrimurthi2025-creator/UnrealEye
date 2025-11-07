@@ -1007,34 +1007,13 @@ gradio-app::part(statustracker) {
     transform: translateX(-100%);
 }
 
-.border-light.right {
-    top: 0;
-    right: 0;
-    width: 2px;
-    height: 100%;
-    animation: move-vertical 4s linear infinite;
-    animation-delay: 1s;
-    transform: translateY(-100%);
-}
-
 .border-light.bottom {
     bottom: 0;
     right: 0;
     width: 100%;
     height: 2px;
-    animation: move-horizontal 4s linear infinite;
-    animation-delay: 2s;
+    animation: move-horizontal 4s linear infinite reverse;
     transform: translateX(100%);
-}
-
-.border-light.left {
-    bottom: 0;
-    left: 0;
-    width: 2px;
-    height: 100%;
-    animation: move-vertical 4s linear infinite;
-    animation-delay: 3s;
-    transform: translateY(100%);
 }
 
 @keyframes move-horizontal {
@@ -1043,14 +1022,5 @@ gradio-app::part(statustracker) {
     }
     100% {
         transform: translateX(100%);
-    }
-}
-
-@keyframes move-vertical {
-    0% {
-        transform: translateY(-100%);
-    }
-    100% {
-        transform: translateY(100%);
     }
 }
