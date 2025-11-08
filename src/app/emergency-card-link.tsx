@@ -5,7 +5,6 @@ import { ArrowRight } from 'lucide-react';
 export function EmergencyCardLink() {
   return (
     <Link href="/emergency-help" className={cn("emergency-card-link-new")}>
-      <div className="emergency-glow-new"></div>
       <div className="card-content-new">
         <span className="card-icon-new">🛡️</span>
         <div className="card-text-new">
