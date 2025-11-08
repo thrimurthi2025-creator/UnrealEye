@@ -106,10 +106,6 @@ export function Loader() {
             className="browser-top"
           ></rect>
 
-          <text x="450" y="140" textAnchor="middle" className="loading-text">
-            Initializing Neural Network
-          </text>
-
           <rect x="270" y="160" width="360" height="20" className="skeleton"></rect>
           <rect x="270" y="190" width="200" height="15" className="skeleton"></rect>
           <rect x="270" y="215" width="300" height="15" className="skeleton"></rect>
