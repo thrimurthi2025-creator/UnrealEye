@@ -1,7 +1,9 @@
-"use client";
+'use client';
 
 import React, { useState, useRef, useCallback } from 'react';
 import { ChevronRight, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 interface SwipeButtonProps {
   href: string;
@@ -12,7 +14,7 @@ export function SwipeButton({ href, text }: SwipeButtonProps) {
   const [sliding, setSliding] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(0);
   const [unlocked, setUnlocked] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLAnchorElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const handleInteractionStart = (clientX: number) => {
@@ -37,41 +39,40 @@ export function SwipeButton({ href, text }: SwipeButtonProps) {
     if (newPosition >= maxPosition - 5) {
       setUnlocked(true);
       setSliding(false);
-      window.open(href, '_blank', 'noopener,noreferrer');
-      // Reset after a delay
-      setTimeout(() => {
-        setSliderPosition(0);
-        setUnlocked(false);
-      }, 1500);
+      // The user will now be able to click the link
     }
-  }, [sliding, unlocked, href]);
+  }, [sliding, unlocked]);
   
   const handleInteractionEnd = () => {
     if (!sliding || unlocked) return;
     setSliding(false);
     
-    // Snap back if not unlocked
-    const container = containerRef.current;
-    const slider = sliderRef.current;
-    if (container && slider) {
-      const maxPosition = container.offsetWidth - slider.offsetWidth;
-      if (sliderPosition < maxPosition) {
-        setSliderPosition(0);
-      }
+    if (sliderPosition < (containerRef.current!.offsetWidth - sliderRef.current!.offsetWidth - 5)) {
+      setSliderPosition(0);
     }
   };
 
-  const onMouseDown = (e: React.MouseEvent) => handleInteractionStart(e.clientX);
-  const onMouseMove = (e: React.MouseEvent) => handleInteractionMove(e.clientX);
-  
-  const onTouchStart = (e: React.TouchEvent) => handleInteractionStart(e.touches[0].clientX);
-  const onTouchMove = (e: React.TouchEvent) => handleInteractionMove(e.touches[0].clientX);
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (!unlocked) e.preventDefault();
+    handleInteractionStart(e.clientX);
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (!unlocked) e.preventDefault();
+    handleInteractionStart(e.touches[0].clientX);
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!unlocked) {
+      e.preventDefault();
+    }
+  };
 
   React.useEffect(() => {
-    const handleMouseUp = () => handleInteractionEnd();
-    const handleTouchEnd = () => handleInteractionEnd();
     const handleMouseMoveGlobal = (e: MouseEvent) => handleInteractionMove(e.clientX);
     const handleTouchMoveGlobal = (e: TouchEvent) => handleInteractionMove(e.touches[0].clientX);
+    const handleMouseUp = () => handleInteractionEnd();
+    const handleTouchEnd = () => handleInteractionEnd();
 
     if (sliding) {
       window.addEventListener('mousemove', handleMouseMoveGlobal);
@@ -90,11 +91,16 @@ export function SwipeButton({ href, text }: SwipeButtonProps) {
 
 
   return (
-    <div 
+    <Link 
       ref={containerRef}
-      className={`swipe-button-container ${unlocked ? 'unlocked' : ''} ${sliding ? 'sliding' : ''}`}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn('swipe-button-container', { unlocked, sliding })}
       onMouseDown={onMouseDown}
       onTouchStart={onTouchStart}
+      onClick={handleClick}
+      draggable="false"
     >
       <div 
         ref={sliderRef}
@@ -104,8 +110,8 @@ export function SwipeButton({ href, text }: SwipeButtonProps) {
         {unlocked ? <ShieldCheck /> : <ChevronRight />}
       </div>
       <span className="swipe-button-text">
-        {unlocked ? 'Action Complete' : text}
+        {unlocked ? 'Click to Continue' : text}
       </span>
-    </div>
+    </Link>
   );
 }

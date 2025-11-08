@@ -641,7 +641,6 @@ footer {
 .emergency-card-link-new:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 25px rgba(220, 53, 69, 0.1);
-  border-color: var(--accent-red);
 }
 
 .dark .emergency-card-link-new:hover {
@@ -1063,6 +1062,8 @@ gradio-app::part(statustracker) {
   border: 1px solid rgba(220, 53, 69, 0.4);
   cursor: grab;
   transition: background-color 0.3s;
+  -webkit-user-drag: none;
+  text-decoration: none;
 }
 
 .swipe-button-container.sliding {
@@ -1072,7 +1073,7 @@ gradio-app::part(statustracker) {
 .swipe-button-container.unlocked {
   background-color: var(--accent-green);
   border-color: var(--accent-green);
-  cursor: default;
+  cursor: pointer;
 }
 
 .swipe-button-slider {
@@ -1107,15 +1108,16 @@ gradio-app::part(statustracker) {
   animation: slide-text 2.5s infinite;
   white-space: nowrap;
   transition: opacity 0.3s;
+  pointer-events: none;
 }
 
-.swipe-button-container.sliding .swipe-button-text,
+.swipe-button-container.sliding .swipe-button-text {
+  animation: none;
+  opacity: 0.5;
+}
+
 .swipe-button-container.unlocked .swipe-button-text {
   animation: none;
-  opacity: 0;
-}
-
-.swipe-button-container.unlocked .swipe-button-text {
   opacity: 1;
   color: white;
 }

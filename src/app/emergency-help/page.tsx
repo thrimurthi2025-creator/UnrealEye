@@ -43,7 +43,7 @@ export default function EmergencyHelp() {
             <div className="mt-8">
               <SwipeButton
                 href="https://stopncii.org/"
-                text="Swipe to Remove from Internet"
+                text="Swipe to Get Help"
               />
             </div>
           </section>
