@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { SwipeButton } from '@/components/ui/swipe-button';
 
 export default function EmergencyHelp() {
   
@@ -39,9 +40,12 @@ export default function EmergencyHelp() {
                 <li><strong>Track Progress:</strong> Once your case is submitted, StopNCII.org works with participating tech companies to find and remove the image across their platforms.</li>
               </ol>
             </div>
-            <a href="https://stopncii.org/" target="_blank" rel="noopener noreferrer" className="emergency-button">
-              Remove from Internet (via StopNCII.org)
-            </a>
+            <div className="mt-8">
+              <SwipeButton
+                href="https://stopncii.org/"
+                text="Swipe to Remove from Internet"
+              />
+            </div>
           </section>
         </main>
 

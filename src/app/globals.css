@@ -625,13 +625,13 @@ footer {
   display: block;
   text-decoration: none;
   background: var(--bg-secondary);
-  background-image: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.08) 0%, transparent 70%);
   border: 1px solid var(--accent-red);
   border-radius: 16px;
   margin-top: 30px;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  background-image: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.08) 0%, transparent 70%);
 }
 
 .dark .emergency-card-link-new {
@@ -641,6 +641,7 @@ footer {
 .emergency-card-link-new:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 25px rgba(220, 53, 69, 0.1);
+  border-color: var(--accent-red);
 }
 
 .dark .emergency-card-link-new:hover {
@@ -1046,4 +1047,86 @@ gradio-app::part(statustracker) {
 
 .dark .detector-tab-button.active {
   color: var(--bg-dark);
+}
+
+/* Swipe Button */
+.swipe-button-container {
+  position: relative;
+  width: 100%;
+  height: 56px;
+  background-color: var(--bg-tertiary);
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+  border: 1px solid rgba(220, 53, 69, 0.4);
+  cursor: grab;
+  transition: background-color 0.3s;
+}
+
+.swipe-button-container.sliding {
+  cursor: grabbing;
+}
+
+.swipe-button-container.unlocked {
+  background-color: var(--accent-green);
+  border-color: var(--accent-green);
+  cursor: default;
+}
+
+.swipe-button-slider {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-color: var(--accent-red);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.1s linear, background-color 0.3s;
+}
+
+.swipe-button-container.unlocked .swipe-button-slider {
+  background-color: white;
+  color: var(--accent-green);
+}
+
+.swipe-button-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 1;
+  font-weight: 600;
+  color: var(--text-secondary);
+  animation: slide-text 2.5s infinite;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+}
+
+.swipe-button-container.sliding .swipe-button-text,
+.swipe-button-container.unlocked .swipe-button-text {
+  animation: none;
+  opacity: 0;
+}
+
+.swipe-button-container.unlocked .swipe-button-text {
+  opacity: 1;
+  color: white;
+}
+
+@keyframes slide-text {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(15px);
+    opacity: 1;
+  }
 }
