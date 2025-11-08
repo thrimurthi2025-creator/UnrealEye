@@ -625,6 +625,7 @@ footer {
   display: block;
   text-decoration: none;
   background: var(--bg-secondary);
+  background-image: radial-gradient(ellipse at center, rgba(220, 53, 69, 0.08) 0%, transparent 70%);
   border: 1px solid var(--border);
   border-radius: 16px;
   margin-top: 30px;
@@ -633,29 +634,18 @@ footer {
   overflow: hidden;
 }
 
-.emergency-card-link-new::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 4px;
-  background-color: var(--accent-red);
-  transition: transform 0.3s ease;
-  transform: scaleY(0);
-  transform-origin: bottom;
+.dark .emergency-card-link-new {
+  background-image: radial-gradient(ellipse at center, rgba(255, 77, 77, 0.08) 0%, transparent 70%);
 }
 
-
 .emergency-card-link-new:hover {
-  transform: translateY(-2px);
-  border-color: var(--border);
+  transform: translateY(-4px);
+  border-color: var(--accent-red);
   box-shadow: 0 4px 25px rgba(220, 53, 69, 0.1);
 }
 
-.emergency-card-link-new:hover::before {
-  transform: scaleY(1);
-  transform-origin: top;
+.dark .emergency-card-link-new:hover {
+  box-shadow: 0 4px 25px rgba(255, 77, 77, 0.15);
 }
 
 .card-content-new {
@@ -675,6 +665,7 @@ footer {
 
 .card-icon-new {
   font-size: 2rem;
+  color: var(--accent-red);
 }
 
 .card-text-new {
