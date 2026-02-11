@@ -163,7 +163,7 @@ export default function Home() {
   };
   
   const detectorSrc = activeDetector === 'image'
-    ? "https://thrimurthi2025-unrealeye.hf.space"
+    ? "https://thrimurthi2025-unrealeyeultra.hf.space"
     : "https://thrimurthi2025-unrealeye-text.hf.space";
 
   return (
