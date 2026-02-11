@@ -25,36 +25,6 @@ type Claim = {
   claimReview: ClaimReview[];
 };
 
-const GradioApp = (props: any) => {
-  const ref = useRef<HTMLElement | null>(null);
-  const loaded = useRef(false);
-
-  useEffect(() => {
-    const currentRef = ref.current;
-    if (!currentRef) return;
-
-    const handleLoad = () => {
-      if (!loaded.current) {
-        props.onLoad?.();
-        loaded.current = true;
-      }
-    };
-    
-    currentRef.addEventListener('load', handleLoad);
-    // Fallback timer in case the 'load' event doesn't fire
-    const timer = setTimeout(handleLoad, 5000); 
-
-    return () => {
-      currentRef?.removeEventListener('load', handleLoad);
-      clearTimeout(timer);
-    };
-  }, [ref, props]);
-
-  // The `key` prop is crucial here to force re-mounting when the src changes
-  return <gradio-app {...props} ref={ref}></gradio-app>;
-};
-
-
 function ClaimReviewCard({ claim }: { claim: Claim }) {
   const review = claim.claimReview?.[0];
   if (!review) return null;
@@ -221,10 +191,11 @@ export default function Home() {
               </div>
               
               {isClient && (
-                <GradioApp 
+                <iframe
                   key={activeDetector}
                   src={detectorSrc}
                   onLoad={() => setIsDetectorLoading(false)}
+                  style={{width: '100%', height: '100%', border: 'none', minHeight: 600}}
                 />
               )}
             </div>

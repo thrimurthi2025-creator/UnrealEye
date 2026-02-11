@@ -17,7 +17,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
-        <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.49.1/gradio.js"></script>
       </head>
       <body className="antialiased">
         <ThemeProvider
