@@ -19,6 +19,11 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
       </head>
       <body className="antialiased">
+        <div className="liquid-bg">
+          <div className="shape-1"></div>
+          <div className="shape-2"></div>
+          <div className="shape-3"></div>
+        </div>
         <ThemeProvider
           attribute="class"
           enableSystem
