@@ -60,6 +60,32 @@ export default function Home() {
   
   const [activeDetector, setActiveDetector] = useState('image');
   const [isDetectorLoading, setIsDetectorLoading] = useState(true);
+  const detectorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setIsDetectorLoading(true);
+
+    if (detectorTimeoutRef.current) {
+      clearTimeout(detectorTimeoutRef.current);
+    }
+
+    detectorTimeoutRef.current = setTimeout(() => {
+      setIsDetectorLoading(false);
+    }, 15000); // Failsafe: hide loader after 15 seconds
+
+    return () => {
+      if (detectorTimeoutRef.current) {
+        clearTimeout(detectorTimeoutRef.current);
+      }
+    };
+  }, [activeDetector]);
+
+  const handleDetectorLoad = () => {
+    if (detectorTimeoutRef.current) {
+      clearTimeout(detectorTimeoutRef.current);
+    }
+    setIsDetectorLoading(false);
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,7 +136,7 @@ export default function Home() {
         <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-3xl">
           <GlassCard className="flex items-center justify-between p-3 rounded-full">
             <Link href="/" className='flex items-center gap-2'>
-              <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
+              <Image src="https://i.postimg.cc/D013wY0c/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
               <span className="font-bold text-xl text-white">Unreal Eye</span>
             </Link>
             <a href="#tools" className="hidden sm:block bg-white/10 text-white px-4 py-2 rounded-full text-sm hover:bg-white/20 transition-colors">
@@ -138,13 +164,13 @@ export default function Home() {
               <div className="flex items-center justify-center gap-2 mb-4">
                  <button 
                    className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'image' ? 'bg-white/10 text-white' : 'text-white/50 hover:bg-white/5')}
-                   onClick={() => { setActiveDetector('image'); setIsDetectorLoading(true); }}
+                   onClick={() => setActiveDetector('image')}
                  >
                    Image Detector
                  </button>
                  <button 
                    className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'text' ? 'bg-white/10 text-white' : 'text-white/50 hover:bg-white/5')}
-                   onClick={() => { setActiveDetector('text'); setIsDetectorLoading(true); }}
+                   onClick={() => setActiveDetector('text')}
                  >
                    Text Detector
                  </button>
@@ -159,8 +185,9 @@ export default function Home() {
                 <iframe
                   key={activeDetector}
                   src={detectorSrc}
-                  onLoad={() => setIsDetectorLoading(false)}
+                  onLoad={handleDetectorLoad}
                   className="absolute inset-0 w-full h-full border-0"
+                  style={{ visibility: isDetectorLoading ? 'hidden' : 'visible' }}
                 />
               </div>
             </GlassCard>

@@ -13,7 +13,7 @@ export default function EmergencyHelp() {
          <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-3xl">
           <GlassCard className="flex items-center justify-between p-3 rounded-full">
             <Link href="/" className='flex items-center gap-2'>
-              <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
+              <Image src="https://i.postimg.cc/D013wY0c/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
               <span className="font-bold text-xl text-white">Unreal Eye</span>
             </Link>
              <Link href="/" className="hidden sm:block bg-white/10 text-white px-4 py-2 rounded-full text-sm hover:bg-white/20 transition-colors">
