@@ -13,7 +13,6 @@ export default {
         sans: ['Outfit', 'sans-serif'],
       },
       colors: {
-        'space-dark': '#240f3d',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
