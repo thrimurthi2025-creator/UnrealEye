@@ -1,8 +1,7 @@
 'use client';
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { Newspaper, Search, ArrowRight, X, ScanLine, FileText, Shield, Code, Bot, BrainCircuit } from 'lucide-react';
+import { Newspaper, Search, ArrowRight, X, Shield, Code, Bot, BrainCircuit, ScanEye } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { GlassCard } from '@/components/ui/glass-card';
@@ -109,7 +108,7 @@ export default function Home() {
         <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-3xl">
           <GlassCard className="flex items-center justify-between p-3 rounded-full">
             <Link href="/" className='flex items-center gap-2'>
-              <Image src="https://i.postimg.cc/D013wY0c/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
+              <ScanEye className="w-10 h-10 text-white" />
               <span className="font-bold text-xl text-white">Unreal Eye</span>
             </Link>
             <a href="#tools" className="hidden sm:block bg-white/10 text-white px-4 py-2 rounded-full text-sm hover:bg-white/20 transition-colors">
