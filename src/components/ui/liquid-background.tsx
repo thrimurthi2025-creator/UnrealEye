@@ -2,7 +2,7 @@ import React from 'react';
 
 export function LiquidBackground() {
   return (
-    <div className="fixed inset-0 -z-50 overflow-hidden">
+    <div className="fixed inset-0 -z-50 overflow-hidden transform-gpu">
       <div className="absolute inset-0 -z-20 bg-space-dark" />
       
       {/* Noise Overlay */}
@@ -12,9 +12,9 @@ export function LiquidBackground() {
 
       {/* Static, larger, more blurred blobs */}
       <div className="absolute inset-0 -z-20 mix-blend-screen">
-        <div className="absolute -top-16 -left-16 h-96 w-96 rounded-full bg-light-cyan opacity-20 filter blur-[150px]" />
-        <div className="absolute -bottom-16 -right-16 h-96 w-96 rounded-full bg-light-purple opacity-20 filter blur-[150px]" />
-        <div className="absolute -bottom-16 -left-1/4 h-96 w-96 rounded-full bg-light-blue opacity-20 filter blur-[150px]" />
+        <div className="absolute -top-16 -left-16 h-96 w-96 rounded-full bg-light-cyan opacity-20 blur-[150px]" />
+        <div className="absolute -bottom-16 -right-16 h-96 w-96 rounded-full bg-light-purple opacity-20 blur-[150px]" />
+        <div className="absolute -bottom-16 -left-1/4 h-96 w-96 rounded-full bg-light-blue opacity-20 blur-[150px]" />
       </div>
     </div>
   );
