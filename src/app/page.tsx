@@ -206,10 +206,22 @@ export default function Home() {
             </GlassCard>
           </section>
 
-          {/* Features & Emergency Section */}
-          <section className="grid md:grid-cols-3 gap-8">
-            <GlassCard className="md:col-span-2 p-8 space-y-6">
-                <h3 className="text-xl font-bold text-gradient-purple">Our Technology</h3>
+          {/* Emergency Help Section */}
+          <section>
+            <Link href="/emergency-help" className="block">
+              <GlassCard className="p-8 flex flex-col justify-center items-center text-center border-red-500/50 hover:border-red-500/80">
+                <Shield className="w-12 h-12 text-red-400 animate-pulse"/>
+                <h3 className="mt-4 text-xl font-bold text-red-400">Emergency Help Center</h3>
+                <p className="mt-2 text-white/60">If you are a victim of image-based abuse, get help here.</p>
+                <ArrowRight className="mt-4 w-6 h-6 text-red-400" />
+              </GlassCard>
+            </Link>
+          </section>
+
+          {/* Features Section */}
+          <section>
+            <GlassCard className="p-8 space-y-6">
+                <h3 className="text-xl font-bold text-gradient-purple text-center">Our Technology</h3>
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="flex gap-4">
                     <BrainCircuit className="w-8 h-8 text-purple-400" />
@@ -241,15 +253,6 @@ export default function Home() {
                   </div>
                 </div>
             </GlassCard>
-
-            <Link href="/emergency-help" className="block">
-              <GlassCard className="p-8 h-full flex flex-col justify-center items-center text-center border-red-500/50 hover:border-red-500/80">
-                <Shield className="w-12 h-12 text-red-400 animate-pulse"/>
-                <h3 className="mt-4 text-xl font-bold text-red-400">Emergency Help Center</h3>
-                <p className="mt-2 text-white/60">If you are a victim of image-based abuse, get help here.</p>
-                <ArrowRight className="mt-4 w-6 h-6 text-red-400" />
-              </GlassCard>
-            </Link>
           </section>
 
         </main>
