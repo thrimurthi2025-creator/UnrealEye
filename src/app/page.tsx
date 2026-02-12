@@ -2,11 +2,10 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Newspaper, Search, ArrowRight, X } from 'lucide-react';
+import { Newspaper, Search, ArrowRight, X, ScanLine, FileText, Shield, Code, Bot, BrainCircuit } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { EmergencyCardLink } from '@/app/emergency-card-link';
+import { GlassCard } from '@/components/ui/glass-card';
 import { Loader } from '@/components/ui/loader';
 
 type ClaimReview = {
@@ -20,7 +19,6 @@ type ClaimReview = {
 type Claim = {
   text: string;
   claimant: string;
-
   claimDate: string;
   claimReview: ClaimReview[];
 };
@@ -31,37 +29,27 @@ function ClaimReviewCard({ claim }: { claim: Claim }) {
 
   const { title, textualRating, publisher, url, reviewDate } = review;
 
-  const getRatingClass = (rating: string) => {
+  const getRatingColor = (rating: string) => {
     const lowerRating = rating.toLowerCase();
-    if (['true', 'accurate', 'mostly true'].some(r => lowerRating.includes(r))) return 'true';
-    if (['false', 'inaccurate', 'mostly false', 'misleading'].some(r => lowerRating.includes(r))) return 'false';
-    if (['mixture', 'unproven', 'unsupported', 'no consensus'].some(r => lowerRating.includes(r))) return 'mixture';
-    return '';
+    if (['true', 'accurate', 'mostly true'].some(r => lowerRating.includes(r))) return 'text-cyan-400 border-cyan-400/50';
+    if (['false', 'inaccurate', 'mostly false', 'misleading'].some(r => lowerRating.includes(r))) return 'text-red-400 border-red-400/50';
+    if (['mixture', 'unproven', 'unsupported', 'no consensus'].some(r => lowerRating.includes(r))) return 'text-purple-400 border-purple-400/50';
+    return 'text-gray-400 border-gray-400/50';
   }
 
   return (
-    <Card className="fact-check-card">
-      <CardHeader>
-        <CardTitle className="text-lg">{title || 'Claim'}</CardTitle>
-        <CardDescription>
-          "{claim.text}"
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="fact-check-rating" data-rating={getRatingClass(textualRating)}>
-          <p>Rating from <a href={publisher?.site} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publisher?.name || 'Unknown Publisher'}</a>:</p>
-          <p className="rating-text">{textualRating}</p>
-        </div>
-         <div className="flex justify-between items-center text-sm">
-          <a href={url} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">
-            Read the full fact-check
-          </a>
-          <span className="text-text-secondary">{new Date(reviewDate).toLocaleDateString()}</span>
-        </div>
-      </CardContent>
-    </Card>
+    <GlassCard className="p-6 flex flex-col gap-4">
+      <h3 className="font-semibold text-lg text-white">"{claim.text}"</h3>
+      <div className={cn("p-3 rounded-lg border text-sm", getRatingColor(textualRating))}>
+          <span className="font-bold">{textualRating}</span> according to <a href={publisher?.site} target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:text-white">{publisher?.name}</a>
+      </div>
+      <a href={url} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline flex items-center gap-2 text-sm">
+        Read Full Analysis <ArrowRight className="w-4 h-4" />
+      </a>
+    </GlassCard>
   );
 }
+
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -70,23 +58,8 @@ export default function Home() {
   const [factCheckError, setFactCheckError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
   
-  const [isClient, setIsClient] = useState(false);
-  const [isDetectorLoading, setIsDetectorLoading] = useState(true);
-  const [isBlinking, setIsBlinking] = useState(false);
   const [activeDetector, setActiveDetector] = useState('image');
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const handleStatusClick = () => {
-    if (!isDetectorLoading) {
-      setIsBlinking(true);
-      setTimeout(() => {
-        setIsBlinking(false);
-      }, 1000); 
-    }
-  };
+  const [isDetectorLoading, setIsDetectorLoading] = useState(true);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,7 +72,7 @@ export default function Home() {
 
     const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
     if (!API_KEY) {
-        setFactCheckError("API key not configured. The site administrator needs to configure this feature.");
+        setFactCheckError("API key is not configured on the server.");
         setIsFactCheckLoading(false);
         return;
     }
@@ -108,18 +81,11 @@ export default function Home() {
       const response = await fetch(
         `https://factchecktools.googleapis.com/v1alpha1/claims:search?key=${API_KEY}&query=${encodeURIComponent(query)}`
       );
-      
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        const errorMessage = errorData?.error?.message || `HTTP error! Status: ${response.status}`;
-        throw new Error(errorMessage);
-      }
-      
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const data = await response.json();
       setClaims(data.claims || []);
     } catch (err: any) {
-      console.error(err);
-      setFactCheckError(err.message || 'An error occurred while fetching fact-checks.');
+      setFactCheckError(err.message || 'An error occurred.');
     } finally {
       setIsFactCheckLoading(false);
     }
@@ -137,156 +103,168 @@ export default function Home() {
     : "https://thrimurthi2025-unrealeye-text.hf.space";
 
   return (
-    <>
-      <div className={`grid-bg ${isBlinking ? 'blinking' : ''}`}></div>
-      
-      <div className={`container ${isBlinking ? 'blinking' : ''}`}>
-        <header className="flex justify-between items-center py-4">
-          <div className="logo">
-            <Link href="/" className='flex items-center gap-3'>
-              <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={50} height={50} className="w-10 h-10 md:w-12 md:h-12" />
-              <span className="logo-text logo-text-gradient">Unreal Eye</span>
+    <div className="min-h-screen w-full overflow-x-hidden">
+      <div className="container mx-auto px-4 py-8">
+
+        {/* Header */}
+        <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-3xl">
+          <GlassCard className="flex items-center justify-between p-3 rounded-full">
+            <Link href="/" className='flex items-center gap-2'>
+              <Image src="https://i.postimg.cc/9F6mLw7z/Picsart-25-11-01-16-11-00-382.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
+              <span className="font-bold text-xl text-white">Unreal Eye</span>
             </Link>
-          </div>
+            <a href="#tools" className="hidden sm:block bg-white/10 text-white px-4 py-2 rounded-full text-sm hover:bg-white/20 transition-colors">
+              Detection Tools
+            </a>
+          </GlassCard>
         </header>
 
-        <main className="space-y-8">
-           <div className={`main-card ${isDetectorLoading ? 'offline' : ''} ${isBlinking ? 'blinking' : ''}`}>
-            <div className="card-header">
-              <div className="flex items-center gap-2">
+        <main className="mt-32 space-y-24 md:space-y-32">
+          
+          {/* Hero Section */}
+          <section className="text-center flex flex-col items-center animate-float">
+            <h1 className="text-5xl md:text-7xl font-bold text-gradient-cyan">
+              Clarity in the Age of AI
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg text-white/70">
+              Advanced neural network forensics to distinguish AI-generated content from reality with crystal clarity and precision.
+            </p>
+          </section>
+
+          {/* Core Tools Section */}
+          <section id="tools" className="space-y-8">
+            <h2 className="text-center text-3xl font-bold text-gradient-purple">Core Detection Suite</h2>
+            <GlassCard className="p-4 md:p-6">
+              <div className="flex items-center justify-center gap-2 mb-4">
                  <button 
-                   className={`detector-tab-button ${activeDetector === 'image' ? 'active' : ''}`}
-                   onClick={() => {
-                     setActiveDetector('image');
-                     setIsDetectorLoading(true);
-                   }}
+                   className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'image' ? 'bg-white/10 text-white' : 'text-white/50 hover:bg-white/5')}
+                   onClick={() => { setActiveDetector('image'); setIsDetectorLoading(true); }}
                  >
                    Image Detector
                  </button>
                  <button 
-                   className={`detector-tab-button ${activeDetector === 'text' ? 'active' : ''}`}
-                   onClick={() => {
-                     setActiveDetector('text');
-                     setIsDetectorLoading(true);
-                   }}
+                   className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'text' ? 'bg-white/10 text-white' : 'text-white/50 hover:bg-white/5')}
+                   onClick={() => { setActiveDetector('text'); setIsDetectorLoading(true); }}
                  >
                    Text Detector
                  </button>
               </div>
-              <div 
-                className={isDetectorLoading ? "status-badge offline" : "status-badge"}
-                onClick={handleStatusClick}
-                style={{ cursor: isDetectorLoading ? 'default' : 'pointer' }}
-              >
-                <span className="status-dot"></span>
-                <span>{isDetectorLoading ? 'SYSTEM OFFLINE' : 'SYSTEM ONLINE'}</span>
-              </div>
-            </div>
 
-            <div className="detector-wrapper">
-              <div className="scan-lines"></div>
-              
-              <div id="loadingOverlay" className={`loading-overlay ${!isDetectorLoading ? 'hidden' : ''}`}>
-                  <Loader />
-              </div>
-              
-              {isClient && (
+              <div className="relative min-h-[600px] rounded-4xl overflow-hidden bg-black/20">
+                {isDetectorLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10">
+                    <Loader />
+                  </div>
+                )}
                 <iframe
                   key={activeDetector}
                   src={detectorSrc}
                   onLoad={() => setIsDetectorLoading(false)}
-                  style={{width: '100%', height: '100%', border: 'none', minHeight: 600}}
+                  className="absolute inset-0 w-full h-full border-0"
                 />
-              )}
-            </div>
+              </div>
+            </GlassCard>
+          </section>
 
-            <div className="fact-check-section">
-               <div className="fact-check-search-card">
+          {/* Fact Check Section */}
+          <section className="space-y-8">
+            <h2 className="text-center text-3xl font-bold text-gradient-cyan">Global Fact-Check</h2>
+            <GlassCard className="p-4 md:p-8">
                 <div className="flex items-start gap-4 mb-4">
-                  <Newspaper className="w-8 h-8 text-accent-cyan flex-shrink-0 mt-1" />
+                  <Newspaper className="w-8 h-8 text-cyan-400 flex-shrink-0 mt-1" />
                   <div>
-                    <h2 className="text-xl font-bold">Fact Check Search</h2>
-                    <p className="text-text-secondary">Search for fact-checks on news and claims.</p>
+                    <h3 className="text-xl font-bold">Fact Check Search</h3>
+                    <p className="text-white/70">Search the public record for fact-checks on news and claims.</p>
                   </div>
                 </div>
-                <form onSubmit={handleSearch} className="fact-check-form">
-                  <Search className="w-5 h-5 fact-check-input-icon" />
+                <form onSubmit={handleSearch} className="relative flex items-center">
+                  <Search className="w-5 h-5 absolute left-4 text-white/50" />
                   <Input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search for articles, topics, or keywords..."
-                    className="fact-check-input"
+                    className="fact-check-input h-14 pl-12 pr-14 rounded-full w-full"
                     disabled={isFactCheckLoading}
                   />
                   <button
                     type={hasSearched ? "button" : "submit"}
                     onClick={hasSearched ? handleClearSearch : undefined}
-                    className={cn("fact-check-button", { "fact-check-button-clear": hasSearched })}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
                     disabled={isFactCheckLoading}
                   >
                     {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
                   </button>
                 </form>
-              </div>
-
-              {isFactCheckLoading && (
-                 <div className="flex justify-center items-center mt-8">
-                   <Loader />
-                 </div>
-              )}
-
-              {factCheckError && <p className="text-center text-red-500 mt-8">{factCheckError}</p>}
+             
+              {isFactCheckLoading && <div className="flex justify-center py-8"><Loader /></div>}
+              {factCheckError && <p className="text-center text-red-400 mt-4">{factCheckError}</p>}
               
-              <div className="fact-check-results mt-8">
-                  {claims.length > 0 && (
-                    <div className="grid gap-4 md:grid-cols-2">
-                      {claims.map((claim, index) => (
-                        <ClaimReviewCard key={`${claim.claimReview[0]?.url || index}`} claim={claim} />
-                      ))}
-                    </div>
-                  )}
-                  
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                  {claims.map((claim, index) => (
+                    <ClaimReviewCard key={`${claim.claimReview[0]?.url || index}`} claim={claim} />
+                  ))}
                   {hasSearched && !isFactCheckLoading && claims.length === 0 && !factCheckError && (
-                    <div className="text-center mt-8 p-6 bg-bg-secondary border border-border rounded-lg">
-                      <p className="text-text-secondary">No fact-checks found for your query.</p>
+                    <div className="text-center py-8 col-span-full">
+                      <p className="text-white/50">No fact-checks found for your query.</p>
                     </div>
                   )}
               </div>
-            </div>
+            </GlassCard>
+          </section>
 
-            <EmergencyCardLink />
-          </div>
+          {/* Features & Emergency Section */}
+          <section className="grid md:grid-cols-3 gap-8">
+            <GlassCard className="md:col-span-2 p-8 space-y-6">
+                <h3 className="text-xl font-bold text-gradient-purple">Our Technology</h3>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="flex gap-4">
+                    <BrainCircuit className="w-8 h-8 text-purple-400" />
+                    <div>
+                      <h4 className="font-semibold">Real-Time Analysis</h4>
+                      <p className="text-sm text-white/60">GPU-accelerated inference for millisecond processing.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <Bot className="w-8 h-8 text-purple-400" />
+                    <div>
+                      <h4 className="font-semibold">High Accuracy</h4>
+                      <p className="text-sm text-white/60">Trained on millions of diverse data samples.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <Code className="w-8 h-8 text-purple-400" />
+                    <div>
+                      <h4 className="font-semibold">Privacy First</h4>
+                      <p className="text-sm text-white/60">Zero data retention. All processing happens in-memory.</p>
+                    </div>
+                  </div>
+                   <div className="flex gap-4">
+                    <Shield className="w-8 h-8 text-purple-400" />
+                    <div>
+                      <h4 className="font-semibold">Disclaimer</h4>
+                      <p className="text-sm text-white/60">AI detection is a tool, not a guarantee. Use with discretion.</p>
+                    </div>
+                  </div>
+                </div>
+            </GlassCard>
 
+            <Link href="/emergency-help" className="block">
+              <GlassCard className="p-8 h-full flex flex-col justify-center items-center text-center border-red-500/50 hover:border-red-500/80">
+                <Shield className="w-12 h-12 text-red-400 animate-pulse"/>
+                <h3 className="mt-4 text-xl font-bold text-red-400">Emergency Help Center</h3>
+                <p className="mt-2 text-white/60">If you are a victim of image-based abuse, get help here.</p>
+                <ArrowRight className="mt-4 w-6 h-6 text-red-400" />
+              </GlassCard>
+            </Link>
+          </section>
 
-          <div className="features">
-            <div className="feature">
-              <span className="feature-icon">⚡</span>
-              <h3 className="feature-title">Real-Time Analysis</h3>
-              <p className="feature-desc">Process images in milliseconds with GPU-accelerated inference.</p>
-            </div>
-            <div className="feature">
-              <span className="feature-icon">🎯</span>
-              <h3 className="feature-title">High Accuracy</h3>
-              <p className="feature-desc">99%+ precision trained on millions of diverse image samples.</p>
-            </div>
-            <div className="feature">
-              <span className="feature-icon">🔐</span>
-              <h3 className="feature-title">Privacy First</h3>
-              <p className="feature-desc">Zero data retention. All processing happens in-memory.</p>
-            </div>
-            <div className="feature">
-              <span className="feature-icon">⚠️</span>
-              <h3 className="feature-title">Disclaimer</h3>
-              <p className="feature-desc">AI image detection might not be 100% accurate.</p>
-            </div>
-          </div>
         </main>
 
-        <footer>
-          © 2025 Unreal Eye
+        <footer className="text-center py-16 text-white/40 text-sm">
+          © 2025 Unreal Eye. All Rights Reserved.
         </footer>
       </div>
-    </>
+    </div>
   );
 }

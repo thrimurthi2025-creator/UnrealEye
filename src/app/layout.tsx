@@ -2,10 +2,11 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
+import { LiquidBackground } from '@/components/ui/liquid-background';
 
 export const metadata: Metadata = {
-  title: 'AI Detection Lab — Advanced Image Analysis',
-  description: 'Advanced neural network forensics to distinguish AI-generated imagery from authentic photographs with precision and speed.',
+  title: 'Unreal Eye — Next-Gen AI Forensics',
+  description: 'Advanced neural network forensics to distinguish AI-generated content from reality with crystal clarity and precision.',
 };
 
 export default function RootLayout({
@@ -14,22 +15,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
-      </head>
-      <body className="antialiased">
-        <div className="liquid-bg">
-          <div className="shape-1"></div>
-          <div className="shape-2"></div>
-          <div className="shape-3"></div>
-        </div>
+    <html lang="en" className="dark" style={{ colorScheme: 'dark' }}>
+      <head />
+      <body>
+        <LiquidBackground />
         <ThemeProvider
           attribute="class"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <main className="relative z-10">{children}</main>
           <Toaster />
         </ThemeProvider>
       </body>
