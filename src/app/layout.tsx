@@ -2,7 +2,6 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
-import { LiquidBackground } from '@/components/ui/liquid-background';
 
 export const metadata: Metadata = {
   title: 'Unreal Eye — Next-Gen AI Forensics',
@@ -18,7 +17,6 @@ export default function RootLayout({
     <html lang="en" className="dark" style={{ colorScheme: 'dark' }}>
       <head />
       <body>
-        <LiquidBackground />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

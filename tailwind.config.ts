@@ -13,10 +13,7 @@ export default {
         sans: ['Outfit', 'sans-serif'],
       },
       colors: {
-        'space-dark': '#020205',
-        'light-cyan': '#06b6d4',
-        'light-purple': '#9333ea',
-        'light-blue': '#2563eb',
+        'space-dark': '#240f3d',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
