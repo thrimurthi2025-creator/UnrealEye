@@ -29,7 +29,7 @@ export default function EmergencyHelp() {
               <h2 className="mt-4 text-3xl md:text-4xl font-bold text-gradient-cyan">
                 Emergency Help: Image-Based Abuse
               </h2>
-              <p className="mt-4 max-w-3xl text-lg text-white/70">
+              <p className="mt-4 max-w-2xl text-lg text-white/70">
                 If someone has shared or threatened to share an intimate image of you (real or AI-generated) without your consent, you can take action. This is known as Non-Consensual Intimate Imagery (NCII).
               </p>
             </div>

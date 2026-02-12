@@ -118,11 +118,11 @@ export default function Home() {
           </GlassCard>
         </header>
 
-        <main className="mt-32 space-y-24 md:space-y-32">
+        <main className="mt-32 space-y-20 md:space-y-28">
           
           {/* Hero Section */}
           <section className="text-center flex flex-col items-center animate-float">
-            <h1 className="text-5xl md:text-7xl font-bold text-gradient-cyan">
+            <h1 className="text-5xl md:text-6xl font-bold text-gradient-cyan">
               Clarity in the Age of AI
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-white/70">
@@ -149,7 +149,7 @@ export default function Home() {
                  </button>
               </div>
 
-              <div className="relative min-h-[800px] rounded-4xl overflow-hidden bg-black/20">
+              <div className="relative min-h-[600px] md:min-h-[800px] rounded-4xl overflow-hidden bg-black/20">
                 <iframe
                   key={activeDetector}
                   src={detectorSrc}
