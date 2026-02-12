@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Newspaper, Search, ArrowRight, X, ScanLine, FileText, Shield, Code, Bot, BrainCircuit } from 'lucide-react';
@@ -59,33 +59,6 @@ export default function Home() {
   const [hasSearched, setHasSearched] = useState(false);
   
   const [activeDetector, setActiveDetector] = useState('image');
-  const [isDetectorLoading, setIsDetectorLoading] = useState(true);
-  const detectorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    setIsDetectorLoading(true);
-
-    if (detectorTimeoutRef.current) {
-      clearTimeout(detectorTimeoutRef.current);
-    }
-
-    detectorTimeoutRef.current = setTimeout(() => {
-      setIsDetectorLoading(false);
-    }, 15000); // Failsafe: hide loader after 15 seconds
-
-    return () => {
-      if (detectorTimeoutRef.current) {
-        clearTimeout(detectorTimeoutRef.current);
-      }
-    };
-  }, [activeDetector]);
-
-  const handleDetectorLoad = () => {
-    if (detectorTimeoutRef.current) {
-      clearTimeout(detectorTimeoutRef.current);
-    }
-    setIsDetectorLoading(false);
-  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -177,17 +150,10 @@ export default function Home() {
               </div>
 
               <div className="relative min-h-[600px] rounded-4xl overflow-hidden bg-black/20">
-                {isDetectorLoading && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10">
-                    <Loader />
-                  </div>
-                )}
                 <iframe
                   key={activeDetector}
                   src={detectorSrc}
-                  onLoad={handleDetectorLoad}
                   className="absolute inset-0 w-full h-full border-0"
-                  style={{ visibility: isDetectorLoading ? 'hidden' : 'visible' }}
                 />
               </div>
             </GlassCard>
