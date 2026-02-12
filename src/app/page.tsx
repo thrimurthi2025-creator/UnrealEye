@@ -149,7 +149,7 @@ export default function Home() {
                  </button>
               </div>
 
-              <div className="relative min-h-[600px] rounded-4xl overflow-hidden bg-black/20">
+              <div className="relative min-h-[800px] rounded-4xl overflow-hidden bg-black/20">
                 <iframe
                   key={activeDetector}
                   src={detectorSrc}
