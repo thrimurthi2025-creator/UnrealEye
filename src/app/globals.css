@@ -75,17 +75,51 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Outfit', sans-serif;
-    background-image:
-      radial-gradient(at 15% 15%, hsl(188 82% 58% / 0.15), transparent 40%),
-      radial-gradient(at 85% 85%, hsl(269 71% 56% / 0.15), transparent 40%);
   }
   .dark body {
     background-color: #020205;
-    background-image:
-      radial-gradient(at 0% 0%, hsl(188 82% 58% / 0.25), transparent 50%),
-      radial-gradient(at 98% 98%, hsl(269 71% 56% / 0.25), transparent 50%),
-      radial-gradient(at 50% 50%, hsl(217 91% 60% / 0.2), transparent 50%);
   }
+}
+
+@layer components {
+  .bubble-background {
+    @apply fixed inset-0 -z-10 overflow-hidden pointer-events-none;
+  }
+
+  .bubble {
+    --bubble-size: 10vw;
+    --bubble-duration: 20s;
+    --bubble-delay: 0s;
+    --bubble-left: 10%;
+
+    animation: rise var(--bubble-duration) var(--bubble-delay) linear infinite;
+    
+    @apply absolute rounded-full;
+    bottom: calc(-1.5 * var(--bubble-size));
+    left: var(--bubble-left);
+    width: var(--bubble-size);
+    aspect-ratio: 1/1;
+    filter: blur(50px);
+  }
+
+  .bubble:nth-child(2n) {
+      background-color: hsl(340 82% 58% / 0.25);
+  }
+
+  .bubble:nth-child(2n-1) {
+    background-color: hsl(188 82% 58% / 0.25);
+  }
+
+  .bubble:nth-child(1) { --bubble-size: 15vw; --bubble-duration: 25s; --bubble-delay: 0s; --bubble-left: 5%; }
+  .bubble:nth-child(2) { --bubble-size: 10vw; --bubble-duration: 20s; --bubble-delay: 2s; --bubble-left: 20%; }
+  .bubble:nth-child(3) { --bubble-size: 20vw; --bubble-duration: 35s; --bubble-delay: 4s; --bubble-left: 30%; }
+  .bubble:nth-child(4) { --bubble-size: 8vw;  --bubble-duration: 18s; --bubble-delay: 3s; --bubble-left: 45%; }
+  .bubble:nth-child(5) { --bubble-size: 12vw; --bubble-duration: 22s; --bubble-delay: 7s; --bubble-left: 60%; }
+  .bubble:nth-child(6) { --bubble-size: 18vw; --bubble-duration: 32s; --bubble-delay: 8s; --bubble-left: 70%; }
+  .bubble:nth-child(7) { --bubble-size: 13vw; --bubble-duration: 23s; --bubble-delay: 10s; --bubble-left: 85%; }
+  .bubble:nth-child(8) { --bubble-size: 16vw; --bubble-duration: 28s; --bubble-delay: 12s; --bubble-left: 95%; }
+  .bubble:nth-child(9) { --bubble-size: 7vw;  --bubble-duration: 19s; --bubble-delay: 14s; --bubble-left: 40%; }
+  .bubble:nth-child(10){ --bubble-size: 14vw; --bubble-duration: 29s; --bubble-delay: 15s; --bubble-left: 25%; }
 }
 
 @layer utilities {

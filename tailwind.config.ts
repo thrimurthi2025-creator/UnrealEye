@@ -67,6 +67,14 @@ export default {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        rise: {
+          from: {
+            transform: 'translateY(0) scale(1)',
+          },
+          to: {
+            transform: 'translateY(calc(-100vh - 2 * var(--bubble-size))) scale(0.8)',
+          }
+        }
       },
       animation: {
         float: 'float 4s ease-in-out infinite',

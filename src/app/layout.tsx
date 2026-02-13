@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
+import { BubbleBackground } from '@/components/ui/bubble-background';
 
 export const metadata: Metadata = {
   title: 'Unreal Eye — Next-Gen AI Forensics',
@@ -23,6 +24,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <BubbleBackground />
           <main className="relative z-10">{children}</main>
           <Toaster />
         </ThemeProvider>
