@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { GlassCard } from '@/components/ui/glass-card';
 import { Loader } from '@/components/ui/loader';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 type ClaimReview = {
   publisher: { name: string; site: string; };
@@ -38,9 +39,9 @@ function ClaimReviewCard({ claim }: { claim: Claim }) {
 
   return (
     <GlassCard className="p-6 flex flex-col gap-4">
-      <h3 className="font-semibold text-lg text-white">"{claim.text}"</h3>
+      <h3 className="font-semibold text-lg">"{claim.text}"</h3>
       <div className={cn("p-3 rounded-lg border text-sm", getRatingColor(textualRating))}>
-          <span className="font-bold">{textualRating}</span> according to <a href={publisher?.site} target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:text-white">{publisher?.name}</a>
+          <span className="font-bold">{textualRating}</span> according to <a href={publisher?.site} target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:text-foreground">{publisher?.name}</a>
       </div>
       <a href={url} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline flex items-center gap-2 text-sm">
         Read Full Analysis <ArrowRight className="w-4 h-4" />
@@ -108,12 +109,15 @@ export default function Home() {
         <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-3xl">
           <GlassCard className="flex items-center justify-between p-3 rounded-full">
             <Link href="/" className='flex items-center gap-2'>
-              <ScanEye className="w-10 h-10 text-white" />
-              <span className="font-bold text-xl text-white">Unreal Eye</span>
+              <ScanEye className="w-10 h-10 text-foreground" />
+              <span className="font-bold text-xl text-foreground">Unreal Eye</span>
             </Link>
-            <a href="#tools" className="hidden sm:block bg-white/10 text-white px-4 py-2 rounded-full text-sm hover:bg-white/20 transition-colors">
-              Detection Tools
-            </a>
+            <div className="hidden sm:flex items-center gap-2">
+              <a href="#tools" className="bg-foreground/5 text-foreground px-4 py-2 rounded-full text-sm hover:bg-foreground/10 transition-colors">
+                Detection Tools
+              </a>
+              <ThemeToggle />
+            </div>
           </GlassCard>
         </header>
 
@@ -124,7 +128,7 @@ export default function Home() {
             <h1 className="text-5xl md:text-6xl font-bold text-gradient-cyan">
               Clarity in the Age of AI
             </h1>
-            <p className="mt-6 max-w-2xl text-lg text-white/70">
+            <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
               Advanced neural network forensics to distinguish AI-generated content from reality with crystal clarity and precision.
             </p>
           </section>
@@ -135,20 +139,20 @@ export default function Home() {
             <GlassCard className="p-4 md:p-6">
               <div className="flex items-center justify-center gap-2 mb-4">
                  <button 
-                   className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'image' ? 'bg-white/10 text-white' : 'text-white/50 hover:bg-white/5')}
+                   className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'image' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-secondary/50')}
                    onClick={() => setActiveDetector('image')}
                  >
                    Image Detector
                  </button>
                  <button 
-                   className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'text' ? 'bg-white/10 text-white' : 'text-white/50 hover:bg-white/5')}
+                   className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'text' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-secondary/50')}
                    onClick={() => setActiveDetector('text')}
                  >
                    Text Detector
                  </button>
               </div>
 
-              <div className="relative min-h-[850px] md:min-h-[950px] rounded-4xl overflow-hidden bg-black/20">
+              <div className="relative min-h-[850px] md:min-h-[950px] rounded-4xl overflow-hidden bg-secondary/50">
                 <iframe
                   key={activeDetector}
                   src={detectorSrc}
@@ -166,23 +170,23 @@ export default function Home() {
                   <Newspaper className="w-8 h-8 text-cyan-400 flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="text-xl font-bold">Fact Check Search</h3>
-                    <p className="text-white/70">Search the public record for fact-checks on news and claims.</p>
+                    <p className="text-muted-foreground">Search the public record for fact-checks on news and claims.</p>
                   </div>
                 </div>
                 <form onSubmit={handleSearch} className="relative flex items-center">
-                  <Search className="w-5 h-5 absolute left-4 text-white/50" />
+                  <Search className="w-5 h-5 absolute left-4 text-muted-foreground" />
                   <Input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search for articles, topics, or keywords..."
-                    className="fact-check-input h-14 pl-12 pr-14 rounded-full w-full"
+                    className="h-14 pl-12 pr-14 rounded-full w-full"
                     disabled={isFactCheckLoading}
                   />
                   <button
                     type={hasSearched ? "button" : "submit"}
                     onClick={hasSearched ? handleClearSearch : undefined}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 bg-secondary hover:bg-secondary/80 rounded-full flex items-center justify-center transition-colors"
                     disabled={isFactCheckLoading}
                   >
                     {hasSearched ? <X className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
@@ -198,7 +202,7 @@ export default function Home() {
                   ))}
                   {hasSearched && !isFactCheckLoading && claims.length === 0 && !factCheckError && (
                     <div className="text-center py-8 col-span-full">
-                      <p className="text-white/50">No fact-checks found for your query.</p>
+                      <p className="text-muted-foreground">No fact-checks found for your query.</p>
                     </div>
                   )}
               </div>
@@ -211,7 +215,7 @@ export default function Home() {
               <GlassCard className="p-8 flex flex-col justify-center items-center text-center border-red-500/50 hover:border-red-500/80">
                 <Shield className="w-12 h-12 text-red-400 animate-pulse"/>
                 <h3 className="mt-4 text-xl font-bold text-red-400">Emergency Help Center</h3>
-                <p className="mt-2 text-white/60">If you are a victim of image-based abuse, get help here.</p>
+                <p className="mt-2 text-muted-foreground">If you are a victim of image-based abuse, get help here.</p>
                 <ArrowRight className="mt-4 w-6 h-6 text-red-400" />
               </GlassCard>
             </Link>
@@ -226,28 +230,28 @@ export default function Home() {
                     <BrainCircuit className="w-8 h-8 text-purple-400" />
                     <div>
                       <h4 className="font-semibold">Real-Time Analysis</h4>
-                      <p className="text-sm text-white/60">GPU-accelerated inference for millisecond processing.</p>
+                      <p className="text-sm text-muted-foreground">GPU-accelerated inference for millisecond processing.</p>
                     </div>
                   </div>
                   <div className="flex gap-4">
                     <Bot className="w-8 h-8 text-purple-400" />
                     <div>
                       <h4 className="font-semibold">High Accuracy</h4>
-                      <p className="text-sm text-white/60">Trained on millions of diverse data samples.</p>
+                      <p className="text-sm text-muted-foreground">Trained on millions of diverse data samples.</p>
                     </div>
                   </div>
                   <div className="flex gap-4">
                     <Code className="w-8 h-8 text-purple-400" />
                     <div>
                       <h4 className="font-semibold">Privacy First</h4>
-                      <p className="text-sm text-white/60">Zero data retention. All processing happens in-memory.</p>
+                      <p className="text-sm text-muted-foreground">Zero data retention. All processing happens in-memory.</p>
                     </div>
                   </div>
                    <div className="flex gap-4">
                     <Shield className="w-8 h-8 text-purple-400" />
                     <div>
                       <h4 className="font-semibold">Disclaimer</h4>
-                      <p className="text-sm text-white/60">AI detection is a tool, not a guarantee. Use with discretion.</p>
+                      <p className="text-sm text-muted-foreground">AI detection is a tool, not a guarantee. Use with discretion.</p>
                     </div>
                   </div>
                 </div>
@@ -256,7 +260,7 @@ export default function Home() {
 
         </main>
 
-        <footer className="text-center py-16 text-white/40 text-sm">
+        <footer className="text-center py-16 text-muted-foreground text-sm">
           © 2025 Unreal Eye. All Rights Reserved.
         </footer>
       </div>

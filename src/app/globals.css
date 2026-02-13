@@ -6,33 +6,33 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
  
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
  
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
  
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
  
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
  
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
  
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
  
     --radius: 0.5rem;
   }
@@ -73,19 +73,23 @@
     @apply border-border;
   }
   body {
-    @apply text-gray-100;
+    @apply bg-background text-foreground;
     font-family: 'Outfit', sans-serif;
+  }
+  .dark body {
     background-color: #020205;
     background-image:
-      radial-gradient(at 0% 0%, hsl(188 82% 58% / 0.15), transparent 50%),
-      radial-gradient(at 98% 98%, hsl(269 71% 56% / 0.15), transparent 50%),
-      radial-gradient(at 50% 50%, hsl(217 91% 60% / 0.1), transparent 50%);
+      radial-gradient(at 0% 0%, hsl(188 82% 58% / 0.25), transparent 50%),
+      radial-gradient(at 98% 98%, hsl(269 71% 56% / 0.25), transparent 50%),
+      radial-gradient(at 50% 50%, hsl(217 91% 60% / 0.2), transparent 50%);
   }
 }
 
 @layer utilities {
   .glass-card {
-    @apply relative overflow-hidden rounded-5xl border border-white/[0.08] bg-white/[0.05] backdrop-blur-2xl shadow-lg;
+    @apply relative overflow-hidden rounded-5xl backdrop-blur-2xl shadow-lg;
+    @apply border border-gray-900/10 bg-gray-50/50;
+    @apply dark:border-white/[0.08] dark:bg-white/[0.05];
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.03);
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
@@ -93,7 +97,11 @@
   .glass-card::before {
     content: '';
     @apply absolute top-0 left-0 right-0 h-px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.05), transparent);
+  }
+
+  .dark .glass-card::before {
+     background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
   }
   
   .glass-card::after {
@@ -103,15 +111,15 @@
   }
 
   .glass-card:hover {
-     @apply scale-[1.02] bg-white/[0.07];
+     @apply scale-[1.02] bg-gray-50/70 dark:bg-white/[0.07];
   }
 
   .text-gradient-cyan {
-    @apply bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-foreground to-cyan-400 bg-clip-text text-transparent;
   }
 
   .text-gradient-purple {
-    @apply bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-foreground to-purple-400 bg-clip-text text-transparent;
   }
 }
 
@@ -127,21 +135,19 @@ gradio-app, iframe {
   background: transparent !important;
   border-radius: 1.5rem;
 }
-.fact-check-input {
-  @apply bg-white/5 border-white/10 placeholder:text-gray-400;
-}
+
 .swipe-button-container {
   @apply relative w-full h-14 rounded-full flex items-center overflow-hidden select-none cursor-grab;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.1);
+  @apply border border-black/10 bg-black/5;
+  @apply dark:border-white/10 dark:bg-white/10;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 .swipe-button-slider {
-  @apply absolute h-12 w-12 bg-white text-black rounded-full flex items-center justify-center z-10 top-1 left-1 transition-transform;
+  @apply absolute h-12 w-12 bg-foreground text-background rounded-full flex items-center justify-center z-10 top-1 left-1 transition-transform;
 }
 .swipe-button-text {
-  @apply absolute left-0 right-0 text-center z-0 font-medium text-white/70 tracking-wider;
+  @apply absolute left-0 right-0 text-center z-0 font-medium text-muted-foreground tracking-wider;
 }
 .swipe-button-container.unlocked {
   @apply bg-cyan-400/80 border-cyan-400;
@@ -150,5 +156,5 @@ gradio-app, iframe {
   @apply bg-white text-cyan-400;
 }
 .swipe-button-container.unlocked .swipe-button-text {
-  color: white;
+  @apply text-white;
 }
