@@ -104,7 +104,7 @@ export function SwipeButton({ href, text }: SwipeButtonProps) {
     >
       <div 
         ref={sliderRef}
-        className="swipe-button-slider"
+        className={cn('swipe-button-slider', { 'transition-none': sliding })}
         style={{ transform: `translateX(${sliderPosition}px)` }}
       >
         {unlocked ? <ShieldCheck /> : <ChevronRight />}
