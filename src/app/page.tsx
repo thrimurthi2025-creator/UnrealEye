@@ -60,20 +60,20 @@ export default function Home() {
   const [hasSearched, setHasSearched] = useState(false);
   
   const [activeDetector, setActiveDetector] = useState('image');
+  const [isDetectorLoading, setIsDetectorLoading] = useState(true);
 
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [showLoader, setShowLoader] = useState(true);
-
   useEffect(() => {
+    setIsDetectorLoading(true);
     const timer = setTimeout(() => {
-      setShowLoader(false);
+      setIsDetectorLoading(false);
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [activeDetector]);
 
   useEffect(() => {
     const activeIndex = activeDetector === 'image' ? 0 : 1;
@@ -134,8 +134,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-       {showLoader && <LiquidLoader />}
-      <div className={cn("container mx-auto px-4 py-8 transition-opacity duration-700 ease-in", showLoader ? "opacity-0" : "opacity-100")}>
+      <div className="container mx-auto px-4 py-8">
 
         {/* Header */}
         <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-3xl">
@@ -189,12 +188,16 @@ export default function Home() {
                  </div>
               </div>
 
-              <div className="relative min-h-[850px] md:min-h-[950px] rounded-4xl overflow-hidden bg-secondary/50">
-                <iframe
-                  key={activeDetector}
-                  src={detectorSrc}
-                  className="absolute inset-0 w-full h-full border-0"
-                />
+              <div className="relative min-h-[850px] md:min-h-[950px] rounded-4xl overflow-hidden bg-secondary/50 flex items-center justify-center">
+                 {isDetectorLoading ? (
+                  <LiquidLoader />
+                ) : (
+                  <iframe
+                    key={activeDetector}
+                    src={detectorSrc}
+                    className="absolute inset-0 w-full h-full border-0"
+                  />
+                )}
               </div>
             </GlassCard>
           </section>
