@@ -87,15 +87,11 @@
   body {
     @apply text-foreground;
     font-family: 'Outfit', sans-serif;
-    background: #f7f7f7 radial-gradient(circle at 10% 20%, hsl(188 82% 58% / 0.3), transparent 40%), radial-gradient(circle at 80% 90%, hsl(340 82% 58% / 0.3), transparent 40%);
-    background-size: 200% 200%;
-    animation: gradient-move 20s ease-in-out infinite;
+    background: #f7f7f7 radial-gradient(circle at 10% 20%, hsl(188 82% 58% / 0.1), transparent 40%), radial-gradient(circle at 80% 90%, hsl(340 82% 58% / 0.1), transparent 40%);
   }
  
   .dark body {
-    background: #020205 radial-gradient(circle at 10% 20%, hsl(188 82% 58% / 0.35), transparent 30%), radial-gradient(circle at 80% 90%, hsl(340 82% 58% / 0.35), transparent 30%);
-    background-size: 200% 200%;
-    animation: gradient-move 20s ease-in-out infinite;
+    background: #020205 radial-gradient(circle at 10% 20%, hsl(188 82% 58% / 0.15), transparent 30%), radial-gradient(circle at 80% 90%, hsl(340 82% 58% / 0.15), transparent 30%);
   }
 }
 
