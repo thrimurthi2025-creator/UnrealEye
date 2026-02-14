@@ -16,25 +16,64 @@
   }
 }
 
-@keyframes blob-move-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(40px, -60px) scale(1.2); }
-  50% { transform: translate(-20px, 30px) scale(0.9); }
-  75% { transform: translate(50px, 50px) scale(1.2); }
+@keyframes water-drop {
+  0% {
+    transform: translateY(-80px) scale(0.5);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(40px) scale(1);
+    opacity: 1;
+  }
+  45% { /* Impact */
+    transform: translateY(50px) scaleX(2) scaleY(0.5);
+  }
+  55% { /* Ripple out */
+    transform: translateY(50px) scaleX(3) scaleY(0.2);
+    opacity: 0.7;
+  }
+  100% { /* Fade */
+    transform: translateY(50px) scaleX(4) scaleY(0.1);
+    opacity: 0;
+  }
 }
 
-@keyframes blob-move-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-50px, 20px) scale(0.9); }
-  50% { transform: translate(30px, -40px) scale(1.2); }
-  75% { transform: translate(-40px, -60px) scale(1.1); }
+@keyframes water-splash-left {
+  0%, 40% { /* wait for impact */
+    transform: translate(0, 50px) scale(0);
+    opacity: 0;
+  }
+  45% { /* Emerge */
+    transform: translate(0, 50px) scale(0.5);
+    opacity: 1;
+  }
+  75% { /* Fly out */
+    transform: translate(-80px, -20px) scale(0.7);
+    opacity: 0.8;
+  }
+  100% { /* Disappear */
+    transform: translate(-100px, 20px) scale(0.3);
+    opacity: 0;
+  }
 }
 
-@keyframes blob-move-3 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(30px, 30px) scale(1.1); }
-    50% { transform: translate(-50px, -50px) scale(0.8); }
-    75% { transform: translate(20px, -40px) scale(1.1); }
+@keyframes water-splash-right {
+  0%, 40% { /* wait for impact */
+    transform: translate(0, 50px) scale(0);
+    opacity: 0;
+  }
+  45% { /* Emerge */
+    transform: translate(0, 50px) scale(0.5);
+    opacity: 1;
+  }
+  75% { /* Fly out */
+    transform: translate(80px, -20px) scale(0.7);
+    opacity: 0.8;
+  }
+  100% { /* Disappear */
+    transform: translate(100px, 20px) scale(0.3);
+    opacity: 0;
+  }
 }
 
 @layer base {
@@ -201,23 +240,23 @@
 
   .blob-1 {
     @apply bg-cyan-400;
-    animation: blob-move-1 8s ease-in-out infinite;
-    top: 10%;
-    left: 15%;
+    left: calc(50% - 32px);
+    top: calc(50% - 32px);
+    animation: water-drop 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   }
 
   .blob-2 {
     @apply bg-purple-400;
-    animation: blob-move-2 7s ease-in-out infinite -2s;
-    top: 25%;
-    right: 10%;
+    left: calc(50% - 32px);
+    top: calc(50% - 32px);
+    animation: water-splash-left 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   }
 
   .blob-3 {
     @apply bg-red-400;
-    animation: blob-move-3 9s ease-in-out infinite -4s;
-    bottom: 15%;
-    left: 40%;
+    left: calc(50% - 32px);
+    top: calc(50% - 32px);
+    animation: water-splash-right 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   }
 }
 
