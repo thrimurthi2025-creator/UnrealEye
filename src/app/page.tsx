@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Newspaper, Search, ArrowRight, X, Shield, Code, Bot, BrainCircuit, ScanEye } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -59,6 +59,26 @@ export default function Home() {
   const [hasSearched, setHasSearched] = useState(false);
   
   const [activeDetector, setActiveDetector] = useState('image');
+
+  const [indicatorStyle, setIndicatorStyle] = useState({});
+  const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const activeIndex = activeDetector === 'image' ? 0 : 1;
+    const activeTab = tabsRef.current[activeIndex];
+    const container = containerRef.current;
+
+    if (activeTab && container) {
+      const containerRect = container.getBoundingClientRect();
+      const tabRect = activeTab.getBoundingClientRect();
+      
+      setIndicatorStyle({
+        width: tabRect.width,
+        transform: `translateX(${tabRect.left - containerRect.left}px)`,
+      });
+    }
+  }, [activeDetector]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,19 +157,24 @@ export default function Home() {
           <section id="tools" className="space-y-8">
             <h2 className="text-center text-3xl font-bold text-gradient-purple">Core Detection Suite</h2>
             <GlassCard className="p-4 md:p-6">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                 <button 
-                   className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'image' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-secondary/50')}
-                   onClick={() => setActiveDetector('image')}
-                 >
-                   Image Detector
-                 </button>
-                 <button 
-                   className={cn('px-4 py-2 rounded-full transition-colors', activeDetector === 'text' ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:bg-secondary/50')}
-                   onClick={() => setActiveDetector('text')}
-                 >
-                   Text Detector
-                 </button>
+              <div className="flex items-center justify-center mb-4">
+                 <div ref={containerRef} className="liquid-tabs">
+                   <div className="liquid-tab-indicator" style={indicatorStyle} />
+                   <button 
+                     ref={(el) => (tabsRef.current[0] = el)}
+                     className={cn('liquid-tab-trigger', { 'active': activeDetector === 'image' })}
+                     onClick={() => setActiveDetector('image')}
+                   >
+                     Image Detector
+                   </button>
+                   <button 
+                     ref={(el) => (tabsRef.current[1] = el)}
+                     className={cn('liquid-tab-trigger', { 'active': activeDetector === 'text' })}
+                     onClick={() => setActiveDetector('text')}
+                   >
+                     Text Detector
+                   </button>
+                 </div>
               </div>
 
               <div className="relative min-h-[850px] md:min-h-[950px] rounded-4xl overflow-hidden bg-secondary/50">
