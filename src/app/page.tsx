@@ -70,7 +70,7 @@ export default function Home() {
     setIsDetectorLoading(true);
     const timer = setTimeout(() => {
       setIsDetectorLoading(false);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [activeDetector]);
@@ -193,7 +193,10 @@ export default function Home() {
                 <iframe
                   key={activeDetector}
                   src={detectorSrc}
-                  className="absolute inset-0 w-full h-full border-0"
+                  className={cn(
+                    'absolute inset-0 w-full h-full border-0 transition-opacity duration-500',
+                    isDetectorLoading ? 'opacity-0' : 'opacity-100'
+                  )}
                 />
               </div>
             </GlassCard>
