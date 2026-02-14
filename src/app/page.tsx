@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { GlassCard } from '@/components/ui/glass-card';
 import { Loader } from '@/components/ui/loader';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { LiquidLoader } from '@/components/ui/liquid-loader';
 
 type ClaimReview = {
   publisher: { name: string; site: string; };
@@ -63,6 +64,16 @@ export default function Home() {
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLoader(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const activeIndex = activeDetector === 'image' ? 0 : 1;
@@ -123,7 +134,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      <div className="container mx-auto px-4 py-8">
+       {showLoader && <LiquidLoader />}
+      <div className={cn("container mx-auto px-4 py-8 transition-opacity duration-700 ease-in", showLoader ? "opacity-0" : "opacity-100")}>
 
         {/* Header */}
         <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-3xl">
