@@ -179,7 +179,7 @@
   }
 
   .liquid-loader-container {
-    @apply relative flex h-full w-full flex-col items-center justify-center bg-transparent transition-opacity duration-500 ease-in-out;
+    @apply absolute inset-0 z-10 flex h-full w-full flex-col items-center justify-center bg-secondary/50 transition-opacity duration-500 ease-in-out;
   }
   
   .liquid-loader-filter-container {

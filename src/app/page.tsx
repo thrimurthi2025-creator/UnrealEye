@@ -188,16 +188,13 @@ export default function Home() {
                  </div>
               </div>
 
-              <div className="relative min-h-[850px] md:min-h-[950px] rounded-4xl overflow-hidden bg-secondary/50 flex items-center justify-center">
-                 {isDetectorLoading ? (
-                  <LiquidLoader />
-                ) : (
-                  <iframe
-                    key={activeDetector}
-                    src={detectorSrc}
-                    className="absolute inset-0 w-full h-full border-0"
-                  />
-                )}
+              <div className="relative min-h-[850px] md:min-h-[950px] rounded-4xl overflow-hidden bg-secondary/50">
+                {isDetectorLoading && <LiquidLoader />}
+                <iframe
+                  key={activeDetector}
+                  src={detectorSrc}
+                  className="absolute inset-0 w-full h-full border-0"
+                />
               </div>
             </GlassCard>
           </section>
