@@ -301,7 +301,7 @@ export default function Home() {
         </main>
 
         <footer className="text-center py-16 text-muted-foreground text-sm">
-          © 2025 Unreal Eye. All Rights Reserved.
+          © 2026 Unreal Eye. All Rights Reserved.
         </footer>
       </div>
     </div>
