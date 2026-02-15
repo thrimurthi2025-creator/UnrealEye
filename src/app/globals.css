@@ -146,12 +146,18 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Outfit', sans-serif;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -10;
     background-image: radial-gradient(circle at 15% 25%, hsl(260 80% 60% / 0.5), transparent 30%),
                       radial-gradient(circle at 85% 15%, hsl(20 90% 60% / 0.5), transparent 25%),
                       radial-gradient(circle at 75% 85%, hsl(220 90% 55% / 0.4), transparent 40%),
                       radial-gradient(circle at 25% 95%, hsl(20 90% 60% / 0.4), transparent 40%),
                       radial-gradient(circle at 50% 50%, hsl(260 80% 60% / 0.3), transparent 30%);
-    background-attachment: fixed;
   }
 }
 
